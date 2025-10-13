@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ET Handman Services | Trusted Handyman in Brighton & Peacehaven</title>
+  <meta name="description" content="ET Handman Services – reliable repairs and installations. View services, portfolio, testimonials, and book a job."/>
+  <style>
+    :root{
+      --bg:#0f172a; --panel:#0b1220; --fg:#e5e7eb; --muted:#a7b0c0; --accent:#38bdf8; --ok:#22c55e;
+      --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.09); --shadow:0 16px 32px rgba(0,0,0,.45)
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,Arial;background:radial-gradient(1200px 700px at 50% 0%, #111827 0%, var(--bg) 55%);color:var(--fg)}
+
+    .header{position:sticky;top:0;z-index:10;background:rgba(7,12,24,.78);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+    .wrap{max-width:1200px;margin:auto;padding:12px 18px;display:flex;align-items:center;gap:16px}
+    .brand{font-weight:800;letter-spacing:.02em}
+    nav a{color:inherit;text-decoration:none;margin:0 10px;border-bottom:1px dashed transparent}
+    nav a:hover{border-bottom-color:rgba(255,255,255,.35)}
+    .spacer{flex:1}
+    .cta{display:inline-flex;align-items:center;gap:8px;padding:.55rem .9rem;border-radius:9999px;border:1px solid var(--border);background:var(--glass);color:inherit;text-decoration:none}
+    .cta:hover{transform:translateY(-1px)}
+
+    .hero{max-width:1200px;margin:24px auto;padding:0 18px;display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
+    .hero h1{margin:.2rem 0 .6rem;font-size:clamp(28px,5vw,50px)}
+    .hero p{margin:0 0 1rem;color:var(--muted)}
+    .buttons{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{padding:.78rem 1rem;border-radius:12px;border:1px solid var(--border);text-decoration:none;color:inherit;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.25));box-shadow:var(--shadow)}
+    .btn.primary{background:linear-gradient(180deg, rgba(56,189,248,.25), rgba(0,0,0,.25));border-color:rgba(56,189,248,.35)}
+
+    .heroCard{background:var(--glass);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+    .heroImg{width:100%;height:320px;object-fit:cover;background:#1f2937;display:block}
+    .heroNote{padding:12px 16px;color:var(--muted);font-size:14px}
+
+    .section{max-width:1200px;margin:40px auto;padding:0 18px}
+    .section h2{margin:0 0 8px;font-size:clamp(22px,3.6vw,34px)}
+    .muted{color:var(--muted);margin:0 0 18px}
+
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{background:var(--glass);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow)}
+    .svc{padding:16px;display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center}
+    .svc img{width:72px;height:72px;border-radius:12px;object-fit:cover;background:#1f2937}
+    .svc h3{margin:0 0 4px;font-size:18px}
+    .svc p{margin:0;color:var(--muted);font-size:14px}
+
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .tile{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--border);cursor:pointer}
+    .tile img{width:100%;height:220px;object-fit:cover;display:block;background:#111827;transition:transform .35s ease}
+    .tile:hover img{transform:scale(1.04)}
+    .tile .cap{position:absolute;left:0;right:0;bottom:0;padding:10px 12px;background:linear-gradient(180deg, transparent, rgba(0,0,0,.65));font-size:13px}
+
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;place-items:center;z-index:50}
+    .lightbox.open{display:grid}
+    .lb-img{max-width:92vw;max-height:80vh;border-radius:16px;border:1px solid var(--border);box-shadow:var(--shadow)}
+    .lb-cap{margin-top:10px;color:#cbd5e1;text-align:center}
+
+    .testis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .quote{padding:16px}
+    .stars{color:#fbbf24}
+
+    .contactGrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    input,select,textarea{width:100%;padding:.7rem .8rem;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:inherit}
+    textarea{min-height:120px;grid-column:1/-1}
+    .actions{display:flex;gap:10px;align-items:center}
+
+    footer{margin:46px 0 70px}
+    .footerGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card p{margin:.2rem 0}
+    .card a{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.35)}
+
+    .reveal{opacity:0;transform:translateY(16px);animation:fadeUp .6s ease forwards}
+    .reveal.d1{animation-delay:.1s}.reveal.d2{animation-delay:.2s}.reveal.d3{animation-delay:.3s}
+    @keyframes fadeUp{to{opacity:1;transform:none}}
+
+    @media (max-width:1100px){
+      .hero{grid-template-columns:1fr}
+      .grid,.gallery,.testis,.contactGrid,form,.footerGrid{grid-template-columns:1fr}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .reveal{animation:none;opacity:1;transform:none}
+      .tile img{transition:none}
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="wrap">
+      <div class="brand">ET Handman Services</div>
+      <nav aria-label="Main navigation">
+        <a href="#services">Services</a>
+        <a href="#work">Our Work</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#booking">Book</a>
+      </nav>
+      <div class="spacer"></div>
+      <a class="cta" href="https://wa.me/447000000000" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1 class="reveal">Trusted Handman Services in Brighton & Peacehaven</h1>
+      <p class="reveal d1">Reliable repairs and installations — same-day bookings available.</p>
+      <div class="buttons reveal d2">
+        <a class="btn primary" href="#booking">Book a Job</a>
+        <a class="btn" href="#work">View Past Work</a>
+      </div>
+    </div>
+    <aside class="heroCard reveal d1">
+      <img class="heroImg" src="./images/placeholder-hero.jpg" alt="Handyman fixing a cabinet (placeholder)"/>
+      <div class="heroNote">Replace with a real work photo (1200×800+ recommended).</div>
+    </aside>
+  </section>
+
+  <section class="section" id="services">
+    <h2 class="reveal">What we do</h2>
+    <div class="grid">
+      <article class="card svc reveal"><img src="./images/svc-tv.jpg"><div><h3>TV Wall Mounting</h3><p>Secure brackets, cable tidy, levelling & testing.</p></div></article>
+      <article class="card svc reveal d1"><img src="./images/svc-furniture.jpg"><div><h3>Furniture Assembly</h3><p>Flat-pack pros for wardrobes, beds and desks.</p></div></article>
+      <article class="card svc reveal d2"><img src="./images/svc-shelves.jpg"><div><h3>Shelves & Mirrors</h3><p>Solid fixings for plasterboard, brick or stud walls.</p></div></article>
+      <article class="card svc reveal"><img src="./images/svc-doors.jpg"><div><h3>Door & Handle Fixes</h3><p>Hinges, latches, planing, alignment and soft-close.</p></div></article>
+      <article class="card svc reveal d1"><img src="./images/svc-sealant.jpg"><div><h3>Sealant & Grout</h3><p>Mould-resistant reseal for kitchens & bathrooms.</p></div></article>
+      <article class="card svc reveal d2"><img src="./images/svc-electrical.jpg"><div><h3>Small Electrical*</h3><p>Like-for-like light fittings, dimmers and sockets.</p></div></article>
+    </div>
+  </section>
+
+  <section class="section" id="work">
+    <h2 class="reveal">What we’ve done</h2>
+    <div class="gallery" id="gallery">
+      <figure class="tile reveal"><img src="./images/work-1.jpg" data-cap="Wall-mounted TV · Peacehaven"/></figure>
+      <figure class="tile reveal d1"><img src="./images/work-2.jpg" data-cap="Bathroom reseal · Hove"/></figure>
+      <figure class="tile reveal d2"><img src="./images/work-3.jpg" data-cap="Wardrobe assembly · Brighton"/></figure>
+    </div>
+    <div class="lightbox" id="lightbox">
+      <div><img class="lb-img" id="lbImg"/><div class="lb-cap" id="lbCap"></div></div>
+    </div>
+  </section>
+
+  <section class="section" id="reviews">
+    <h2 class="reveal">What customers say</h2>
+    <div class="testis">
+      <article class="card quote reveal"><div class="stars">★★★★★</div><p>“Arrived on time and mounted the TV perfectly.”</p><p class="muted">— Sarah, Peacehaven</p></article>
+      <article class="card quote reveal d1"><div class="stars">★★★★★</div><p>“Built three wardrobes in an afternoon.”</p><p class="muted">— Ahmed, Brighton</p></article>
+      <article class="card quote reveal d2"><div class="stars">★★★★★</div><p>“Friendly and professional — will book again.”</p><p class="muted">— Louise, Hove</p></article>
+    </div>
+  </section>
+
+  <section class="section" id="booking">
+    <h2 class="reveal">Book a job</h2>
+    <div class="contactGrid">
+      <div class="card" style="padding:18px">
+        <form class="reveal" id="quoteForm" onsubmit="event.preventDefault(); fakeSubmit();">
+          <div><label class="muted">Full name</label><input required placeholder="Jane Doe"/></div>
+          <div><label class="muted">Phone</label><input required placeholder="+44"/></div>
+          <div><label class="muted">Email</label><input type="email" placeholder="you@example.com"/></div>
+          <div><label class="muted">Postcode</label><input required placeholder="BN10 7FB"/></div>
+          <div><label class="muted">Service</label><select required><option>TV wall mounting</option><option>Furniture assembly</option></select></div>
+          <div><label class="muted">Preferred date</label><input type="date"/></div>
+          <textarea placeholder="Describe the job, access, parking, photos (URLs) etc."></textarea>
+          <div class="actions"><button class="btn primary" type="submit">Request quote</button><span class="muted" id="formMsg" style="font-size:12px"></span></div>
+        </form>
+      </div>
+      <aside class="card" style="padding:18px">
+        <h3 style="margin-top:0">Contact</h3>
+        <p><strong>Phone:</strong> <a href="tel:+447000000000">+44 7000 000 000</a></p>
+        <p><strong>Email:</strong> <a href="mailto:hello@ethandman.co.uk">hello@ethandman.co.uk</a></p>
+        <p><strong>WhatsApp:</strong> <a href="https://wa.me/447000000000" target="_blank">Chat now</a></p>
+        <p class="muted">Service area: Peacehaven · Brighton & Hove · Worthing · East Sussex</p>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="section">
+    <div class="footerGrid">
+      <div class="card" style="padding:16px 18px"><h4>Address</h4><p>ET Handman Services<br>2 Lincoln Court, Lincoln Avenue<br>Peacehaven BN10 7FB, UK</p></div>
+      <div class="card" style="padding:16px 18px"><h4>Hours</h4><p>Mon–Sat: 8:00–19:00<br>Sun: By appointment</p></div>
+      <div class="card" style="padding:16px 18px"><h4>Legal</h4><p class="muted" style="font-size:12px">© <span id="year"></span> ET Handman Services</p></div>
+    </div>
+  </footer>
+
+  <script>
+    const lb=document.getElementById('lightbox'),lbImg=document.getElementById('lbImg'),lbCap=document.getElementById('lbCap');
+    document.getElementById('gallery').addEventListener('click',e=>{const img=e.target.closest('img');if(!img)return;lbImg.src=img.src;lbCap.textContent=img.dataset.cap||'';lb.classList.add('open');});
+    lb.addEventListener('click',()=>lb.classList.remove('open'));
+    window.addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('open')});
+    function fakeSubmit(){const m=document.getElementById('formMsg');m.textContent='Thanks! We\'ll be in touch.';setTimeout(()=>{m.textContent='';document.getElementById('quoteForm').reset();},3000)}
+    document.getElementById('year').textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>

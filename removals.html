@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ET Handman Services | Removals & Man with a Van</title>
+  <meta name="description" content="Local & reliable removals: flats, houses, offices. Packing, loading, transport and setup. Get a quote fast."/>
+  <style>
+    :root{
+      --bg:#0f172a; --fg:#e5e7eb; --muted:#a7b0c0; --accent:#f59e0b; --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.09); --shadow:0 16px 32px rgba(0,0,0,.45)
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,Arial;background:radial-gradient(1200px 700px at 50% 0%, #111827 0%, var(--bg) 55%);color:var(--fg)}
+
+    /* Header */
+    .header{position:sticky;top:0;z-index:10;background:rgba(7,12,24,.78);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+    .wrap{max-width:1200px;margin:auto;padding:12px 18px;display:flex;align-items:center;gap:16px}
+    .brand{font-weight:800;letter-spacing:.02em}
+    nav a{color:inherit;text-decoration:none;margin:0 10px;border-bottom:1px dashed transparent}
+    nav a:hover{border-bottom-color:rgba(255,255,255,.35)}
+    .spacer{flex:1}
+    .cta{display:inline-flex;align-items:center;gap:8px;padding:.55rem .9rem;border-radius:9999px;border:1px solid var(--border);background:var(--glass);color:inherit;text-decoration:none}
+    .cta:hover{transform:translateY(-1px)}
+
+    /* Hero */
+    .hero{max-width:1200px;margin:24px auto;padding:0 18px;display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
+    .hero h1{margin:.2rem 0 .6rem;font-size:clamp(28px,5vw,50px)}
+    .hero p{margin:0 0 1rem;color:var(--muted)}
+    .buttons{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{padding:.78rem 1rem;border-radius:12px;border:1px solid var(--border);text-decoration:none;color:inherit;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.25));box-shadow:var(--shadow)}
+    .btn.primary{background:linear-gradient(180deg, rgba(245,158,11,.25), rgba(0,0,0,.25));border-color:rgba(245,158,11,.35)}
+
+    .heroCard{background:var(--glass);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+    .heroImg{width:100%;height:320px;object-fit:cover;background:#1f2937;display:block}
+    .heroNote{padding:12px 16px;color:var(--muted);font-size:14px}
+
+    .section{max-width:1200px;margin:40px auto;padding:0 18px}
+    .section h2{margin:0 0 8px;font-size:clamp(22px,3.6vw,34px)}
+    .muted{color:var(--muted);margin:0 0 18px}
+
+    /* Services grid */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{background:var(--glass);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow)}
+    .svc{padding:16px;display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center}
+    .svc img{width:72px;height:72px;border-radius:12px;object-fit:cover;background:#1f2937}
+    .svc h3{margin:0 0 4px;font-size:18px}
+    .svc p{margin:0;color:var(--muted);font-size:14px}
+
+    /* USP strip */
+    .usp{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}
+    .usp .pill{padding:.6rem .8rem;border:1px solid var(--border);border-radius:9999px;background:var(--glass);text-align:center;font-size:13px}
+
+    /* Portfolio gallery */
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .tile{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--border);cursor:pointer}
+    .tile img{width:100%;height:220px;object-fit:cover;display:block;background:#111827;transition:transform .35s ease}
+    .tile:hover img{transform:scale(1.04)}
+    .tile .cap{position:absolute;left:0;right:0;bottom:0;padding:10px 12px;background:linear-gradient(180deg, transparent, rgba(0,0,0,.65));font-size:13px}
+
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;place-items:center;z-index:50}
+    .lightbox.open{display:grid}
+    .lb-img{max-width:92vw;max-height:80vh;border-radius:16px;border:1px solid var(--border);box-shadow:var(--shadow)}
+    .lb-cap{margin-top:10px;color:#cbd5e1;text-align:center}
+
+    /* Pricing */
+    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .price{padding:18px}
+    .price h3{margin:0 0 8px}
+    .price .num{font-size:28px;font-weight:800}
+    .small{font-size:12px;color:var(--muted)}
+
+    /* Contact / Booking */
+    .contactGrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    input,select,textarea{width:100%;padding:.7rem .8rem;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:inherit}
+    textarea{min-height:120px;grid-column:1/-1}
+    .actions{display:flex;gap:10px;align-items:center}
+
+    /* Footer */
+    footer{margin:46px 0 70px}
+    .footerGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card p{margin:.2rem 0}
+    .card a{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.35)}
+
+    /* Animations */
+    .reveal{opacity:0;transform:translateY(16px);animation:fadeUp .6s ease forwards}
+    .reveal.d1{animation-delay:.1s}.reveal.d2{animation-delay:.2s}.reveal.d3{animation-delay:.3s}
+    @keyframes fadeUp{to{opacity:1;transform:none}}
+
+    @media (max-width:1100px){
+      .hero{grid-template-columns:1fr}
+      .grid,.gallery,.pricing,.contactGrid,form,.footerGrid{grid-template-columns:1fr}
+      .usp{grid-template-columns:1fr 1fr}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .reveal{animation:none;opacity:1;transform:none}
+      .tile img{transition:none}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="wrap">
+      <div class="brand">ET Handman Services</div>
+      <nav aria-label="Main navigation">
+        <a href="#services">Services</a>
+        <a href="#work">Our Work</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#booking">Book</a>
+      </nav>
+      <div class="spacer"></div>
+      <a class="cta" href="https://wa.me/447000000000" target="_blank" rel="noopener" aria-label="WhatsApp us">WhatsApp</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div>
+      <h1 class="reveal">Removals & Man with a Van — Brighton, Peacehaven & nearby</h1>
+      <p class="reveal d1">Stress‑free moves for flats, houses and offices. Packing, loading, transport and setup — handled with care.</p>
+      <div class="buttons reveal d2">
+        <a class="btn primary" href="#booking">Get a Quote</a>
+        <a class="btn" href="#work">See Past Moves</a>
+      </div>
+      <div class="usp reveal d3">
+        <div class="pill">2‑man or 3‑man crews</div>
+        <div class="pill">Dismantle & re‑assemble</div>
+        <div class="pill">Protective blankets & straps</div>
+        <div class="pill">Evening/weekend slots</div>
+      </div>
+    </div>
+    <aside class="heroCard reveal d1" aria-label="Hero images">
+      <img class="heroImg" src="./images/removals-hero.jpg" alt="Team loading boxes into a van (placeholder)"/>
+      <div class="heroNote">Replace with a real van/move photo (1200×800+ recommended).</div>
+    </aside>
+  </section>
+
+  <!-- Services -->
+  <section class="section" id="services">
+    <h2 class="reveal">What we do</h2>
+    <p class="muted reveal d1">Clear options for small and full moves. Mix & match to fit your job.</p>
+    <div class="grid">
+      <article class="card svc reveal"><img src="./images/rem-s1.jpg" alt="Flat/house moves (placeholder)"><div><h3>Flat & House Moves</h3><p>Studio to 4‑bedroom moves handled carefully and efficiently.</p></div></article>
+      <article class="card svc reveal d1"><img src="./images/rem-s2.jpg" alt="Office moves (placeholder)"><div><h3>Office Moves</h3><p>Desks, chairs, IT — labelled and relocated with minimal downtime.</p></div></article>
+      <article class="card svc reveal d2"><img src="./images/rem-s3.jpg" alt="Man with a van (placeholder)"><div><h3>Man with a Van</h3><p>Ideal for single‑item collections, Gumtree/IKEA runs, small loads.</p></div></article>
+      <article class="card svc reveal"><img src="./images/rem-s4.jpg" alt="Packing service (placeholder)"><div><h3>Packing Service</h3><p>Full or partial packing, fragile‑only, and unpacking on arrival.</p></div></article>
+      <article class="card svc reveal d1"><img src="./images/rem-s5.jpg" alt="Furniture assembly (placeholder)"><div><h3>Disassemble & Re‑assemble</h3><p>Beds, wardrobes, tables — we take down and put back up.</p></div></article>
+      <article class="card svc reveal d2"><img src="./images/rem-s6.jpg" alt="Local moves (placeholder)"><div><h3>Local Deliveries</h3><p>Boxes, appliances and flat‑pack delivered to your door.</p></div></article>
+    </div>
+  </section>
+
+  <!-- Our Work -->
+  <section class="section" id="work">
+    <h2 class="reveal">What we’ve done</h2>
+    <p class="muted reveal d1">Real local moves. Replace with your own van, team and customer photos.</p>
+    <div class="gallery" id="gallery">
+      <figure class="tile reveal"><img src="./images/rem-work-1.jpg" alt="1‑bed flat move (placeholder)" data-cap="1‑bed flat move · Peacehaven"/></figure>
+      <figure class="tile reveal d1"><img src="./images/rem-work-2.jpg" alt="Office relocation (placeholder)" data-cap="Office relocation · Brighton"/></figure>
+      <figure class="tile reveal d2"><img src="./images/rem-work-3.jpg" alt="Packing fragile items (placeholder)" data-cap="Fragile packing · Hove"/></figure>
+      <figure class="tile reveal"><img src="./images/rem-work-4.jpg" alt="Two‑man crew loading (placeholder)" data-cap="Two‑man crew · Kemptown"/></figure>
+      <figure class="tile reveal d1"><img src="./images/rem-work-5.jpg" alt="Furniture re‑assembly (placeholder)" data-cap="Wardrobe re‑assembly · Worthing"/></figure>
+      <figure class="tile reveal d2"><img src="./images/rem-work-6.jpg" alt="Local delivery (placeholder)" data-cap="Local delivery · Saltdean"/></figure>
+    </div>
+
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
+      <div>
+        <img class="lb-img" id="lbImg" alt="Preview"/>
+        <div class="lb-cap" id="lbCap"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="section" id="pricing">
+    <h2 class="reveal">Simple pricing</h2>
+    <p class="muted reveal d1">Transparent rates. Parking and materials (boxes, wrap) charged at cost.</p>
+    <div class="pricing">
+      <div class="card price reveal">
+        <h3>Man with a Van (2‑man)</h3>
+        <div class="num">£70 / hour</div>
+        <p class="small">Minimum 2 hours</p>
+      </div>
+      <div class="card price reveal d1">
+        <h3>Half‑day Move</h3>
+        <div class="num">£240</div>
+        <p class="small">Up to 4 hours · Great for 1–2 bed flats</p>
+      </div>
+      <div class="card price reveal d2">
+        <h3>Full‑day Move</h3>
+        <div class="num">£420</div>
+        <p class="small">Up to 8 hours · Larger moves</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking / Contact -->
+  <section class="section" id="booking">
+    <h2 class="reveal">Get a removals quote</h2>
+    <p class="muted reveal d1">Tell us about your move. We’ll confirm by phone or WhatsApp.</p>
+    <div class="contactGrid">
+      <div class="card" style="padding:18px">
+        <form class="reveal" id="quoteForm" onsubmit="event.preventDefault(); fakeSubmit();">
+          <div>
+            <label class="muted" style="font-size:12px">Full name</label>
+            <input required placeholder="Jane Doe"/>
+          </div>
+          <div>
+            <label class="muted" style="font-size:12px">Phone</label>
+            <input required placeholder="+44"/>
+          </div>
+          <div>
+            <label class="muted" style="font-size:12px">Email</label>
+            <input type="email" placeholder="you@example.com"/>
+          </div>
+          <div>
+            <label class="muted" style="font-size:12px">Moving date</label>
+            <input type="date"/>
+          </div>
+          <div>
+            <label class="muted" style="font-size:12px">From (postcode)</label>
+            <input required placeholder="BN10"/>
+          </div>
+          <div>
+            <label class="muted" style="font-size:12px">To (postcode)</label>
+            <input required placeholder="BN1"/>
+          </div>
+          <div>
+            <label class="muted" style="font-size:12px">Move size</label>
+            <select required>
+              <option value="">Choose…</option>
+              <option>Room / Small load</option>
+              <option>1‑bed flat</option>
+              <option>2‑bed flat</option>
+              <option>2‑bed house</option>
+              <option>3‑bed house</option>
+              <option>Office</option>
+            </select>
+          </div>
+          <div>
+            <label class="muted" style="font-size:12px">Services</label>
+            <select>
+              <option>Packing</option>
+              <option>Disassemble/Re‑assemble</option>
+              <option>Deliver packing materials</option>
+              <option>Just transport</option>
+            </select>
+          </div>
+          <textarea placeholder="Floors/no. of stairs, lift access, parking info, large items (sofa, wardrobe), special care, etc."></textarea>
+          <div class="actions">
+            <button class="btn primary" type="submit">Request quote</button>
+            <span class="muted" id="formMsg" aria-live="polite" style="font-size:12px"></span>
+          </div>
+        </form>
+      </div>
+      <aside class="card" style="padding:18px">
+        <h3 style="margin-top:0">Contact</h3>
+        <p><strong>Phone:</strong> <a href="tel:+447000000000">+44 7000 000 000</a></p>
+        <p><strong>Email:</strong> <a href="mailto:hello@ethandman.co.uk">hello@ethandman.co.uk</a></p>
+        <p><strong>WhatsApp:</strong> <a href="https://wa.me/447000000000" target="_blank" rel="noopener">Chat now</a></p>
+        <p class="muted">Service area: Peacehaven · Brighton & Hove · Worthing · East Sussex</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="section" aria-label="Footer">
+    <div class="footerGrid">
+      <div class="card" style="padding:16px 18px">
+        <h4 style="margin:0 0 6px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;opacity:.8">Address</h4>
+        <p>ET Handman Services<br>2 Lincoln Court, Lincoln Avenue<br>Peacehaven BN10 7FB, UK</p>
+      </div>
+      <div class="card" style="padding:16px 18px">
+        <h4 style="margin:0 0 6px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;opacity:.8">Hours</h4>
+        <p>Mon–Sat: 8:00–19:00<br>Sun: By appointment</p>
+      </div>
+      <div class="card" style="padding:16px 18px">
+        <h4 style="margin:0 0 6px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;opacity:.8">Legal</h4>
+        <p class="muted small">© <span id="year"></span> ET Handman Services</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Lightbox
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbCap = document.getElementById('lbCap');
+    document.getElementById('gallery').addEventListener('click', (e)=>{
+      const img = e.target.closest('img');
+      if(!img) return;
+      lbImg.src = img.src; lbCap.textContent = img.dataset.cap || '';
+      lb.classList.add('open');
+    });
+    lb.addEventListener('click', ()=> lb.classList.remove('open'));
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') lb.classList.remove('open'); });
+
+    // Fake submit
+    function fakeSubmit(){
+      const msg = document.getElementById('formMsg');
+      msg.textContent = 'Thanks! We\'ll be in touch shortly.';
+      setTimeout(()=>{ msg.textContent=''; document.getElementById('quoteForm').reset(); }, 3000);
+    }
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
