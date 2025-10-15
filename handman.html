@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ET Handman Services | Trusted Handyman in Brighton & Peacehaven</title>
   <meta name="description" content="ET Handman Services – reliable repairs and installations. View services, portfolio, testimonials, and book a job."/>
+  <link rel="preload" as="image" href="./images/et-handyman-logo.jpg" />
   <style>
     :root{
       --bg:#0f172a; --panel:#0b1220; --fg:#e5e7eb; --muted:#a7b0c0; --accent:#38bdf8; --ok:#22c55e;
@@ -20,6 +21,14 @@
       background:radial-gradient(1200px 700px at 50% 0%, #111827 0%, var(--bg) 55%);
       color:var(--fg);
       /* padding-top set in JS to match fixed header height */
+      position:relative;
+    }
+    /* Optional subtle watermark logo behind content */
+    body::before{
+      content:"";
+      position:fixed; inset:0; pointer-events:none; z-index:0;
+      background:url("./images/et-handyman-logo.jpg") center/30% no-repeat;
+      opacity:.05; filter:grayscale(100%) brightness(1.6);
     }
 
     /* ===== Fixed header (frozen) ===== */
@@ -29,7 +38,11 @@
       border-bottom:1px solid var(--border);
     }
     .wrap{max-width:1200px;margin:auto;padding:12px 18px;display:flex;align-items:center;gap:16px}
-    .brand{font-weight:800;letter-spacing:.02em}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.02em}
+    .brand-logo{
+      width:28px;height:28px;object-fit:contain;border-radius:6px;flex:0 0 28px;
+      box-shadow:0 0 0 1px rgba(255,255,255,.15), 0 4px 10px rgba(0,0,0,.35);
+    }
     nav a{
       color:inherit;text-decoration:none;margin:0 10px;
       border-bottom:2px solid transparent;padding-bottom:2px;transition:border-color .2s ease
@@ -41,7 +54,7 @@
     .cta:hover{transform:translateY(-1px)}
 
     /* Ensure sections stop below fixed header */
-    .hero, .section{scroll-margin-top:var(--header-h)}
+    .hero, .section{scroll-margin-top:var(--header-h); position:relative; z-index:1;}
 
     /* ===== Hero ===== */
     .hero{max-width:1200px;margin:24px auto;padding:0 18px;display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
@@ -110,7 +123,10 @@
   <!-- ===== Fixed Header ===== -->
   <header class="header" id="site-header">
     <div class="wrap">
-      <div class="brand">ET Handman Services</div>
+      <div class="brand">
+        <img class="brand-logo" src="./images/et-handyman-logo.jpg" alt="ET Handman Services logo">
+        ET Handman Services
+      </div>
       <nav aria-label="Main navigation">
         <a href="#services">Services</a>
         <a href="#work">Our Work</a>
@@ -169,8 +185,8 @@
   <section class="section" id="reviews" tabindex="-1">
     <h2 class="reveal">What customers say</h2>
     <div class="testis">
-      <article class="card quote reveal"><div class="stars">★★★★★</div><p>“Arrived on time and mounted the TV perfectly.”</p><p class="muted">— Sarah, Peacehaven</p></article>
-      <article class="card quote reveal d1"><div class="stars">★★★★★</div><p>“Built three wardrobes in an afternoon.”</p><p class="muted">— Ahmed, Brighton</p></article>
+      <article class="card quote reveal"><div class="stars">★★★★★</div><p>“Et handyman services the best in brighton he does the best job  and great service, I've moveded from Birmingham to Brighton he was man  of the job. 100% bless him hardworking.”</p><p class="muted">— Mohammed Asif, Peacehaven</p></article>
+      <article class="card quote reveal d1"><div class="stars">★★★★★</div><p>“Handyman  dose the best job and absolutely great personality and amazing service, like removing and construction work like painting decorating tilling gardening leveling and flooring. ❤️❤️❤️❤️.”</p><p class="muted">— Amir Ali, Brighton</p></article>
       <article class="card quote reveal d2"><div class="stars">★★★★★</div><p>“Friendly and professional — will book again.”</p><p class="muted">— Louise, Hove</p></article>
     </div>
   </section>
