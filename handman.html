@@ -1,11 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ET Handman Services | Trusted Handyman in Brighton & Peacehaven</title>
-  <meta name="description" content="ET Handman Services – reliable repairs and installations. View services, portfolio, testimonials, and book a job."/>
+
+  <title>ET Handyman Services | Trusted Handyman in Brighton, Hove & Peacehaven</title>
+  <meta name="description" content="ET Handyman Services — reliable repairs and installations across Brighton, Hove, Peacehaven & East Sussex. TV mounting, flat-pack assembly, shelves, doors, sealant, small electrical." />
+
+  <!-- Core SEO -->
+  <link rel="canonical" href="https://ethandman.co.uk/">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="language" content="en-GB">
+  <link rel="alternate" hreflang="en-gb" href="https://ethandman.co.uk/">
+  <meta name="theme-color" content="#0f172a">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="ET Handyman Services" />
+  <meta property="og:description" content="Reliable repairs & installations — same-day bookings available." />
+  <meta property="og:image" content="https://ethandman.co.uk/images/placeholder-hero.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_GB" />
+  <meta property="og:url" content="https://ethandman.co.uk/" />
+
   <link rel="preload" as="image" href="./images/et-handyman-logo.jpg" />
+  <link rel="icon" href="./images/et-handyman-logo.jpg">
+
+  <!-- LocalBusiness Schema (merged with AggregateRating) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"ET Handyman Services",
+    "image":"https://ethandman.co.uk/images/et-handyman-logo.jpg",
+    "telephone":"+44 7305 848484",
+    "email":"hello@ethandman.co.uk",
+    "url":"https://ethandman.co.uk",
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"2 Lincoln Court, Lincoln Avenue",
+      "addressLocality":"Peacehaven",
+      "postalCode":"BN10 7FB",
+      "addressCountry":"GB"
+    },
+    "areaServed":["Brighton","Hove","Peacehaven","Worthing","East Sussex"],
+    "sameAs":["https://wa.me/447305848484"],
+    "openingHours":"Mo-Sa 08:00-19:00",
+    "aggregateRating":{
+      "@type":"AggregateRating",
+      "ratingValue":"5.0",
+      "reviewCount":"3"
+    }
+  }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {"@type":"Question","name":"Do you offer same-day bookings?",
+       "acceptedAnswer":{"@type":"Answer","text":"Yes, subject to availability. Message us on WhatsApp to check slots."}},
+      {"@type":"Question","name":"Which areas do you cover?",
+       "acceptedAnswer":{"@type":"Answer","text":"Brighton, Hove, Peacehaven, Worthing and across East Sussex."}},
+      {"@type":"Question","name":"Do you mount TVs on plasterboard walls?",
+       "acceptedAnswer":{"@type":"Answer","text":"Yes. We use appropriate anchors and check studs for a safe, level fit."}}
+    ]
+  }
+  </script>
+
   <style>
     :root{
       --bg:#0f172a; --panel:#0b1220; --fg:#e5e7eb; --muted:#a7b0c0; --accent:#38bdf8; --ok:#22c55e;
@@ -124,32 +187,35 @@
   <header class="header" id="site-header">
     <div class="wrap">
       <div class="brand">
-        <img class="brand-logo" src="./images/et-handyman-logo.jpg" alt="ET Handman Services logo">
-        ET Handman Services
+        <img class="brand-logo" src="./images/et-handyman-logo.jpg" alt="ET Handyman Services logo" width="28" height="28" loading="eager">
+        ET Handyman Services
       </div>
       <nav aria-label="Main navigation">
-        <a href="#services">Services</a>
-        <a href="#work">Our Work</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#booking">Book</a>
+        <a href="#services">Handyman Services</a>
+        <a href="#work">Past Work &amp; Gallery</a>
+        <a href="#reviews">Customer Reviews</a>
+        <a href="#booking">Book a Handyman</a>
       </nav>
       <div class="spacer"></div>
-      <a class="cta" href="https://wa.me/447000000000" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="cta" href="https://wa.me/447305848484" target="_blank" rel="noopener" aria-label="Chat on WhatsApp with ET Handyman Services">WhatsApp</a>
     </div>
   </header>
 
   <!-- ===== Hero ===== -->
   <section class="hero" id="top">
     <div>
-      <h1 class="reveal">Trusted Handman Services in Brighton & Peacehaven</h1>
+      <h1 class="reveal">Trusted Handyman Services in Brighton &amp; Peacehaven</h1>
       <p class="reveal d1">Reliable repairs and installations — same-day bookings available.</p>
+      <p class="muted reveal d1" style="margin-top:.5rem">
+        Handyman in Brighton, Hove &amp; Peacehaven — TV mounting, flat-pack assembly, shelves &amp; mirrors, door fixes, sealant, and small electrical replacements.
+      </p>
       <div class="buttons reveal d2">
         <a class="btn primary" href="#booking">Book a Job</a>
         <a class="btn" href="#work">View Past Work</a>
       </div>
     </div>
     <aside class="heroCard reveal d1">
-      <img class="heroImg" src="./images/placeholder-hero.jpg" alt="Handyman fixing a cabinet (placeholder)"/>
+      <img class="heroImg" src="./images/placeholder-hero.jpg" alt="Handyman fitting a kitchen cabinet" loading="lazy" width="1200" height="320"/>
       <div class="heroNote"></div>
     </aside>
   </section>
@@ -158,12 +224,35 @@
   <section class="section" id="services" tabindex="-1">
     <h2 class="reveal">What we do</h2>
     <div class="grid">
-      <article class="card svc reveal"><img src="./images/svc-tv.png" alt=""><div><h3>TV Wall Mounting</h3><p>Secure brackets, cable tidy, levelling & testing.</p></div></article>
-      <article class="card svc reveal d1"><img src="./images/svc-furniture.jpeg" alt=""><div><h3>Furniture Assembly</h3><p>Flat-pack pros for wardrobes, beds and desks.</p></div></article>
-      <article class="card svc reveal d2"><img src="./images/svc-shelves.jpg" alt=""><div><h3>Shelves & Mirrors</h3><p>Solid fixings for plasterboard, brick or stud walls.</p></div></article>
-      <article class="card svc reveal"><img src="./images/svc-doors.jpeg" alt=""><div><h3>Door & Handle Fixes</h3><p>Hinges, latches, planing, alignment and soft-close.</p></div></article>
-      <article class="card svc reveal d1"><img src="./images/svc-sealant.png" alt=""><div><h3>Sealant & Grout</h3><p>Mould-resistant reseal for kitchens & bathrooms.</p></div></article>
-      <article class="card svc reveal d2"><img src="./images/svc-electrical.png" alt=""><div><h3>Small Electrical*</h3><p>Like-for-like light fittings, dimmers and sockets.</p></div></article>
+      <article class="card svc reveal">
+        <img src="./images/svc-tv.png" alt="TV wall mounting service" loading="lazy" width="72" height="72">
+        <div><h3>TV Wall Mounting</h3><p>Secure brackets, cable tidy, levelling &amp; testing.</p></div>
+      </article>
+
+      <article class="card svc reveal d1">
+        <img src="./images/svc-furniture.jpeg" alt="Furniture assembly service" loading="lazy" width="72" height="72">
+        <div><h3>Furniture Assembly</h3><p>Flat-pack pros for wardrobes, beds and desks.</p></div>
+      </article>
+
+      <article class="card svc reveal d2">
+        <img src="./images/svc-shelves.jpg" alt="Shelves and mirrors installation" loading="lazy" width="72" height="72">
+        <div><h3>Shelves &amp; Mirrors</h3><p>Solid fixings for plasterboard, brick or stud walls.</p></div>
+      </article>
+
+      <article class="card svc reveal">
+        <img src="./images/svc-doors.jpeg" alt="Door and handle fixes" loading="lazy" width="72" height="72">
+        <div><h3>Door &amp; Handle Fixes</h3><p>Hinges, latches, planing, alignment and soft-close.</p></div>
+      </article>
+
+      <article class="card svc reveal d1">
+        <img src="./images/svc-sealant.png" alt="Kitchen and bathroom sealant and grout" loading="lazy" width="72" height="72">
+        <div><h3>Sealant &amp; Grout</h3><p>Mould-resistant reseal for kitchens &amp; bathrooms.</p></div>
+      </article>
+
+      <article class="card svc reveal d2">
+        <img src="./images/svc-electrical.png" alt="Small electrical replacements" loading="lazy" width="72" height="72">
+        <div><h3>Small Electrical*</h3><p>Like-for-like light fittings, dimmers and sockets.</p></div>
+      </article>
     </div>
   </section>
 
@@ -171,12 +260,24 @@
   <section class="section" id="work" tabindex="-1">
     <h2 class="reveal">What we’ve done</h2>
     <div class="gallery" id="gallery">
-      <figure class="tile reveal"><img src="./images/work-1.jpg" data-cap="Window Washing · Peacehaven" alt=""></figure>
-      <figure class="tile reveal d1"><img src="./images/work-2.jpg" data-cap="Bathroom reseal · Hove" alt=""></figure>
-      <figure class="tile reveal d2"><img src="./images/work-3.jpg" data-cap="Gardening · Brighton" alt=""></figure>
-      <figure class="tile reveal d3"><img src="./images/work-4.jpg" data-cap="Digging · Brighton" alt=""></figure>
-      <figure class="tile reveal d4"><img src="./images/work-5.jpg" data-cap="Landscapping · Brighton" alt=""></figure>
-      <figure class="tile reveal d4"><img src="./images/work-6.jpg" data-cap="Painting · Brighton" alt=""></figure>
+      <figure class="tile reveal">
+        <img src="./images/work-1.jpg" data-cap="Window Cleaning · Peacehaven" alt="Window cleaning in Peacehaven" loading="lazy" width="800" height="220">
+      </figure>
+      <figure class="tile reveal d1">
+        <img src="./images/work-2.jpg" data-cap="Bathroom reseal · Hove" alt="Bathroom reseal in Hove" loading="lazy" width="800" height="220">
+      </figure>
+      <figure class="tile reveal d2">
+        <img src="./images/work-3.jpg" data-cap="Gardening · Brighton" alt="Gardening work in Brighton" loading="lazy" width="800" height="220">
+      </figure>
+      <figure class="tile reveal d3">
+        <img src="./images/work-4.jpg" data-cap="Digging · Brighton" alt="Garden digging in Brighton" loading="lazy" width="800" height="220">
+      </figure>
+      <figure class="tile reveal d4">
+        <img src="./images/work-5.jpg" data-cap="Landscaping · Brighton" alt="Landscaping project in Brighton" loading="lazy" width="800" height="220">
+      </figure>
+      <figure class="tile reveal d4">
+        <img src="./images/work-6.jpg" data-cap="Painting · Brighton" alt="Interior painting in Brighton" loading="lazy" width="800" height="220">
+      </figure>
     </div>
     <div class="lightbox" id="lightbox"><div><img class="lb-img" id="lbImg" alt=""><div class="lb-cap" id="lbCap"></div></div></div>
   </section>
@@ -185,9 +286,21 @@
   <section class="section" id="reviews" tabindex="-1">
     <h2 class="reveal">What customers say</h2>
     <div class="testis">
-      <article class="card quote reveal"><div class="stars">★★★★★</div><p>“Et handyman services the best in brighton he does the best job  and great service, I've moveded from Birmingham to Brighton he was man  of the job. 100% bless him hardworking.”</p><p class="muted">— Mohammed Asif, Peacehaven</p></article>
-      <article class="card quote reveal d1"><div class="stars">★★★★★</div><p>“Handyman  dose the best job and absolutely great personality and amazing service, like removing and construction work like painting decorating tilling gardening leveling and flooring. ❤️❤️❤️❤️.”</p><p class="muted">— Amir Ali, Brighton</p></article>
-      <article class="card quote reveal d2"><div class="stars">★★★★★</div><p>“Friendly and professional — will book again.”</p><p class="muted">— Louise, Hove</p></article>
+      <article class="card quote reveal">
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p>“Et handyman services the best in brighton he does the best job and great service, I've moveded from Birmingham to Brighton he was man of the job. 100% bless him hardworking.”</p>
+        <p class="muted">— Mohammed Asif, Peacehaven</p>
+      </article>
+      <article class="card quote reveal d1">
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p>“Handyman dose the best job and absolutely great personality and amazing service, like removing and construction work like painting decorating tilling gardening leveling and flooring. ❤️❤️❤️❤️.”</p>
+        <p class="muted">— Amir Ali, Brighton</p>
+      </article>
+      <article class="card quote reveal d2">
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p>“Friendly and professional — will book again.”</p>
+        <p class="muted">— Louise, Hove</p>
+      </article>
     </div>
   </section>
 
@@ -197,22 +310,32 @@
     <div class="contactGrid">
       <div class="card" style="padding:18px">
         <form class="reveal" id="quoteForm" onsubmit="event.preventDefault(); fakeSubmit();">
-          <div><label class="muted">Full name</label><input required placeholder="Jane Doe"/></div>
-          <div><label class="muted">Phone</label><input required placeholder="+44"/></div>
-          <div><label class="muted">Email</label><input type="email" placeholder="you@example.com"/></div>
-          <div><label class="muted">Postcode</label><input required placeholder="BN10 7FB"/></div>
-          <div><label class="muted">Service</label><select required><option>TV wall mounting</option><option>Furniture assembly</option></select></div>
-          <div><label class="muted">Preferred date</label><input type="date"/></div>
-          <textarea placeholder="Describe the job, access, parking, photos (URLs) etc."></textarea>
+          <div><label class="muted">Full name</label><input required placeholder="Jane Doe" aria-label="Full name"/></div>
+          <div><label class="muted">Phone</label><input required placeholder="+44" aria-label="Phone number"/></div>
+          <div><label class="muted">Email</label><input type="email" placeholder="you@example.com" aria-label="Email address"/></div>
+          <div><label class="muted">Postcode</label><input required placeholder="BN10 7FB" aria-label="Postcode"/></div>
+          <div>
+            <label class="muted">Service</label>
+            <select required aria-label="Service">
+              <option>TV wall mounting</option>
+              <option>Furniture assembly</option>
+              <option>Shelves & mirrors</option>
+              <option>Door & handle fixes</option>
+              <option>Sealant & grout</option>
+              <option>Small electrical</option>
+            </select>
+          </div>
+          <div><label class="muted">Preferred date</label><input type="date" aria-label="Preferred date"/></div>
+          <textarea placeholder="Describe the job, access, parking, photos (URLs) etc." aria-label="Job details"></textarea>
           <div class="actions"><button class="btn primary" type="submit">Request quote</button><span class="muted" id="formMsg" style="font-size:12px"></span></div>
         </form>
       </div>
       <aside class="card" style="padding:18px">
         <h3 style="margin-top:0">Contact</h3>
-        <p><strong>Phone:</strong> <a href="tel:+447305848484">+447305848484</a></p>
+        <p><strong>Phone:</strong> <a href="tel:+447305848484">+44 7305 848484</a></p>
         <p><strong>Email:</strong> <a href="mailto:hello@ethandman.co.uk">hello@ethandman.co.uk</a></p>
         <p><strong>WhatsApp:</strong> <a href="https://wa.me/447305848484" target="_blank" rel="noopener">Chat now</a></p>
-        <p class="muted">Service area: Peacehaven · Brighton & Hove · Worthing · East Sussex</p>
+        <p class="muted">Service area: Peacehaven · Brighton &amp; Hove · Worthing · East Sussex</p>
       </aside>
     </div>
   </section>
@@ -220,9 +343,26 @@
   <!-- ===== Footer ===== -->
   <footer class="section">
     <div class="footerGrid">
-      <div class="card" style="padding:16px 18px"><h4>Address</h4><p>ET Handman Services<br>2 Lincoln Court, Lincoln Avenue<br>Peacehaven BN10 7FB, UK</p></div>
+      <div class="card" style="padding:16px 18px">
+        <h4>Address</h4>
+        <p>ET Handyman Services<br>2 Lincoln Court, Lincoln Avenue<br>Peacehaven BN10 7FB, UK</p>
+        <p>
+          <a href="#services">TV wall mounting</a> ·
+          <a href="#services">Furniture assembly</a> ·
+          <a href="#services">Shelves &amp; mirrors</a> ·
+          <a href="#services">Door &amp; handle fixes</a> ·
+          <a href="#services">Sealant &amp; grout</a> ·
+          <a href="#services">Small electrical</a>
+        </p>
+      </div>
       <div class="card" style="padding:16px 18px"><h4>Hours</h4><p>Mon–Sat: 8:00–19:00<br>Sun: By appointment</p></div>
-      <div class="card" style="padding:16px 18px"><h4>Legal</h4><p class="muted" style="font-size:12px">© <span id="year"></span> ET Handman Services</p></div>
+      <div class="card" style="padding:16px 18px">
+        <h4>Legal</h4>
+        <p class="muted" style="font-size:12px">
+          *Small Electrical: like-for-like replacements only (no re-wiring).<br>
+          © <span id="year"></span> ET Handyman Services
+        </p>
+      </div>
     </div>
   </footer>
 
