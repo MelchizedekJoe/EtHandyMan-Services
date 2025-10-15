@@ -8,21 +8,42 @@
   <style>
     :root{
       --bg:#0f172a; --panel:#0b1220; --fg:#e5e7eb; --muted:#a7b0c0; --accent:#38bdf8; --ok:#22c55e;
-      --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.09); --shadow:0 16px 32px rgba(0,0,0,.45)
+      --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.09); --shadow:0 16px 32px rgba(0,0,0,.45);
+      --header-h:72px; /* JS updates exact value */
     }
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,Arial;background:radial-gradient(1200px 700px at 50% 0%, #111827 0%, var(--bg) 55%);color:var(--fg)}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,Arial;
+      background:radial-gradient(1200px 700px at 50% 0%, #111827 0%, var(--bg) 55%);
+      color:var(--fg);
+      /* padding-top set in JS to match fixed header height */
+    }
 
-    .header{position:sticky;top:0;z-index:10;background:rgba(7,12,24,.78);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+    /* ===== Fixed header (frozen) ===== */
+    .header{
+      position:fixed; top:0; left:0; right:0; z-index:1000;
+      background:rgba(7,12,24,.78); backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--border);
+    }
     .wrap{max-width:1200px;margin:auto;padding:12px 18px;display:flex;align-items:center;gap:16px}
     .brand{font-weight:800;letter-spacing:.02em}
-    nav a{color:inherit;text-decoration:none;margin:0 10px;border-bottom:1px dashed transparent}
+    nav a{
+      color:inherit;text-decoration:none;margin:0 10px;
+      border-bottom:2px solid transparent;padding-bottom:2px;transition:border-color .2s ease
+    }
     nav a:hover{border-bottom-color:rgba(255,255,255,.35)}
+    nav a.active{border-bottom-color:rgba(255,255,255,.75)}
     .spacer{flex:1}
     .cta{display:inline-flex;align-items:center;gap:8px;padding:.55rem .9rem;border-radius:9999px;border:1px solid var(--border);background:var(--glass);color:inherit;text-decoration:none}
     .cta:hover{transform:translateY(-1px)}
 
+    /* Ensure sections stop below fixed header */
+    .hero, .section{scroll-margin-top:var(--header-h)}
+
+    /* ===== Hero ===== */
     .hero{max-width:1200px;margin:24px auto;padding:0 18px;display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
     .hero h1{margin:.2rem 0 .6rem;font-size:clamp(28px,5vw,50px)}
     .hero p{margin:0 0 1rem;color:var(--muted)}
@@ -86,7 +107,8 @@
   </style>
 </head>
 <body>
-  <header class="header">
+  <!-- ===== Fixed Header ===== -->
+  <header class="header" id="site-header">
     <div class="wrap">
       <div class="brand">ET Handman Services</div>
       <nav aria-label="Main navigation">
@@ -100,7 +122,8 @@
     </div>
   </header>
 
-  <section class="hero">
+  <!-- ===== Hero ===== -->
+  <section class="hero" id="top">
     <div>
       <h1 class="reveal">Trusted Handman Services in Brighton & Peacehaven</h1>
       <p class="reveal d1">Reliable repairs and installations — same-day bookings available.</p>
@@ -111,35 +134,39 @@
     </div>
     <aside class="heroCard reveal d1">
       <img class="heroImg" src="./images/placeholder-hero.jpg" alt="Handyman fixing a cabinet (placeholder)"/>
-      <div class="heroNote">Replace with a real work photo (1200×800+ recommended).</div>
+      <div class="heroNote"></div>
     </aside>
   </section>
 
-  <section class="section" id="services">
+  <!-- ===== Services ===== -->
+  <section class="section" id="services" tabindex="-1">
     <h2 class="reveal">What we do</h2>
     <div class="grid">
-      <article class="card svc reveal"><img src="./images/svc-tv.png"><div><h3>TV Wall Mounting</h3><p>Secure brackets, cable tidy, levelling & testing.</p></div></article>
-      <article class="card svc reveal d1"><img src="./images/svc-furniture.jpeg"><div><h3>Furniture Assembly</h3><p>Flat-pack pros for wardrobes, beds and desks.</p></div></article>
-      <article class="card svc reveal d2"><img src="./images/svc-shelves.jpg"><div><h3>Shelves & Mirrors</h3><p>Solid fixings for plasterboard, brick or stud walls.</p></div></article>
-      <article class="card svc reveal"><img src="./images/svc-doors.jpeg"><div><h3>Door & Handle Fixes</h3><p>Hinges, latches, planing, alignment and soft-close.</p></div></article>
-      <article class="card svc reveal d1"><img src="./images/svc-sealant.png"><div><h3>Sealant & Grout</h3><p>Mould-resistant reseal for kitchens & bathrooms.</p></div></article>
-      <article class="card svc reveal d2"><img src="./images/svc-electrical.png"><div><h3>Small Electrical*</h3><p>Like-for-like light fittings, dimmers and sockets.</p></div></article>
+      <article class="card svc reveal"><img src="./images/svc-tv.png" alt=""><div><h3>TV Wall Mounting</h3><p>Secure brackets, cable tidy, levelling & testing.</p></div></article>
+      <article class="card svc reveal d1"><img src="./images/svc-furniture.jpeg" alt=""><div><h3>Furniture Assembly</h3><p>Flat-pack pros for wardrobes, beds and desks.</p></div></article>
+      <article class="card svc reveal d2"><img src="./images/svc-shelves.jpg" alt=""><div><h3>Shelves & Mirrors</h3><p>Solid fixings for plasterboard, brick or stud walls.</p></div></article>
+      <article class="card svc reveal"><img src="./images/svc-doors.jpeg" alt=""><div><h3>Door & Handle Fixes</h3><p>Hinges, latches, planing, alignment and soft-close.</p></div></article>
+      <article class="card svc reveal d1"><img src="./images/svc-sealant.png" alt=""><div><h3>Sealant & Grout</h3><p>Mould-resistant reseal for kitchens & bathrooms.</p></div></article>
+      <article class="card svc reveal d2"><img src="./images/svc-electrical.png" alt=""><div><h3>Small Electrical*</h3><p>Like-for-like light fittings, dimmers and sockets.</p></div></article>
     </div>
   </section>
 
-  <section class="section" id="work">
+  <!-- ===== Our Work ===== -->
+  <section class="section" id="work" tabindex="-1">
     <h2 class="reveal">What we’ve done</h2>
     <div class="gallery" id="gallery">
-      <figure class="tile reveal"><img src="./images/work-1.jpg" data-cap="Wall-mounted TV · Peacehaven"/></figure>
-      <figure class="tile reveal d1"><img src="./images/work-2.jpg" data-cap="Bathroom reseal · Hove"/></figure>
-      <figure class="tile reveal d2"><img src="./images/work-3.jpg" data-cap="Wardrobe assembly · Brighton"/></figure>
+      <figure class="tile reveal"><img src="./images/work-1.jpg" data-cap="Window Washing · Peacehaven" alt=""></figure>
+      <figure class="tile reveal d1"><img src="./images/work-2.jpg" data-cap="Bathroom reseal · Hove" alt=""></figure>
+      <figure class="tile reveal d2"><img src="./images/work-3.jpg" data-cap="Gardening · Brighton" alt=""></figure>
+      <figure class="tile reveal d3"><img src="./images/work-4.jpg" data-cap="Digging · Brighton" alt=""></figure>
+      <figure class="tile reveal d4"><img src="./images/work-5.jpg" data-cap="Landscapping · Brighton" alt=""></figure>
+      <figure class="tile reveal d4"><img src="./images/work-6.jpg" data-cap="Painting · Brighton" alt=""></figure>
     </div>
-    <div class="lightbox" id="lightbox">
-      <div><img class="lb-img" id="lbImg"/><div class="lb-cap" id="lbCap"></div></div>
-    </div>
+    <div class="lightbox" id="lightbox"><div><img class="lb-img" id="lbImg" alt=""><div class="lb-cap" id="lbCap"></div></div></div>
   </section>
 
-  <section class="section" id="reviews">
+  <!-- ===== Reviews ===== -->
+  <section class="section" id="reviews" tabindex="-1">
     <h2 class="reveal">What customers say</h2>
     <div class="testis">
       <article class="card quote reveal"><div class="stars">★★★★★</div><p>“Arrived on time and mounted the TV perfectly.”</p><p class="muted">— Sarah, Peacehaven</p></article>
@@ -148,7 +175,8 @@
     </div>
   </section>
 
-  <section class="section" id="booking">
+  <!-- ===== Booking ===== -->
+  <section class="section" id="booking" tabindex="-1">
     <h2 class="reveal">Book a job</h2>
     <div class="contactGrid">
       <div class="card" style="padding:18px">
@@ -167,12 +195,13 @@
         <h3 style="margin-top:0">Contact</h3>
         <p><strong>Phone:</strong> <a href="tel:+447305848484">+447305848484</a></p>
         <p><strong>Email:</strong> <a href="mailto:hello@ethandman.co.uk">hello@ethandman.co.uk</a></p>
-        <p><strong>WhatsApp:</strong> <a href="https://wa.me/447305848484" target="_blank">Chat now</a></p>
+        <p><strong>WhatsApp:</strong> <a href="https://wa.me/447305848484" target="_blank" rel="noopener">Chat now</a></p>
         <p class="muted">Service area: Peacehaven · Brighton & Hove · Worthing · East Sussex</p>
       </aside>
     </div>
   </section>
 
+  <!-- ===== Footer ===== -->
   <footer class="section">
     <div class="footerGrid">
       <div class="card" style="padding:16px 18px"><h4>Address</h4><p>ET Handman Services<br>2 Lincoln Court, Lincoln Avenue<br>Peacehaven BN10 7FB, UK</p></div>
@@ -182,12 +211,66 @@
   </footer>
 
   <script>
-    const lb=document.getElementById('lightbox'),lbImg=document.getElementById('lbImg'),lbCap=document.getElementById('lbCap');
-    document.getElementById('gallery').addEventListener('click',e=>{const img=e.target.closest('img');if(!img)return;lbImg.src=img.src;lbCap.textContent=img.dataset.cap||'';lb.classList.add('open');});
+    // ===== Lightbox =====
+    const lb=document.getElementById('lightbox'), lbImg=document.getElementById('lbImg'), lbCap=document.getElementById('lbCap');
+    document.getElementById('gallery').addEventListener('click',e=>{
+      const img=e.target.closest('img'); if(!img) return;
+      lbImg.src=img.src; lbCap.textContent=img.dataset.cap||''; lb.classList.add('open');
+    });
     lb.addEventListener('click',()=>lb.classList.remove('open'));
-    window.addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('open')});
-    function fakeSubmit(){const m=document.getElementById('formMsg');m.textContent='Thanks! We\'ll be in touch.';setTimeout(()=>{m.textContent='';document.getElementById('quoteForm').reset();},3000)}
+    window.addEventListener('keydown',e=>{if(e.key==='Escape') lb.classList.remove('open')});
+
+    // ===== Fake submit =====
+    function fakeSubmit(){
+      const m=document.getElementById('formMsg');
+      m.textContent='Thanks! We\'ll be in touch.';
+      setTimeout(()=>{ m.textContent=''; document.getElementById('quoteForm').reset(); },3000);
+    }
+
+    // ===== Year =====
     document.getElementById('year').textContent=new Date().getFullYear();
+
+    // ===== Fixed header offset + smooth nav + scrollspy =====
+    const headerEl = document.getElementById('site-header');
+    function setHeaderOffset(){
+      const h = headerEl.getBoundingClientRect().height;
+      document.body.style.paddingTop = h + 'px';                           // push content below fixed header
+      document.documentElement.style.setProperty('--header-h', (h+8)+'px'); // for scroll-margin
+    }
+    setHeaderOffset();
+    window.addEventListener('resize', setHeaderOffset);
+
+    // Smooth click + focus to section (a11y)
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    navLinks.forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('href');
+        const target = document.querySelector(id);
+        if(!target) return;
+        e.preventDefault();
+        target.scrollIntoView({behavior:'smooth', block:'start'});
+        target.setAttribute('tabindex','-1');
+        target.focus({preventScroll:true});
+      });
+    });
+
+    // Scrollspy active state
+    const sections = [...document.querySelectorAll('.hero, .section')];
+    const linkMap = Object.fromEntries([...navLinks].map(l=>[l.getAttribute('href'), l]));
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(!entry.isIntersecting) return;
+        const id = '#' + (entry.target.id || '');
+        const active = linkMap[id];
+        if(!active) return;
+        navLinks.forEach(l=>l.classList.remove('active'));
+        active.classList.add('active');
+      });
+    }, {
+      rootMargin: `-${getComputedStyle(document.documentElement).getPropertyValue('--header-h')} 0px -60% 0px`,
+      threshold: 0.1
+    });
+    sections.forEach(s=> io.observe(s));
   </script>
 </body>
 </html>
