@@ -19,14 +19,14 @@
       margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,Arial; 
       background: radial-gradient(1200px 700px at 50% 0%, #111827 0%, var(--bg) 55%);
       color:var(--fg); 
-      overflow-x:hidden;
+      overflow:hidden; /* prevent any page scroll */
     }
 
-    .scene{position:relative; min-height:100dvh; width:100%; display:grid; grid-template-rows:auto 1fr auto;}
+    .scene{position:relative; height:100dvh; width:100%; display:grid; grid-template-rows:auto 1fr auto;}
 
     /* Header brand */
     .brand{
-      position:sticky; top:16px; margin-inline:auto; margin-top:16px; z-index:2;
+      position:absolute; top:16px; left:50%; transform:translateX(-50%); z-index:2;
       letter-spacing:.06em; text-transform:uppercase; font-weight:800; font-size:14px; 
       padding:.55rem .9rem; background:var(--glass); border:1px solid rgba(255,255,255,.08); border-radius:9999px; backdrop-filter: blur(6px);
       box-shadow: var(--shadow);
@@ -38,7 +38,7 @@
     @keyframes drift { to { transform: translateY(200vh) translateX(50vw); opacity:.1; } }
 
     /* Stage */
-    .stage{position:relative; width:min(88vw,860px); height:min(68vh,640px); margin-inline:auto; margin-top:6vh; perspective:1400px;}
+    .stage{position:relative; width:min(88vw,860px); height:min(78vh,680px); margin-inline:auto; margin-top:9vh; perspective:1400px;}
 
     .doorframe{position:absolute; inset:0; border-radius:24px; box-shadow: 0 0 0 2px rgba(255,255,255,.08), var(--shadow);
       background: linear-gradient(180deg, #0b1224 0%, #0a0f1e 60%, #07101e 100%);
@@ -75,9 +75,9 @@
     .right .badge{ background: linear-gradient(90deg, rgba(245,158,11,.18), rgba(0,0,0,.2)); }
 
     /* Center logo/instructions */
-    .logo{ position:absolute; top:50%; left:50%; transform: translate(-50%,-50%); text-align:center; user-select:none; pointer-events:none; }
+    .logo{ position:absolute; top:50%; left:50%; transform: translate(-50%,-50%); text-align:center; user-select:none; pointer-events:none; padding:0 16px; }
     .logo h1{ margin:0; font-weight:800; letter-spacing:.01em; font-size: clamp(26px,4.6vw,54px); }
-    .logo p{ margin:.5rem 0 0; opacity:.75; max-width:58ch; }
+    .logo p{ margin:.5rem auto 0; opacity:.8; max-width:60ch; line-height:1.5; }
 
     /* Hover cue */
     .door:hover .left{ transform: perspective(1400px) rotateY(-2deg); }
@@ -90,18 +90,11 @@
     .open-right .right{ transform: rotateY(105deg); }
     .open-right .left{ transform: rotateY(0deg) scale(1.01); }
 
-    /* Contact footer */
-    .contact{ width:min(1000px,92vw); margin:28px auto 48px; display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-    .card{ background:var(--glass); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px 18px; box-shadow: var(--shadow); }
-    .card h3{ margin:0 0 6px; font-size:14px; letter-spacing:.06em; text-transform:uppercase; opacity:.8; }
-    .card p{ margin:.25rem 0 0; }
-    .card a{ color:inherit; text-decoration:none; border-bottom:1px dashed rgba(255,255,255,.35); }
-
-    .hint{ text-align:center; font-size:14px; opacity:.7; margin-top:10px; }
+    /* Hide footer/hints entirely to keep a single, no-scroll section */
+    .hint, .contact { display:none; }
 
     @media (max-width:820px){
-      .stage{ width:min(94vw,760px); height:min(64vh,560px); }
-      .contact{ grid-template-columns:1fr; }
+      .stage{ width:min(94vw,760px); height:min(74vh,680px); margin-top:11vh; }
     }
   </style>
 </head>
@@ -117,7 +110,7 @@
       <div class="doorframe">
         <div class="door" id="door">
           <!-- LEFT = Handman Services -->
-          <div class="leaf left" id="leaf-left" role="button" tabindex="0" aria-label="Open for Handman Services" data-target="/handman.html">
+          <div class="leaf left" id="leaf-left" role="button" tabindex="0" aria-label="Open for Handman Services" data-target="handman.html?from=left">
             <div class="panel"></div>
             <span class="badge">Handman</span>
             <div class="handle" aria-hidden="true"></div>
@@ -128,7 +121,7 @@
           </div>
 
           <!-- RIGHT = Removals Services -->
-          <div class="leaf right" id="leaf-right" role="button" tabindex="0" aria-label="Open for Removals Services" data-target="/removals.html">
+          <div class="leaf right" id="leaf-right" role="button" tabindex="0" aria-label="Open for Removals Services" data-target="removals.html?from=right">
             <div class="panel"></div>
             <span class="badge">Removals</span>
             <div class="handle" aria-hidden="true"></div>
@@ -139,35 +132,22 @@
           </div>
 
           <div class="logo">
-            <h1>Welcome</h1>
-            <p>Open the left door for <strong>Handman</strong> or the right door for <strong>Removals</strong>. Click, tap, or press Enter/Space while focused.</p>
+            <h1>Welcome to ET Handman Services</h1>
+            <p>
+              Open the door you want to access — <strong>Handman</strong> or <strong>Removals</strong>.
+              Psst… look behind the door 👀
+            </p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- CONTACT FOOTER -->
-    <section class="contact" aria-label="Contact details">
-      <div class="card">
-        <h3>Phone</h3>
-        <p><a href="tel:+447000000000">+44 7000 000 000</a></p>
-      </div>
-      <div class="card">
-        <h3>Email</h3>
-        <p><a href="mailto:hello@ethandman.co.uk">hello@ethandman.co.uk</a></p>
-      </div>
-      <div class="card">
-        <h3>Address</h3>
-        <p>ET Handman Services<br/>2 Lincoln Court, Lincoln Avenue<br/>Peacehaven BN10 7FB, UK</p>
-      </div>
-    </section>
-    <div class="hint">Press <kbd>Tab</kbd> to focus a door · <kbd>Enter</kbd> or <kbd>Space</kbd> to open</div>
   </div>
 
   <script>
     // ===== Random stars =====
     const stars = document.getElementById('stars');
-    const starCount = Math.min(120, Math.floor((window.innerWidth*window.innerHeight)/9000));
+    const starCount = Math.min(110, Math.floor((window.innerWidth*window.innerHeight)/11000));
     for(let i=0;i<starCount;i++){
       const s = document.createElement('span');
       const x = Math.random()*100; const y = Math.random()*100;
@@ -214,10 +194,6 @@
 
     // Optional: focus the left leaf initially for keyboard users
     window.setTimeout(()=>left.focus({preventScroll:true}), 400);
-
-    // TODO: Replace with your real routes
-    // left.dataset.target = '/handman.html';
-    // right.dataset.target = '/removals.html';
   </script>
 </body>
 </html>
