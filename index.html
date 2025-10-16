@@ -5,25 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ET Handyman Services | Handyman & Removals in Peacehaven</title>
 
-  <!-- Canonical + favicon (edit on deploy) -->
+  <!-- Core SEO -->
+  <meta name="description" content="Repairs, installations & house/office removals across Peacehaven & Brighton. Fast, friendly, reliable. Call 07305 848484." />
   <link rel="canonical" href="https://your-domain.example/" />
   <link rel="icon" href="/favicon.ico" />
-
-  <!-- Share cards -->
-  <meta name="description" content="Repairs, installations & house/office removals across Peacehaven & Brighton. Fast, friendly, and reliable. Call 07305 848484." />
   <meta property="og:title" content="ET Handyman Services — Handyman & Removals" />
-  <meta property="og:description" content="Repairs, installations & house/office removals across Peacehaven & Brighton. Fast, friendly, and reliable." />
+  <meta property="og:description" content="Repairs, installations & house/office removals across Peacehaven & Brighton." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://your-domain.example/images/social-card.jpg" />
   <meta property="og:url" content="https://your-domain.example/" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Preloads -->
+  <!-- Helpful preloads (safe to remove if not needed) -->
+  <link rel="preload" as="image" href="./images/et-handyman-logo.jpg">
   <link rel="preload" as="image" href="./images/placeholder-hero.jpeg">
   <link rel="preload" as="image" href="./images/removals-hero.jpg">
-  <link rel="preload" as="image" href="./images/et-handyman-logo.jpg">
 
-  <!-- LocalBusiness schema -->
+  <!-- LocalBusiness schema (keep for rich results) -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -46,41 +44,24 @@
 
   <style>
     :root{
-      --bg:#0f172a;      /* slate-900 */
-      --fg:#e5e7eb;      /* gray-200 */
+      --bg:#0f172a; /* slate-900 */
+      --fg:#e5e7eb; /* gray-200 */
       --glass:rgba(255,255,255,.06);
+      --border:rgba(255,255,255,.1);
       --shadow:0 20px 40px rgba(0,0,0,.45);
     }
 
-    html,body{height:100%;}
+    html,body{height:100%}
     body{
-      margin:0;
+      margin:0; color:var(--fg);
       font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,Arial;
-      color:var(--fg);
-      overflow:hidden; /* single-screen hero */
       background: radial-gradient(1200px 700px at 50% 0%, #111827 0%, var(--bg) 55%);
-      position:relative;
+      overflow:hidden; /* single-screen hero */
     }
 
-    /* subtle watermark (remove this block if you don't want the background logo) */
-    body::before{
-      content:"";
-      position:fixed; inset:0;
-      background:url('./images/et-handyman-logo.jpg') center/40% no-repeat;
-      opacity:.08; z-index:0; pointer-events:none;
-      filter:grayscale(100%) brightness(1.9);
-    }
+    .scene{position:relative; height:100dvh; display:grid; grid-template-rows:auto 1fr auto;}
 
-    /* Skip link */
-    .skip{
-      position:absolute; left:-9999px; top:-9999px;
-      background:#111827; color:#fff; padding:.5rem .75rem; border-radius:.5rem;
-    }
-    .skip:focus{ left:16px; top:16px; z-index:50; }
-
-    .scene{position:relative; height:100dvh; display:grid; grid-template-rows:auto 1fr auto; z-index:1;}
-
-    /* Brand chip — top-left, larger logo */
+    /* Brand chip */
     .brand{
       position:absolute; top:20px; left:20px; z-index:3;
       display:inline-flex; align-items:center; gap:12px;
@@ -91,99 +72,51 @@
     }
     .brand-logo{ width:60px; height:auto; object-fit:contain; border-radius:10px; }
 
-    /* Star field */
-    .stars{position:absolute; inset:0; pointer-events:none; opacity:.25;}
-    .stars span{position:absolute; width:2px; height:2px; background:#fff; border-radius:2px; animation:drift linear infinite;}
-    @keyframes drift{to{transform:translateY(200vh) translateX(50vw); opacity:.1;}}
-
     /* Stage */
     .stage{position:relative; width:min(88vw,860px); height:min(78vh,680px); margin-inline:auto; margin-top:9vh; perspective:1400px;}
-    .doorframe{
-      position:absolute; inset:0; border-radius:24px;
-      box-shadow:0 0 0 2px rgba(255,255,255,.08), var(--shadow);
-      background:linear-gradient(180deg,#0b1224 0%,#0a0f1e 60%,#07101e 100%);
-      overflow:hidden;
-    }
+    .doorframe{position:absolute; inset:0; border-radius:24px; box-shadow:0 0 0 2px rgba(255,255,255,.08), var(--shadow); background:linear-gradient(180deg,#0b1224 0%,#0a0f1e 60%,#07101e 100%); overflow:hidden;}
 
-    /* Doors (anchors = real navigation without JS) */
+    /* Doors */
     .door{position:absolute; inset:12px; border-radius:20px; transform-style:preserve-3d; display:flex;}
     .leaf{
       position:relative; flex:1 1 50%; display:block; text-decoration:none; color:inherit;
-      background:#0f172a; border:1px solid rgba(255,255,255,.1);
-      box-shadow:inset 0 0 60px rgba(0,0,0,.45);
+      background:#0f172a; border:1px solid var(--border); cursor:pointer; overflow:hidden;
       transition:transform 1.05s cubic-bezier(.2,.7,.1,1), filter .3s ease;
-      cursor:pointer; overflow:hidden;
+      box-shadow:inset 0 0 60px rgba(0,0,0,.45);
     }
-    .leaf.left { transform-origin:left  center; border-top-left-radius:20px;  border-bottom-left-radius:20px; }
-    .leaf.right{ transform-origin:right center; border-top-right-radius:20px; border-bottom-right-radius:20px; }
+    .leaf.left  { transform-origin:left  center; border-top-left-radius:20px;  border-bottom-left-radius:20px; }
+    .leaf.right { transform-origin:right center; border-top-right-radius:20px; border-bottom-right-radius:20px; }
 
-    .leaf::before{
-      content:""; position:absolute; inset:0;
-      background-position:center; background-size:cover; background-repeat:no-repeat;
-      filter:saturate(1.05) blur(1.2px);
-      transition:transform .8s ease, filter .6s ease;
-    }
+    .leaf::before{content:""; position:absolute; inset:0; background-position:center; background-size:cover; background-repeat:no-repeat; filter:saturate(1.05) blur(1.2px); transition:transform .8s ease, filter .6s ease;}
     .leaf.left::before  { background-image:url('./images/placeholder-hero.jpeg'); }
     .leaf.right::before { background-image:url('./images/removals-hero.jpg'); }
-    .leaf::after{content:""; position:absolute; inset:0;
-      background:radial-gradient(120% 100% at 50% 20%, rgba(0,0,0,.15), rgba(0,0,0,.55));
-    }
-
+    .leaf::after{content:""; position:absolute; inset:0; background:radial-gradient(120% 100% at 50% 20%, rgba(0,0,0,.15), rgba(0,0,0,.55));}
     .leaf:hover{ filter:brightness(1.06); }
     .leaf:hover::before{ transform:scale(1.03); }
 
-    .panel{
-      position:absolute; inset:22px; border-radius:12px;
-      border:1px solid rgba(255,255,255,.08);
-      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.12));
-    }
+    .panel{position:absolute; inset:22px; border-radius:12px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.12));}
 
     /* Handles */
-    .handle-base{
-      position:absolute; top:50%; width:46px; height:46px; border-radius:50%;
-      transform:translateY(-50%); z-index:1;
-      background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.15), rgba(0,0,0,.45));
-      box-shadow:inset 0 0 4px rgba(255,255,255,.25), 0 2px 6px rgba(0,0,0,.5);
-    }
+    .handle-base{ position:absolute; top:50%; width:46px; height:46px; border-radius:50%; transform:translateY(-50%); background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.15), rgba(0,0,0,.45)); box-shadow:inset 0 0 4px rgba(255,255,255,.25), 0 2px 6px rgba(0,0,0,.5); }
     .left .handle-base  { right:23px; }
     .right .handle-base { left:23px;  }
 
-    .handle{
-      position:absolute; top:50%; width:26px; height:26px; border-radius:50%;
-      transform:translateY(-50%); z-index:2;
-      background:radial-gradient(circle at 30% 30%, #ffed9f, #b67c0d 70%, #7a4f00);
-      box-shadow:
-        inset 0 1px 4px rgba(255,255,255,.65),
-        inset 0 -1px 3px rgba(0,0,0,.45),
-        0 3px 8px rgba(0,0,0,.6);
-      transition:transform .2s ease, box-shadow .2s ease;
-    }
+    .handle{ position:absolute; top:50%; width:26px; height:26px; border-radius:50%; transform:translateY(-50%); background:radial-gradient(circle at 30% 30%, #ffed9f, #b67c0d 70%, #7a4f00); box-shadow: inset 0 1px 4px rgba(255,255,255,.65), inset 0 -1px 3px rgba(0,0,0,.45), 0 3px 8px rgba(0,0,0,.6); transition:transform .2s ease, box-shadow .2s ease; }
     .left .handle  { right:32px; }
     .right .handle { left:32px;  }
-    .leaf:hover .handle{
-      transform:translateY(-50%) scale(1.05);
-      box-shadow:
-        0 4px 12px rgba(255,200,80,.5),
-        inset 0 1px 4px rgba(255,255,255,.65),
-        inset 0 -1px 3px rgba(0,0,0,.45);
-    }
+    .leaf:hover .handle{ transform:translateY(-50%) scale(1.05); box-shadow: 0 4px 12px rgba(255,200,80,.5), inset 0 1px 4px rgba(255,255,255,.65), inset 0 -1px 3px rgba(0,0,0,.45); }
 
     /* Labels */
     .label{ position:absolute; left:0; right:0; bottom:24px; text-align:center; z-index:2; }
     .label h2{ margin:0; font-size:clamp(18px,2.3vw,28px); text-shadow:0 2px 10px rgba(0,0,0,.6); }
     .label p { margin:.35rem 0 0; opacity:.9; font-size:13px; text-shadow:0 2px 8px rgba(0,0,0,.6); }
-    .badge{
-      position:absolute; top:16px; right:16px; font-size:12px; opacity:.95;
-      background:rgba(0,0,0,.42); padding:.35rem .6rem; border-radius:9999px;
-      border:1px solid rgba(255,255,255,.1); z-index:2;
-    }
 
     /* Center copy */
-    .logo{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; user-select:none; pointer-events:none; padding:0 16px; z-index:0; }
+    .logo{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; user-select:none; pointer-events:none; padding:0 16px; }
     .logo h1{ margin:0; font-weight:800; letter-spacing:.01em; font-size:clamp(26px,4.6vw,54px); }
     .logo p { margin:.5rem auto 0; opacity:.85; max-width:60ch; line-height:1.5; }
 
-    /* Open animation states */
+    /* Open states */
     .door:hover .left  { transform:perspective(1400px) rotateY(-2deg); }
     .door:hover .right { transform:perspective(1400px) rotateY( 2deg); }
     .open-left  .left  { transform:rotateY(-105deg); }
@@ -194,31 +127,19 @@
     .open-right .right::before{ filter:saturate(1.1) blur(0); }
 
     /* Reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      .leaf, .leaf::before{ transition:none; }
-    }
+    @media (prefers-reduced-motion: reduce){ .leaf, .leaf::before{ transition:none; } }
 
-    /* Footer (contact) */
-    footer{
-      position:absolute; bottom:0; width:100%;
-      background:rgba(0,0,0,.4); backdrop-filter:blur(6px);
-      text-align:center; padding:10px 6px; font-size:14px;
-      border-top:1px solid rgba(255,255,255,.1);
-      letter-spacing:.4px;
-    }
+    /* Footer */
+    footer{ position:absolute; bottom:0; width:100%; background:rgba(0,0,0,.4); backdrop-filter:blur(6px); text-align:center; padding:10px 6px; font-size:14px; border-top:1px solid rgba(255,255,255,.1); letter-spacing:.4px; }
     footer a{ color:#f8fafc; text-decoration:none; border-bottom:1px dashed rgba(255,255,255,.3); }
 
-    @media (max-width:820px){
-      .stage{ width:min(94vw,760px); height:min(74vh,680px); margin-top:11vh; }
-      footer{font-size:13px;}
-      body::before{ background-size:55%; } /* slightly larger watermark on small screens */
-    }
+    @media (max-width:820px){ .stage{ width:min(94vw,760px); height:min(74vh,680px); margin-top:11vh; } footer{font-size:13px;} }
 
-    /* noscript hint */
-    noscript{ position:fixed; bottom:56px; left:50%; transform:translateX(-50%);
-      background:#0b1224; color:#fff; padding:.5rem .75rem; border-radius:.5rem;
-      border:1px solid rgba(255,255,255,.15); font-size:14px; z-index:4;
-    }
+    /* Skip link */
+    .skip{ position:absolute; left:-9999px; top:-9999px; background:#111827; color:#fff; padding:.5rem .75rem; border-radius:.5rem; }
+    .skip:focus{ left:16px; top:16px; z-index:50; }
+
+    noscript{ position:fixed; bottom:56px; left:50%; transform:translateX(-50%); background:#0b1224; color:#fff; padding:.5rem .75rem; border-radius:.5rem; border:1px solid rgba(255,255,255,.15); font-size:14px; }
   </style>
 </head>
 <body>
@@ -230,15 +151,12 @@
       <span>ET Handyman Services</span>
     </div>
 
-    <div class="stars" aria-hidden="true" id="stars"></div>
-
     <div class="stage">
       <div class="doorframe">
         <div class="door" id="door">
           <!-- LEFT = Handyman -->
-          <a class="leaf left" id="leaf-left" href="handman.html" aria-label="Open for Handyman Services" aria-expanded="false" data-target="handman.html?from=left">
+          <a class="leaf left" id="leaf-left" href="handman.html" aria-label="Open for Handyman Services" aria-expanded="false">
             <div class="panel"></div>
-            <span class="badge">Handyman</span>
             <div class="handle-base" aria-hidden="true"></div>
             <div class="handle" aria-hidden="true"></div>
             <div class="label">
@@ -248,9 +166,8 @@
           </a>
 
           <!-- RIGHT = Removals -->
-          <a class="leaf right" id="leaf-right" href="removals.html" aria-label="Open for Removals Services" aria-expanded="false" data-target="removals.html?from=right">
+          <a class="leaf right" id="leaf-right" href="removals.html" aria-label="Open for Removals Services" aria-expanded="false">
             <div class="panel"></div>
-            <span class="badge">Removals</span>
             <div class="handle-base" aria-hidden="true"></div>
             <div class="handle" aria-hidden="true"></div>
             <div class="label">
@@ -261,7 +178,7 @@
 
           <div class="logo">
             <h1>Welcome to ET Handyman Services</h1>
-            <p>Open the door you want to access — <strong>Handyman</strong> or <strong>Removals</strong>. Psst… look behind the door 👀</p>
+            <p>Open the door you want to access — <strong>Handyman</strong> or <strong>Removals</strong>.</p>
           </div>
         </div>
       </div>
@@ -277,24 +194,10 @@
   <noscript>JavaScript is off — links still work, but animations are disabled.</noscript>
 
   <script>
-    // Stars
-    const stars=document.getElementById('stars');
-    const starCount=Math.min(110,Math.floor((window.innerWidth*window.innerHeight)/11000));
-    for(let i=0;i<starCount;i++){
-      const s=document.createElement('span');
-      s.style.left=Math.random()*100+'vw';
-      s.style.top=Math.random()*100+'vh';
-      s.style.opacity=(0.25+Math.random()*0.6).toFixed(2);
-      s.style.animationDuration=(18+Math.random()*22)+'s';
-      s.style.animationDelay=(-Math.random()*20)+'s';
-      s.style.transform=`scale(${0.6+Math.random()*1.6})`;
-      stars.appendChild(s);
-    }
-
     // Door logic (progressive enhancement)
-    const door=document.getElementById('door');
-    const left=document.getElementById('leaf-left');
-    const right=document.getElementById('leaf-right');
+    const door = document.getElementById('door');
+    const left = document.getElementById('leaf-left');
+    const right = document.getElementById('leaf-right');
 
     function openLeaf(which, url){
       if(which==='left'){
@@ -306,13 +209,13 @@
         door.classList.add('open-right');
         right.setAttribute('aria-expanded','true');
       }
-      setTimeout(()=>{ window.location.href=url; }, 420);
+      setTimeout(()=>{ window.location.href=url; }, 360);
     }
 
-    left.addEventListener('click', (e)=>{ e.preventDefault(); openLeaf('left',  left.dataset.target  || left.href);  });
-    right.addEventListener('click',(e)=>{ e.preventDefault(); openLeaf('right', right.dataset.target || right.href); });
+    left.addEventListener('click', (e)=>{ e.preventDefault(); openLeaf('left',  left.href);  });
+    right.addEventListener('click',(e)=>{ e.preventDefault(); openLeaf('right', right.href); });
 
-    // Keyboard: anchors already handle Enter; we just give initial focus
+    // Initial focus for keyboard users
     setTimeout(()=>left.focus({preventScroll:true}),400);
   </script>
 </body>
