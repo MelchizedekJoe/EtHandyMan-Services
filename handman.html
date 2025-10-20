@@ -1,392 +1,327 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ET Handyman Services | Brighton & Peacehaven</title>
-  <meta name="description" content="ET Handyman Services — roofing repairs, tiling & patios, resin driveways, landscaping, painting & decorating, carpets and small plumbing across Brighton, Hove & Peacehaven."/>
-  <link rel="preload" as="image" href="./images/et-handyman-logo.jpg" />
-  <style>
-    :root{
-      --bg:#0f172a; --panel:#0b1220; --fg:#e5e7eb; --muted:#a7b0c0;
-      --border:rgba(255,255,255,.09); --glass:rgba(255,255,255,.06);
-      --shadow:0 16px 32px rgba(0,0,0,.45); --header-h:64px; --accent:#38bdf8;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,Arial;
-      background:radial-gradient(1200px 700px at 50% 0%, #111827 0%, var(--bg) 55%);
-      color:var(--fg);
-      -webkit-text-size-adjust:100%;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ET Handyman Services | Brighton & Peacehaven</title>
+<meta name="description" content="ET Handyman Services — roofing, tiling, driveways, landscaping, painting, flooring and plumbing across Brighton, Hove & Peacehaven."/>
+<link rel="preload" as="image" href="./images/et-handyman-logo.jpg" />
+<style>
+:root{
+  --bg:#0f172a; --panel:#0b1220; --fg:#e5e7eb; --muted:#a7b0c0;
+  --border:rgba(255,255,255,.09); --glass:rgba(255,255,255,.06);
+  --shadow:0 16px 32px rgba(0,0,0,.45); --accent:#38bdf8; --header-h:64px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,Arial;
+  background:radial-gradient(1200px 700px at 50% 0%, #111827 0%, var(--bg) 55%);
+  color:var(--fg);
+  -webkit-text-size-adjust:100%;
+}
 
-    /* ===== Header / Nav ===== */
-    .header{
-      position:fixed; inset:0 0 auto 0; z-index:1000;
-      background:rgba(7,12,24,.78); backdrop-filter:blur(10px);
-      border-bottom:1px solid var(--border);
-    }
-    .wrap{ max-width:1200px; margin:auto; padding:10px 16px; display:flex; align-items:center; gap:12px }
-    .brand{ display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.02em; font-size:16px }
-    .brand-logo{ width:28px; height:28px; object-fit:contain; border-radius:6px; box-shadow:0 0 0 1px rgba(255,255,255,.15), 0 4px 10px rgba(0,0,0,.35) }
-    nav{ display:flex; align-items:center; gap:8px }
-    nav a{ color:inherit; text-decoration:none; margin:0 8px; border-bottom:2px solid transparent; padding:6px 0; transition:border-color .2s ease; line-height:1 }
-    nav a:hover{ border-bottom-color:rgba(255,255,255,.35) }
-    nav a.active{ border-bottom-color:rgba(255,255,255,.75) }
-    .spacer{ flex:1 }
-    .cta{ display:inline-flex; align-items:center; gap:8px; padding:.55rem .9rem; border-radius:9999px; border:1px solid var(--border); background:var(--glass); color:inherit; text-decoration:none }
+/* ===== Header ===== */
+.header{
+  position:fixed; inset:0 0 auto 0; z-index:1000;
+  background:rgba(7,12,24,.78); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.wrap{max-width:1200px;margin:auto;padding:10px 16px;display:flex;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px;letter-spacing:.02em}
+.brand-logo{width:28px;height:28px;object-fit:contain;border-radius:6px;box-shadow:0 0 0 1px rgba(255,255,255,.15),0 4px 10px rgba(0,0,0,.35)}
+nav{display:flex;align-items:center;gap:8px}
+nav a{color:inherit;text-decoration:none;margin:0 8px;padding:6px 0;border-bottom:2px solid transparent;transition:.2s}
+nav a:hover{border-bottom-color:rgba(255,255,255,.35)}
+nav a.active{border-bottom-color:rgba(255,255,255,.75)}
+.spacer{flex:1}
+.cta{display:inline-flex;align-items:center;gap:8px;padding:.55rem .9rem;border-radius:9999px;border:1px solid var(--border);background:var(--glass);text-decoration:none;color:inherit}
+.menu-btn{display:none;border:1px solid var(--border);background:var(--glass);border-radius:10px;padding:.5rem .7rem;cursor:pointer}
+.menu-btn svg{width:22px;height:22px}
 
-    /* Mobile menu button */
-    .menu-btn{
-      display:none; border:1px solid var(--border); background:var(--glass); color:inherit;
-      border-radius:10px; padding:.5rem .7rem; line-height:0; cursor:pointer;
-    }
-    .menu-btn svg{ width:22px; height:22px; display:block }
+/* ===== Layout ===== */
+.hero,.section{scroll-margin-top:calc(var(--header-h) + 10px)}
+.section{max-width:1200px;margin:40px auto;padding:0 16px}
+.section h2{margin:0 0 8px;font-size:clamp(22px,3.6vw,34px)}
+.muted{color:var(--muted);margin:0 0 18px}
 
-    /* Mobile nav panel */
-    @media (max-width:900px){
-      .menu-btn{ display:inline-flex }
-      nav{
-        position:fixed; top:var(--header-h); left:0; right:0;
-        background:rgba(7,12,24,.98); backdrop-filter:blur(10px);
-        border-bottom:1px solid var(--border); transform:translateY(-16px);
-        opacity:0; pointer-events:none; transition:opacity .2s ease, transform .2s ease;
-        padding:10px 16px; flex-direction:column; align-items:flex-start; gap:0;
-      }
-      nav a{ padding:12px 4px; margin:0 }
-      nav.open{ opacity:1; pointer-events:auto; transform:translateY(0) }
-      .cta{ display:none } /* hide header CTA on mobile (we add sticky bar) */
-      :root{ --header-h:60px }
-    }
+/* ===== Hero ===== */
+.hero{max-width:1200px;margin:24px auto;padding:0 16px;display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:center}
+.hero h1{font-size:clamp(26px,5vw,46px);margin-bottom:.6rem}
+.hero p{color:var(--muted);margin-bottom:1rem}
+.buttons{display:flex;gap:10px;flex-wrap:wrap}
+.btn{padding:.78rem 1rem;border-radius:12px;border:1px solid var(--border);text-decoration:none;color:inherit;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.25));box-shadow:var(--shadow)}
+.btn.primary{background:linear-gradient(180deg,rgba(56,189,248,.25),rgba(0,0,0,.25));border-color:rgba(56,189,248,.35)}
+.heroCard{background:var(--glass);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.heroImg{width:100%;height:320px;object-fit:cover;background:#1f2937;display:block}
 
-    /* Layout helpers */
-    .hero,.section{ scroll-margin-top:calc(var(--header-h) + 10px); position:relative; z-index:0; }
-    .section{ max-width:1200px; margin:40px auto; padding:0 16px }
-    .section h2{ margin:0 0 8px; font-size:clamp(22px,3.6vw,34px) }
-    .muted{ color:var(--muted); margin:0 0 18px }
+/* ===== Services ===== */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{background:var(--glass);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow)}
+.svc{padding:14px;display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center}
+.svc img{width:72px;height:72px;border-radius:12px;object-fit:cover;background:#1f2937}
+.svc h3{margin:0 0 4px;font-size:18px}
+.svc p{margin:0;color:var(--muted);font-size:14px}
 
-    /* ===== Hero ===== */
-    .hero{
-      max-width:1200px; margin:24px auto; padding:0 16px;
-      display:grid; grid-template-columns:1.1fr .9fr; gap:20px; align-items:center
-    }
-    .hero h1{ margin:.2rem 0 .6rem; font-size:clamp(26px,5vw,46px) }
-    .hero p{ margin:0 0 1rem; color:var(--muted) }
-    .buttons{ display:flex; gap:10px; flex-wrap:wrap }
-    .btn{ padding:.78rem 1rem; border-radius:12px; border:1px solid var(--border); text-decoration:none; color:inherit; background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.25)); box-shadow:var(--shadow) }
-    .btn.primary{ background:linear-gradient(180deg, rgba(56,189,248,.25), rgba(0,0,0,.25)); border-color:rgba(56,189,248,.35) }
-    .heroCard{ background:var(--glass); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); overflow:hidden }
-    .heroImg{ width:100%; height:320px; object-fit:cover; background:#1f2937; display:block }
+/* ===== Gallery ===== */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tile{border-radius:14px;overflow:hidden;border:1px solid var(--border);cursor:pointer}
+.tile img{width:100%;height:220px;object-fit:cover;transition:transform .25s ease}
+.tile:hover img{transform:scale(1.03)}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;place-items:center;z-index:50}
+.lightbox.open{display:grid}
+.lb-img{max-width:92vw;max-height:80vh;border-radius:16px;border:1px solid var(--border);box-shadow:var(--shadow)}
+.lb-cap{margin-top:10px;color:#cbd5e1;text-align:center}
 
-    /* ===== Services ===== */
-    .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px }
-    .card{ background:var(--glass); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow) }
-    .svc{ padding:14px; display:grid; grid-template-columns:72px 1fr; gap:12px; align-items:center }
-    .svc img{ width:72px; height:72px; border-radius:12px; object-fit:cover; background:#1f2937 }
-    .svc h3{ margin:0 0 4px; font-size:18px }
-    .svc p{ margin:0; color:var(--muted); font-size:14px }
+/* ===== Reviews ===== */
+.testis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.quote{padding:14px}
+.stars{color:#fbbf24}
 
-    /* ===== Gallery (lightbox) ===== */
-    .gallery{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px }
-    .tile{ position:relative; border-radius:14px; overflow:hidden; border:1px solid var(--border); cursor:pointer }
-    .tile img{ width:100%; height:220px; object-fit:cover; display:block; background:#111827; transition:transform .25s ease }
-    .tile:hover img{ transform:scale(1.03) }
-    .lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.9); display:none; place-items:center; z-index:50 }
-    .lightbox.open{ display:grid }
-    .lb-img{ max-width:92vw; max-height:80vh; border-radius:16px; border:1px solid var(--border); box-shadow:var(--shadow) }
-    .lb-cap{ margin-top:10px; color:#cbd5e1; text-align:center }
+/* ===== Booking ===== */
+.contactGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:block;margin-bottom:6px;font-size:13px;color:var(--muted)}
+input,select,textarea{
+  width:100%;padding:.8rem .9rem;border-radius:12px;border:1px solid var(--border);
+  background:rgba(255,255,255,.04);color:inherit;font-size:16px;
+}
+textarea{min-height:120px;grid-column:1/-1}
+.actions{display:flex;gap:10px;align-items:center}
 
-    /* ===== Reviews ===== */
-    .testis{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px }
-    .quote{ padding:14px }
-    .stars{ color:#fbbf24 }
+/* ===== Footer ===== */
+footer{margin:46px 0 70px}
+.footerGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card p{margin:.2rem 0}
+.card a{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.35)}
 
-    /* ===== Booking ===== */
-    .contactGrid{ display:grid; grid-template-columns:1fr 1fr; gap:14px }
-    form{ display:grid; grid-template-columns:1fr 1fr; gap:12px }
-    label{ display:block; margin:0 0 6px; font-size:13px; color:var(--muted) }
-    input,select,textarea{
-      width:100%; padding:.8rem .9rem; border-radius:12px; border:1px solid var(--border);
-      background:rgba(255,255,255,.04); color:inherit; font-size:16px; /* 16px prevents iOS zoom */
-    }
-    textarea{ min-height:120px; grid-column:1/-1 }
-    .actions{ display:flex; gap:10px; align-items:center }
+/* ===== Sticky mobile bar ===== */
+.mobile-bar{
+  position:fixed;inset:auto 0 0 0;z-index:999;
+  background:rgba(7,12,24,.96);border-top:1px solid var(--border);
+  padding:10px 12px;gap:10px;display:none;
+}
+.mobile-bar a{
+  flex:1;text-align:center;text-decoration:none;color:#0b1220;
+  background:var(--accent);border-radius:12px;padding:.9rem 1rem;
+  font-weight:700;box-shadow:0 6px 20px rgba(56,189,248,.25)
+}
+.mobile-bar a.secondary{
+  background:rgba(255,255,255,.08);color:var(--fg);
+  border:1px solid var(--border);box-shadow:none
+}
 
-    /* ===== Footer ===== */
-    footer{ margin:46px 0 70px }
-    .footerGrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px }
-    .card p{ margin:.2rem 0 }
-    .card a{ color:inherit; text-decoration:none; border-bottom:1px dashed rgba(255,255,255,.35) }
-
-    /* ===== Sticky mobile action bar ===== */
-    .mobile-bar{
-      position:fixed; inset:auto 0 0 0; display:none; z-index:999;
-      background:rgba(7,12,24,.96); border-top:1px solid var(--border);
-      padding:10px 12px; display:flex; gap:10px;
-    }
-    .mobile-bar a{ flex:1; text-align:center; text-decoration:none; color:#0b1220; background:var(--accent);
-      border-radius:12px; padding:.9rem 1rem; font-weight:700; box-shadow:0 6px 20px rgba(56,189,248,.25) }
-    .mobile-bar a.secondary{ background:rgba(255,255,255,.08); color:var(--fg); border:1px solid var(--border); box-shadow:none }
-
-    /* ===== Responsive breakpoints ===== */
-    @media (max-width:1100px){
-      .hero{grid-template-columns:1fr}
-    }
-    @media (max-width:900px){
-      .grid{grid-template-columns:repeat(2,1fr)}
-      .gallery{grid-template-columns:repeat(2,1fr)}
-      .testis{grid-template-columns:repeat(2,1fr)}
-      .contactGrid{grid-template-columns:1fr}
-      form{grid-template-columns:1fr}
-      textarea{grid-column:auto}
-      .footerGrid{grid-template-columns:1fr}
-      .heroImg{height:260px}
-    }
-    @media (max-width:600px){
-      .grid{grid-template-columns:1fr}
-      .gallery{grid-template-columns:1fr}
-      .testis{grid-template-columns:1fr}
-      .tile img{height:200px}
-      .mobile-bar{display:flex}
-    }
-
-    /* Prefer-reduced-motion: tone down effects */
-    @media (prefers-reduced-motion:reduce){
-      *{scroll-behavior:auto}
-      .tile img{transition:none}
-    }
-  </style>
+/* ===== Responsive ===== */
+@media (max-width:1100px){.hero{grid-template-columns:1fr}}
+@media (max-width:900px){
+  .menu-btn{display:inline-flex}
+  nav{
+    position:fixed;top:var(--header-h);left:0;right:0;
+    background:rgba(7,12,24,.98);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);flex-direction:column;
+    align-items:flex-start;gap:0;padding:10px 16px;
+    transform:translateY(-16px);opacity:0;pointer-events:none;
+    transition:opacity .2s ease,transform .2s ease;
+  }
+  nav a{padding:12px 4px;margin:0}
+  nav.open{opacity:1;pointer-events:auto;transform:translateY(0)}
+  .cta{display:none}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .gallery{grid-template-columns:repeat(2,1fr)}
+  .testis{grid-template-columns:repeat(2,1fr)}
+  .contactGrid{grid-template-columns:1fr}
+  form{grid-template-columns:1fr}
+  .footerGrid{grid-template-columns:1fr}
+  .heroImg{height:260px}
+}
+@media (max-width:600px){
+  .grid,.gallery,.testis{grid-template-columns:1fr}
+  .tile img{height:200px}
+  .mobile-bar{display:flex}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}.tile img{transition:none}}
+</style>
 </head>
 <body>
-  <!-- ===== Fixed Header ===== -->
-  <header class="header" id="site-header">
-    <div class="wrap">
-      <button class="menu-btn" aria-label="Toggle menu" aria-controls="mainnav" aria-expanded="false">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      </button>
-      <div class="brand">
-        <img class="brand-logo" src="./images/et-handyman-logo.jpg" alt="ET Handyman Services logo" width="28" height="28">
-        ET Handyman Services
-      </div>
-      <div class="spacer"></div>
-      <nav id="mainnav" aria-label="Main navigation">
-        <a href="#services">Services</a>
-        <a href="#work">Our Work</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#booking">Book</a>
-      </nav>
-      <a class="cta" href="https://wa.me/447305848484" target="_blank" rel="noopener">WhatsApp</a>
+<header class="header" id="site-header">
+  <div class="wrap">
+    <button class="menu-btn" aria-label="Toggle menu" aria-controls="mainnav" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <div class="brand">
+      <img class="brand-logo" src="./images/et-handyman-logo.jpg" alt="ET Handyman logo" width="28" height="28">
+      ET Handyman Services
     </div>
-  </header>
-
-  <!-- ===== Hero ===== -->
-  <section class="hero" id="top">
-    <div>
-      <h1>Trusted Handyman Services in Brighton & Peacehaven</h1>
-      <p>Roofing, tiling, landscaping, resin driveways, decorating and more — reliable, insured, and friendly.</p>
-      <div class="buttons">
-        <a class="btn primary" href="#booking">Book a Job</a>
-        <a class="btn" href="#work">View Past Work</a>
-      </div>
-    </div>
-    <aside class="heroCard">
-      <img class="heroImg" src="./images/Tiling%209.jpg" alt="Outdoor porcelain tiling project" loading="lazy" width="1200" height="800"/>
-    </aside>
-  </section>
-
-  <!-- ===== Services ===== -->
-  <section class="section" id="services" tabindex="-1">
-    <h2>What we do</h2>
-    <p class="muted">Professional workmanship across exterior and interior projects.</p>
-    <div class="grid">
-      <article class="card svc">
-        <img src="./images/Roofing%20repairs.jpg" alt="Roof tile and flashing repair" loading="lazy" width="240" height="240">
-        <div><h3>Roofing & Repairs</h3><p>Tile/slate replacement, valleys & lead flashing, underlay & battens, gutters and leak fixes.</p></div>
-      </article>
-
-      <article class="card svc">
-        <img src="./images/Tiling7.jpg" alt="Commercial entrance tiling" loading="lazy" width="240" height="240">
-        <div><h3>Tiling & Paving</h3><p>Indoor/outdoor tiling, patios & steps, porcelain/ceramic, grouting and levelling.</p></div>
-      </article>
-
-      <article class="card svc">
-        <img src="./images/Grandting3.jpg" alt="Completed resin-bound driveway" loading="lazy" width="240" height="240">
-        <div><h3>Driveways & Resin</h3><p>Resin-bound finishes, bases, edging and drainage for durable, low-maintenance driveways.</p></div>
-      </article>
-
-      <article class="card svc">
-        <img src="./images/Landscaping3.jpg" alt="Garden path with gravel beds" loading="lazy" width="240" height="240">
-        <div><h3>Landscaping & Groundworks</h3><p>Garden clearance, paths & edging, gravel/turf, levels and makeovers.</p></div>
-      </article>
-
-      <article class="card svc">
-        <img src="./images/painting.jpg" alt="Interior painting" loading="lazy" width="240" height="240">
-        <div><h3>Painting & Decorating</h3><p>Walls, ceilings and woodwork with careful prep and tidy finishes.</p></div>
-      </article>
-
-      <article class="card svc">
-        <img src="./images/Carpeting.jpg" alt="Carpet fitting in living room" loading="lazy" width="240" height="240">
-        <div><h3>Carpets & Flooring</h3><p>Carpet supply & fit, underlay, trimming and room restoration.</p></div>
-      </article>
-    </div>
-  </section>
-
-  <!-- ===== Our Work ===== -->
-  <section class="section" id="work" tabindex="-1">
-    <h2>What we’ve done</h2>
-    <div class="gallery" id="gallery">
-      <figure class="tile"><img src="./images/Clearing.jpg" data-cap="Garden clearance — Brighton" alt="Garden clearance" loading="lazy" width="1000" height="700"></figure>
-      <figure class="tile"><img src="./images/Landscaping2.jpg" data-cap="New path & gravel beds — Peacehaven" alt="Path and gravel beds" loading="lazy" width="1000" height="700"></figure>
-      <figure class="tile"><img src="./images/Tiling%203.jpg" data-cap="Outdoor porcelain patio — Hove" alt="Porcelain patio tiling" loading="lazy" width="1000" height="700"></figure>
-      <figure class="tile"><img src="./images/Roof%20repairs.jpg" data-cap="Lead valley & tile repair — Brighton" alt="Roof valley repair" loading="lazy" width="1000" height="700"></figure>
-      <figure class="tile"><img src="./images/Grandting3.jpg" data-cap="Resin-bound driveway — East Sussex" alt="Resin driveway finish" loading="lazy" width="1000" height="700"></figure>
-      <figure class="tile"><img src="./images/Marbling.jpg" data-cap="Patterned interior tiling — Brighton" alt="Patterned tiling" loading="lazy" width="1000" height="700"></figure>
-    </div>
-    <div class="lightbox" id="lightbox"><div><img class="lb-img" id="lbImg" alt=""><div class="lb-cap" id="lbCap"></div></div></div>
-  </section>
-
-  <!-- ===== Reviews ===== -->
-  <section class="section" id="reviews" tabindex="-1">
-    <h2>What customers say</h2>
-    <div class="testis">
-      <article class="card quote"><div class="stars">★★★★★</div><p>“ET Handyman Services are the best in Brighton — great job and great service. 100%.”</p><p class="muted">— Mohammed Asif, Peacehaven</p></article>
-      <article class="card quote"><div class="stars">★★★★★</div><p>“Amazing service — painting, decorating, tiling, gardening. ❤️”</p><p class="muted">— Amir Ali, Brighton</p></article>
-      <article class="card quote"><div class="stars">★★★★★</div><p>“Friendly and professional — will book again.”</p><p class="muted">— Louise, Hove</p></article>
-    </div>
-  </section>
-
-  <!-- ===== Booking ===== -->
-  <section class="section" id="booking" tabindex="-1">
-    <h2>Book a job</h2>
-    <div class="contactGrid">
-      <div class="card" style="padding:16px">
-        <form id="quoteForm" onsubmit="event.preventDefault(); fakeSubmit();">
-          <div>
-            <label>Full name</label>
-            <input required placeholder="Jane Doe" autocomplete="name" inputmode="text"/>
-          </div>
-          <div>
-            <label>Phone</label>
-            <input required placeholder="+44" autocomplete="tel" inputmode="tel"/>
-          </div>
-          <div>
-            <label>Email</label>
-            <input type="email" placeholder="you@example.com" autocomplete="email"/>
-          </div>
-          <div>
-            <label>Postcode</label>
-            <input required placeholder="BN10 7FB" inputmode="text" autocomplete="postal-code"/>
-          </div>
-          <div>
-            <label>Service</label>
-            <select required>
-              <option>Roofing & Repairs</option>
-              <option>Tiling & Paving</option>
-              <option>Driveways & Resin</option>
-              <option>Landscaping & Groundworks</option>
-              <option>Painting & Decorating</option>
-              <option>Carpets & Flooring</option>
-              <option>Small Plumbing / Bathroom</option>
-            </select>
-          </div>
-          <div>
-            <label>Preferred date</label>
-            <input type="date"/>
-          </div>
-          <div style="grid-column:1/-1">
-            <label>Job details</label>
-            <textarea placeholder="Describe the job, access, parking, links to photos, etc."></textarea>
-          </div>
-          <div class="actions" style="grid-column:1/-1">
-            <button class="btn primary" type="submit">Request quote</button>
-            <span class="muted" id="formMsg" style="font-size:12px"></span>
-          </div>
-        </form>
-      </div>
-      <aside class="card" style="padding:16px">
-        <h3 style="margin-top:0">Contact</h3>
-        <p><strong>Phone:</strong> <a href="tel:+447305848484">+44 7305 848484</a></p>
-        <p><strong>Email:</strong> <a href="mailto:ely@etremovals.com">ely@etremovals.com</a></p>
-        <p><strong>WhatsApp:</strong> <a href="https://wa.me/447305848484" target="_blank" rel="noopener">Chat now</a></p>
-        <p class="muted">Service area: Peacehaven · Brighton & Hove · East Sussex</p>
-      </aside>
-    </div>
-  </section>
-
-  <!-- ===== Footer ===== -->
-  <footer class="section">
-    <div class="footerGrid">
-      <div class="card" style="padding:14px 16px"><h4>Address</h4><p>ET Handyman Services<br>2 Lincoln Court, Lincoln Avenue<br>Peacehaven BN10 7FB, UK</p></div>
-      <div class="card" style="padding:14px 16px"><h4>Hours</h4><p>Mon–Sat: 8:00–19:00<br>Sun: By appointment</p></div>
-      <div class="card" style="padding:14px 16px"><h4>Legal</h4><p class="muted" style="font-size:12px">© <span id="year"></span> ET Handyman Services</p></div>
-    </div>
-  </footer>
-
-  <!-- Sticky mobile action bar -->
-  <div class="mobile-bar" role="group" aria-label="Quick actions">
-    <a href="tel:+447305848484">Call</a>
-    <a class="secondary" href="https://wa.me/447305848484" target="_blank" rel="noopener">WhatsApp</a>
+    <div class="spacer"></div>
+    <nav id="mainnav" aria-label="Main navigation">
+      <a href="#services">Services</a>
+      <a href="#work">Our Work</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#booking">Book</a>
+    </nav>
+    <a class="cta" href="https://wa.me/447305848484" target="_blank" rel="noopener">WhatsApp</a>
   </div>
+</header>
 
-  <script>
-    // ===== Fixed header offset =====
-    const headerEl = document.getElementById('site-header');
-    function setHeaderOffset(){
-      const h = headerEl.getBoundingClientRect().height;
-      document.documentElement.style.setProperty('--header-h', (h+6)+'px');
-      document.body.style.paddingTop = h + 'px';
-    }
-    setHeaderOffset();
-    addEventListener('resize', setHeaderOffset);
+<!-- Hero -->
+<section class="hero" id="top">
+  <div>
+    <h1>Trusted Handyman Services in Brighton & Peacehaven</h1>
+    <p>Roofing, tiling, landscaping, resin driveways, decorating and more — reliable, insured, and friendly.</p>
+    <div class="buttons">
+      <a class="btn primary" href="#booking">Book a Job</a>
+      <a class="btn" href="#work">View Past Work</a>
+    </div>
+  </div>
+  <aside class="heroCard">
+    <img class="heroImg" src="./images/Tiling%209.jpg" alt="Outdoor porcelain tiling project" loading="lazy" width="1200" height="800">
+  </aside>
+</section>
 
-    // ===== Year =====
-    document.getElementById('year').textContent=new Date().getFullYear();
+<!-- Services -->
+<section class="section" id="services" tabindex="-1">
+  <h2>What we do</h2>
+  <p class="muted">Professional workmanship across exterior and interior projects.</p>
+  <div class="grid">
+    <article class="card svc"><img src="./images/Roofing repairs.jpg" alt="Roof repair" loading="lazy" width="240" height="240"><div><h3>Roofing & Repairs</h3><p>Tile/slate replacement, valleys & lead flashing, underlay & battens, gutters and leaks.</p></div></article>
+    <article class="card svc"><img src="./images/Tiling7.jpg" alt="Tiling" loading="lazy" width="240" height="240"><div><h3>Tiling & Paving</h3><p>Indoor/outdoor tiling, patios & steps, porcelain/ceramic, grouting and levelling.</p></div></article>
+    <article class="card svc"><img src="./images/Grandting3.jpg" alt="Driveway" loading="lazy" width="240" height="240"><div><h3>Driveways & Resin</h3><p>Resin-bound finishes, edging and drainage for durable, low-maintenance driveways.</p></div></article>
+    <article class="card svc"><img src="./images/Landscaping3.jpg" alt="Landscaping" loading="lazy" width="240" height="240"><div><h3>Landscaping & Groundworks</h3><p>Garden clearance, paths & edging, gravel/turf, levels and makeovers.</p></div></article>
+    <article class="card svc"><img src="./images/painting.jpg" alt="Painting" loading="lazy" width="240" height="240"><div><h3>Painting & Decorating</h3><p>Walls, ceilings and woodwork with careful prep and tidy finishes.</p></div></article>
+    <article class="card svc"><img src="./images/Carpeting.jpg" alt="Carpet" loading="lazy" width="240" height="240"><div><h3>Carpets & Flooring</h3><p>Carpet supply & fit, underlay, trimming and room restoration.</p></div></article>
+  </div>
+</section>
 
-    // ===== Mobile nav toggle =====
-    const menuBtn = document.querySelector('.menu-btn');
-    const nav = document.getElementById('mainnav');
-    menuBtn.addEventListener('click', ()=>{
-      const open = nav.classList.toggle('open');
-      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    // Close nav when clicking a link (mobile)
-    nav.addEventListener('click', e=>{
-      if(e.target.tagName === 'A' && nav.classList.contains('open')){
-        nav.classList.remove('open');
-        menuBtn.setAttribute('aria-expanded','false');
-      }
-    });
+<!-- Work Gallery -->
+<section class="section" id="work" tabindex="-1">
+  <h2>What we’ve done</h2>
+  <div class="gallery" id="gallery">
+    <figure class="tile"><img src="./images/Clearing.jpg" data-cap="Garden clearance — Brighton" alt="Garden clearance" loading="lazy" width="1000" height="700"></figure>
+    <figure class="tile"><img src="./images/Landscaping2.jpg" data-cap="Path & gravel — Peacehaven" alt="Path and gravel beds" loading="lazy" width="1000" height="700"></figure>
+    <figure class="tile"><img src="./images/tiling7.jpg" data-cap="Porcelain patio — Hove" alt="Porcelain patio tiling" loading="lazy" width="1000" height="700"></figure>
+    <figure class="tile"><img src="./images/Roof repairs.jpg" data-cap="Roof valley repair — Brighton" alt="Roof valley repair" loading="lazy" width="1000" height="700"></figure>
+    <figure class="tile"><img src="./images/Grandting3.jpg" data-cap="Resin driveway — East Sussex" alt="Resin driveway finish" loading="lazy" width="1000" height="700"></figure>
+    <figure class="tile"><img src="./images/Marbling.jpg" data-cap="Patterned tiling — Brighton" alt="Patterned tiling" loading="lazy" width="1000" height="700"></figure>
+  </div>
+  <div class="lightbox" id="lightbox"><div><img class="lb-img" id="lbImg" alt=""><div class="lb-cap" id="lbCap"></div></div></div>
+</section>
 
-    // ===== Lightbox =====
-    const lb=document.getElementById('lightbox'), lbImg=document.getElementById('lbImg'), lbCap=document.getElementById('lbCap');
-    document.getElementById('gallery').addEventListener('click',e=>{
-      const img=e.target.closest('img'); if(!img) return;
-      lbImg.src=img.src; lbCap.textContent=img.dataset.cap||''; lb.classList.add('open');
-    });
-    lb.addEventListener('click',()=>lb.classList.remove('open'));
-    addEventListener('keydown',e=>{if(e.key==='Escape') lb.classList.remove('open')});
+<!-- Reviews -->
+<section class="section" id="reviews" tabindex="-1">
+  <h2>What customers say</h2>
+  <div class="testis">
+    <article class="card quote"><div class="stars">★★★★★</div><p>“ET Handyman Services are the best in Brighton — great job and great service.”</p><p class="muted">— Mohammed Asif, Peacehaven</p></article>
+    <article class="card quote"><div class="stars">★★★★★</div><p>“Amazing service — painting, decorating, tiling, gardening. ❤️”</p><p class="muted">— Amir Ali, Brighton</p></article>
+    <article class="card quote"><div class="stars">★★★★★</div><p>“Friendly and professional — will book again.”</p><p class="muted">— Louise, Hove</p></article>
+  </div>
+</section>
 
-    // ===== Fake submit (replace with real endpoint) =====
-    function fakeSubmit(){
-      const m=document.getElementById('formMsg');
-      m.textContent='Thanks! We\'ll be in touch.';
-      setTimeout(()=>{ m.textContent=''; document.getElementById('quoteForm').reset(); },2500);
-    }
+<!-- Booking -->
+<section class="section" id="booking" tabindex="-1">
+  <h2>Book a job</h2>
+  <div class="contactGrid">
+    <div class="card" style="padding:16px">
+      <form id="quoteForm" onsubmit="event.preventDefault(); fakeSubmit();">
+        <div><label>Full name</label><input required placeholder="Jane Doe" autocomplete="name"></div>
+        <div><label>Phone</label><input required placeholder="+44" autocomplete="tel"></div>
+        <div><label>Email</label><input type="email" placeholder="you@example.com" autocomplete="email"></div>
+        <div><label>Postcode</label><input required placeholder="BN10 7FB" autocomplete="postal-code"></div>
+        <div><label>Service</label>
+          <select required>
+            <option>Roofing & Repairs</option>
+            <option>Tiling & Paving</option>
+            <option>Driveways & Resin</option>
+            <option>Landscaping & Groundworks</option>
+            <option>Painting & Decorating</option>
+            <option>Carpets & Flooring</option>
+            <option>Small Plumbing / Bathroom</option>
+          </select></div>
+        <div><label>Preferred date</label><input type="date"></div>
+        <div style="grid-column:1/-1"><label>Job details</label><textarea placeholder="Describe the job, access, parking, links to photos, etc."></textarea></div>
+        <div class="actions" style="grid-column:1/-1"><button class="btn primary" type="submit">Request quote</button><span class="muted" id="formMsg" style="font-size:12px"></span></div>
+      </form>
+    </div>
+    <aside class="card" style="padding:16px">
+      <h3 style="margin-top:0">Contact</h3>
+      <p><strong>Phone:</strong> <a href="tel:+447305848484">+44 7305 848484</a></p>
+      <p><strong>Email:</strong> <a href="mailto:ely@etremovals.com">ely@etremovals.com</a></p>
+      <p><strong>WhatsApp:</strong> <a href="https://wa.me/447305848484" target="_blank" rel="noopener">Chat now</a></p>
+      <p class="muted">Service area: Peacehaven · Brighton & Hove · East Sussex</p>
+    </aside>
+  </div>
+</section>
 
-    // ===== Simple scrollspy =====
-    const links=[...document.querySelectorAll('nav a[href^="#"]')];
-    const map=Object.fromEntries(links.map(l=>[l.getAttribute('href'),l]));
-    const sections=[...document.querySelectorAll('.hero,.section')];
-    const io=new IntersectionObserver((es)=>{
-      es.forEach(e=>{
-        if(!e.isIntersecting) return;
-        const id='#'+(e.target.id||''); const a=map[id]; if(!a) return;
-        links.forEach(x=>x.classList.remove('active')); a.classList.add('active');
-      });
-    },{rootMargin:`-${getComputedStyle(document.documentElement).getPropertyValue('--header-h')} 0px -60% 0px`,threshold:.1});
-    sections.forEach(s=>io.observe(s));
-  </script>
+<!-- Footer -->
+<footer class="section">
+  <div class="footerGrid">
+    <div class="card" style="padding:14px 16px"><h4>Address</h4><p>ET Handyman Services<br>2 Lincoln Court, Lincoln Avenue<br>Peacehaven BN10 7FB, UK</p></div>
+    <div class="card" style="padding:14px 16px"><h4>Hours</h4><p>Mon–Sat: 8:00–19:00<br>Sun: By appointment</p></div>
+    <div class="card" style="padding:14px 16px"><h4>Legal</h4><p class="muted" style="font-size:12px">© <span id="year"></span> ET Handyman Services</p></div>
+  </div>
+</footer>
+
+<!-- Sticky mobile action bar (phones only) -->
+<div class="mobile-bar" role="group" aria-label="Quick actions">
+  <a href="tel:+447305848484">Call</a>
+  <a class="secondary" href="https://wa.me/447305848484" target="_blank" rel="noopener">WhatsApp</a>
+</div>
+
+<script>
+// Header offset
+const headerEl = document.getElementById('site-header');
+function setHeaderOffset(){
+  const h = headerEl.getBoundingClientRect().height;
+  document.documentElement.style.setProperty('--header-h', (h+6)+'px');
+  document.body.style.paddingTop = h + 'px';
+}
+setHeaderOffset();
+addEventListener('resize', setHeaderOffset);
+
+// Year
+document.getElementById('year').textContent=new Date().getFullYear();
+
+// Mobile nav toggle
+const menuBtn = document.querySelector('.menu-btn');
+const nav = document.getElementById('mainnav');
+menuBtn.addEventListener('click', ()=>{
+  const open = nav.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+nav.addEventListener('click', e=>{
+  if(e.target.tagName === 'A' && nav.classList.contains('open')){
+    nav.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded','false');
+  }
+});
+
+// Lightbox
+const lb=document.getElementById('lightbox'), lbImg=document.getElementById('lbImg'), lbCap=document.getElementById('lbCap');
+document.getElementById('gallery').addEventListener('click',e=>{
+  const img=e.target.closest('img'); if(!img) return;
+  lbImg.src=img.src; lbCap.textContent=img.dataset.cap||''; lb.classList.add('open');
+});
+lb.addEventListener('click',()=>lb.classList.remove('open'));
+addEventListener('keydown',e=>{if(e.key==='Escape') lb.classList.remove('open')});
+
+// Fake submit (replace with real endpoint)
+function fakeSubmit(){
+  const m=document.getElementById('formMsg');
+  m.textContent='Thanks! We\'ll be in touch.';
+  setTimeout(()=>{ m.textContent=''; document.getElementById('quoteForm').reset(); },2500);
+}
+
+// Scrollspy
+const links=[...document.querySelectorAll('nav a[href^="#"]')];
+const map=Object.fromEntries(links.map(l=>[l.getAttribute('href'),l]));
+const sections=[...document.querySelectorAll('.hero,.section')];
+const io=new IntersectionObserver((es)=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting) return;
+    const id='#'+(e.target.id||''); const a=map[id]; if(!a) return;
+    links.forEach(x=>x.classList.remove('active')); a.classList.add('active');
+  });
+},{rootMargin:`-${getComputedStyle(document.documentElement).getPropertyValue('--header-h')} 0px -60% 0px`,threshold:.1});
+sections.forEach(s=>io.observe(s));
+</script>
 </body>
 </html>
