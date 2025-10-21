@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ET Handman Services | Removals & Man with a Van</title>
+  <title>ET Removal Services | Removals & Man with a Van</title>
   <meta name="description" content="Local & reliable removals: flats, houses, offices. Packing, loading, transport and setup. Get a quote fast."/>
+  <link rel="preload" as="image" href="./images/et-removal-logo.jpg" />
   <style>
     :root{ --bg:#0f172a; --fg:#e5e7eb; --muted:#a7b0c0; --accent:#f59e0b; --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.09); --shadow:0 16px 32px rgba(0,0,0,.45); --header-h:72px; }
     *{box-sizing:border-box}
@@ -15,12 +16,16 @@
     /* Header */
     .header{ position:fixed; inset:0 0 auto 0; z-index:1000; background:rgba(7,12,24,.78); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); }
     .wrap{ max-width:1200px; margin:auto; padding:12px 18px; display:flex; align-items:center; gap:16px }
-    .brand{ font-weight:800; letter-spacing:.02em }
-    nav a{ color:inherit; text-decoration:none; margin:0 10px; border-bottom:2px solid transparent; padding-bottom:2px; transition:border-color .2s ease }
+    .brand{ display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.02em }
+    .brand-logo{ width:28px; height:28px; object-fit:contain; border-radius:6px; box-shadow:0 0 0 1px rgba(255,255,255,.15), 0 4px 10px rgba(0,0,0,.35) }
+    nav{ display:flex; align-items:center; gap:8px }
+    nav a{ color:inherit; text-decoration:none; margin:0 10px; border-bottom:2px solid transparent; padding:6px 0; transition:border-color .2s ease }
     nav a:hover{ border-bottom-color:rgba(255,255,255,.35) }
     nav a.active{ border-bottom-color:rgba(255,255,255,.7) }
     .spacer{ flex:1 }
     .cta{ display:inline-flex; align-items:center; gap:8px; padding:.55rem .9rem; border-radius:9999px; border:1px solid var(--border); background:var(--glass); color:inherit; text-decoration:none }
+    .menu-btn{ display:none; border:1px solid var(--border); background:var(--glass); border-radius:10px; padding:.5rem .7rem; cursor:pointer }
+    .menu-btn svg{ width:22px; height:22px }
 
     /* Sections */
     .hero,.section{ scroll-margin-top:var(--header-h); position:relative; z-index:0; }
@@ -67,6 +72,12 @@
     .num{ font-size:28px; font-weight:800 }
     .small{ font-size:12px; color:var(--muted) }
 
+    /* Reviews */
+    .rating-badge{display:inline-flex;align-items:center;gap:8px;padding:.45rem .7rem;border:1px solid var(--border);border-radius:9999px;background:var(--glass);font-size:13px}
+    .testis{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:12px }
+    .quote{ padding:16px }
+    .stars{ color:var(--accent) }
+
     /* Booking */
     .contactGrid{ display:grid; grid-template-columns:1fr 1fr; gap:16px }
     form{ display:grid; grid-template-columns:1fr 1fr; gap:12px }
@@ -80,22 +91,73 @@
     .card p{ margin:.2rem 0 }
     .card a{ color:inherit; text-decoration:none; border-bottom:1px dashed rgba(255,255,255,.35) }
 
+    /* Sticky mobile bar (phones only) */
+    .mobile-bar{
+      position:fixed; inset:auto 0 0 0; z-index:999;
+      background:rgba(7,12,24,.96); border-top:1px solid var(--border);
+      padding:10px 12px; gap:10px; display:none;
+    }
+    .mobile-bar a{
+      flex:1; text-align:center; text-decoration:none; color:#0b1220;
+      background:var(--accent); border-radius:12px; padding:.9rem 1rem;
+      font-weight:700; box-shadow:0 6px 20px rgba(245,158,11,.25)
+    }
+    .mobile-bar a.secondary{
+      background:rgba(255,255,255,.08); color:var(--fg);
+      border:1px solid var(--border); box-shadow:none
+    }
+
     /* Responsive */
-    @media (max-width:1100px){ .hero{grid-template-columns:1fr} .grid,.gallery,.pricing,.contactGrid,form,.footerGrid{grid-template-columns:1fr} .usp{grid-template-columns:1fr 1fr} }
+    @media (max-width:1100px){
+      .hero{grid-template-columns:1fr}
+      .grid,.gallery,.pricing,.contactGrid,form,.footerGrid{grid-template-columns:1fr}
+      .usp{grid-template-columns:1fr 1fr}
+      .testis{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:900px){
+      .menu-btn{display:inline-flex}
+      nav{
+        position:fixed; top:var(--header-h); left:0; right:0;
+        background:rgba(7,12,24,.98); backdrop-filter:blur(10px);
+        border-bottom:1px solid var(--border); flex-direction:column;
+        align-items:flex-start; gap:0; padding:10px 16px;
+        transform:translateY(-16px); opacity:0; pointer-events:none;
+        transition:opacity .2s ease, transform .2s ease;
+      }
+      nav a{padding:12px 4px; margin:0}
+      nav.open{opacity:1; pointer-events:auto; transform:translateY(0)}
+      .cta{display:none} /* hide header CTAs on mobile; use sticky bar */
+      .heroImg{height:260px}
+    }
+    @media (max-width:600px){
+      .mobile-bar{display:flex}
+      .tile img{height:200px}
+      .testis{grid-template-columns:1fr}
+    }
+    @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}.tile img{transition:none}}
   </style>
 </head>
 <body>
   <!-- Header -->
   <header class="header" id="site-header">
     <div class="wrap">
-      <div class="brand">ET Handman Services</div>
-      <nav aria-label="Main navigation">
+      <button class="menu-btn" aria-label="Toggle menu" aria-controls="mainnav" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="brand">
+        <img class="brand-logo" src="./images/et-removal-logo.jpg" alt="ET Removal Services logo" width="28" height="28">
+        ET Removal Services
+      </div>
+      <div class="spacer"></div>
+      <nav id="mainnav" aria-label="Main navigation">
         <a href="#services">Services</a>
         <a href="#work">Our Work</a>
         <a href="#pricing">Pricing</a>
+        <a href="#reviews">Reviews</a>
         <a href="#booking">Book</a>
       </nav>
-      <div class="spacer"></div>
+      <!-- Desktop CTAs -->
+      <a class="cta" href="https://www.facebook.com/p/E-T-Removal-Services-LTD-100087564645827/" target="_blank" rel="noopener" aria-label="Visit our Facebook page">Facebook</a>
       <a class="cta" href="https://wa.me/447305848484" target="_blank" rel="noopener" aria-label="WhatsApp us">WhatsApp</a>
     </div>
   </header>
@@ -161,6 +223,32 @@
     </div>
   </section>
 
+  <!-- Reviews -->
+  <section class="section" id="reviews" tabindex="-1">
+    <h2>What customers say</h2>
+    <p class="rating-badge">⭐ 98% recommend <span class="muted">· 34 Facebook reviews</span></p>
+    <div class="testis">
+      <!-- Featured review (from Facebook) -->
+      <article class="card quote">
+        <div class="stars">★★★★★</div>
+        <p>“Absolutely wonderful. Ely and the team moved our three bed house today for us and can’t rate or thank them highly enough. So professional, kind, caring and lovely. Will definitely use again and wouldn’t hesitate to recommend. Thank you guys for making the day stress-free and smooth. Legends.”</p>
+        <p class="muted">— <strong>Sam Elp</strong>, 30 Dec 2024</p>
+      </article>
+      <!-- Add two shorter supporting snippets -->
+      <article class="card quote">
+        <div class="stars">★★★★★</div>
+        <p>“Outstanding — organised, friendly, affordable. Really pleased I picked this company. Will definitely use again.”</p>
+        <p class="muted">— <strong>Nick Mollings</strong>, 18 May 2024</p>
+      </article>
+      <article class="card quote">
+        <div class="stars">★★★★★</div>
+        <p>“Ely & Zack worked so hard for my house move. Fast, reliable and polite. Hired them again for a garage clearance. Thanks!”</p>
+        <p class="muted">— <strong>Emma Wakefield</strong>, 8 Nov 2023</p>
+      </article>
+    </div>
+    <p class="muted" style="margin-top:12px">Read more on <a href="https://www.facebook.com/p/E-T-Removal-Services-LTD-100087564645827/" target="_blank" rel="noopener">our Facebook page</a>.</p>
+  </section>
+
   <!-- Booking -->
   <section class="section" id="booking" tabindex="-1">
     <h2>Get a removals quote</h2>
@@ -202,6 +290,7 @@
         <p><strong>Phone:</strong> <a href="tel:+447305848484">+44 7305 848484</a></p>
         <p><strong>Email:</strong> <a href="mailto:ely@etremovals.com">ely@etremovals.com</a></p>
         <p><strong>WhatsApp:</strong> <a href="https://wa.me/447305848484" target="_blank" rel="noopener">Chat now</a></p>
+        <p><strong>Facebook:</strong> <a href="https://www.facebook.com/p/E-T-Removal-Services-LTD-100087564645827/" target="_blank" rel="noopener">Visit our Facebook</a></p>
         <p class="muted">Service area: Peacehaven · Brighton & Hove · Worthing · East Sussex</p>
       </aside>
     </div>
@@ -210,11 +299,17 @@
   <!-- Footer -->
   <footer class="section" aria-label="Footer">
     <div class="footerGrid">
-      <div class="card" style="padding:16px 18px"><h4 style="margin:0 0 6px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;opacity:.8">Address</h4><p>ET Handman Services<br>2 Lincoln Court, Lincoln Avenue<br>Peacehaven BN10 7FB, UK</p></div>
+      <div class="card" style="padding:16px 18px"><h4 style="margin:0 0 6px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;opacity:.8">Address</h4><p>ET Removal Services<br>2 Lincoln Court, Lincoln Avenue<br>Peacehaven BN10 7FB, UK</p></div>
       <div class="card" style="padding:16px 18px"><h4 style="margin:0 0 6px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;opacity:.8">Hours</h4><p>Mon–Sat: 8:00–19:00<br>Sun: By appointment</p></div>
-      <div class="card" style="padding:16px 18px"><h4 style="margin:0 0 6px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;opacity:.8">Legal</h4><p class="muted small">© <span id="year"></span> ET Handman Services</p></div>
+      <div class="card" style="padding:16px 18px"><h4 style="margin:0 0 6px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;opacity:.8">Legal</h4><p class="muted small">© <span id="year"></span> ET Removal Services</p></div>
     </div>
   </footer>
+
+  <!-- Sticky mobile action bar (phones only) -->
+  <div class="mobile-bar" role="group" aria-label="Quick actions">
+    <a href="tel:+447305848484">Call</a>
+    <a class="secondary" href="https://wa.me/447305848484" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
 
   <script>
     // Year
@@ -229,6 +324,20 @@
     }
     setHeaderOffset();
     addEventListener('resize', setHeaderOffset);
+
+    // Mobile nav toggle
+    const menuBtn = document.querySelector('.menu-btn');
+    const nav = document.getElementById('mainnav');
+    menuBtn.addEventListener('click', ()=>{
+      const open = nav.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    nav.addEventListener('click', e=>{
+      if(e.target.tagName === 'A' && nav.classList.contains('open')){
+        nav.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded','false');
+      }
+    });
 
     // Smooth scroll + focus
     const navLinks = document.querySelectorAll('nav a[href^="#"]');
