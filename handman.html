@@ -269,6 +269,43 @@ footer{margin:46px 0 70px}
   <a href="tel:+447305848484">Call</a>
   <a class="secondary" href="https://wa.me/447305848484" target="_blank" rel="noopener">WhatsApp</a>
 </div>
+<!-- Floating Home Button -->
+<a href="index.html" class="home-btn" aria-label="Go back to home">
+  <svg viewBox="0 0 24 24" fill="none">
+    <path d="M3 11l9-8 9 8v10a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-6H9v6a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V11z" 
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</a>
+
+<style>
+.home-btn {
+  position: fixed;
+  bottom: 80px;
+  left: 16px;
+  width: 48px;
+  height: 48px;
+  background: var(--accent);
+  color: #0b1220;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 20px rgba(56,189,248,.35);
+  text-decoration: none;
+  z-index: 1000;
+  transition: transform .2s ease, background .2s ease;
+}
+.home-btn:hover {
+  transform: scale(1.1);
+  background: rgba(56,189,248,.85);
+}
+.home-btn svg {
+  width: 24px;
+  height: 24px;
+}
+@media (max-width:600px) {
+  .home-btn { bottom: 100px; left: 12px; width: 44px; height: 44px; }
+}
+</style>
 
 <script>
 // Header offset
@@ -326,6 +363,7 @@ const io=new IntersectionObserver((es)=>{
   });
 },{rootMargin:`-${getComputedStyle(document.documentElement).getPropertyValue('--header-h')} 0px -60% 0px`,threshold:.1});
 sections.forEach(s=>io.observe(s));
+
 </script>
 </body>
 </html>
