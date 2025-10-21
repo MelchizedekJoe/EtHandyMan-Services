@@ -17,9 +17,9 @@
   <meta name="twitter:card" content="summary_large_image" />
 
   <!-- Helpful preloads (safe to remove if not needed) -->
-  <link rel="preload" as="image" href="./images/et-services-logo.png">
-  <link rel="preload" as="image" href="./images/placeholder-hero1.jpg">
-  <link rel="preload" as="image" href="./images/removals-hero.jpg">
+  <link rel="preload" as="image" href="./images/et-services-logo.png" imagesizes="60px" />
+  <link rel="preload" as="image" href="./images/placeholder-hero1.jpg" />
+  <link rel="preload" as="image" href="./images/removals-hero.jpg" />
 
   <!-- LocalBusiness schema (keep for rich results) -->
   <script type="application/ld+json">
@@ -49,6 +49,8 @@
       --glass:rgba(255,255,255,.06);
       --border:rgba(255,255,255,.1);
       --shadow:0 20px 40px rgba(0,0,0,.45);
+      --radius:24px;
+      --safe-vh:100svh; /* modern mobile-safe vh */
     }
 
     html,body{height:100%}
@@ -56,90 +58,170 @@
       margin:0; color:var(--fg);
       font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,Arial;
       background: radial-gradient(1200px 700px at 50% 0%, #111827 0%, var(--bg) 55%);
-      overflow:hidden; /* single-screen hero */
+      /* allow scroll on small screens, avoid “trapped” view */
+      overflow:auto;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .scene{position:relative; height:100dvh; display:grid; grid-template-rows:auto 1fr auto;}
+    .scene{
+      position:relative;
+      min-height:var(--safe-vh);
+      min-height:100dvh; /* fallback */
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+    }
 
     /* Brand chip */
     .brand{
-      position:absolute; top:20px; left:20px; z-index:3;
+      position:absolute; top:16px; left:16px; z-index:3;
       display:inline-flex; align-items:center; gap:12px;
       letter-spacing:.06em; text-transform:uppercase; font-weight:800; font-size:15px;
-      padding:.6rem 1rem; background:var(--glass);
+      padding:.55rem .9rem; background:var(--glass);
       border:1px solid rgba(255,255,255,.08); border-radius:9999px;
       backdrop-filter:blur(6px); box-shadow:var(--shadow);
     }
-    .brand-logo{ width:60px; height:auto; object-fit:contain; border-radius:10px; }
+    .brand-logo{ width:56px; height:auto; object-fit:contain; border-radius:10px; }
 
     /* Stage */
-    .stage{position:relative; width:min(88vw,860px); height:min(78vh,680px); margin-inline:auto; margin-top:9vh; perspective:1400px;}
-    .doorframe{position:absolute; inset:0; border-radius:24px; box-shadow:0 0 0 2px rgba(255,255,255,.08), var(--shadow); background:linear-gradient(180deg,#0b1224 0%,#0a0f1e 60%,#07101e 100%); overflow:hidden;}
+    .stage{
+      position:relative;
+      width:min(92vw,860px);
+      margin:12vh auto 0;
+      perspective:1400px;
+    }
 
-    /* Doors */
-    .door{position:absolute; inset:12px; border-radius:20px; transform-style:preserve-3d; display:flex;}
+    .doorframe{
+      position:relative;
+      border-radius:var(--radius);
+      box-shadow:0 0 0 2px rgba(255,255,255,.08), var(--shadow);
+      background:linear-gradient(180deg,#0b1224 0%,#0a0f1e 60%,#07101e 100%);
+      overflow:hidden;
+    }
+
+    /* Doors container */
+    .door{ position:relative; display:flex; gap:12px; padding:12px; }
+
     .leaf{
       position:relative; flex:1 1 50%; display:block; text-decoration:none; color:inherit;
       background:#0f172a; border:1px solid var(--border); cursor:pointer; overflow:hidden;
       transition:transform 1.05s cubic-bezier(.2,.7,.1,1), filter .3s ease;
       box-shadow:inset 0 0 60px rgba(0,0,0,.45);
+      border-radius:calc(var(--radius) - 6px);
+      min-height:340px; /* gives a good tap area on mobile */
+      touch-action:manipulation;
     }
-    .leaf.left  { transform-origin:left  center; border-top-left-radius:20px;  border-bottom-left-radius:20px; }
-    .leaf.right { transform-origin:right center; border-top-right-radius:20px; border-bottom-right-radius:20px; }
 
-    .leaf::before{content:""; position:absolute; inset:0; background-position:center; background-size:cover; background-repeat:no-repeat; filter:saturate(1.05) blur(1.2px); transition:transform .8s ease, filter .6s ease;}
+    /* Image layers */
+    .leaf::before{
+      content:""; position:absolute; inset:0;
+      background-position:center; background-size:cover; background-repeat:no-repeat;
+      filter:saturate(1.05) blur(1.2px); transition:transform .8s ease, filter .6s ease;
+      will-change:transform;
+    }
     .leaf.left::before  { background-image:url('./images/placeholder-hero1.jpg'); }
     .leaf.right::before { background-image:url('./images/removals-hero.jpg'); }
     .leaf::after{content:""; position:absolute; inset:0; background:radial-gradient(120% 100% at 50% 20%, rgba(0,0,0,.15), rgba(0,0,0,.55));}
+
     .leaf:hover{ filter:brightness(1.06); }
     .leaf:hover::before{ transform:scale(1.03); }
 
-    .panel{position:absolute; inset:22px; border-radius:12px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.12));}
+    /* Sub-panels */
+    .panel{position:absolute; inset:16px; border-radius:12px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.12));}
 
-    /* Handles */
+    /* Handles (kept for desktop flair, hidden on compact) */
     .handle-base{ position:absolute; top:50%; width:46px; height:46px; border-radius:50%; transform:translateY(-50%); background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.15), rgba(0,0,0,.45)); box-shadow:inset 0 0 4px rgba(255,255,255,.25), 0 2px 6px rgba(0,0,0,.5); }
-    .left .handle-base  { right:23px; }
-    .right .handle-base { left:23px;  }
-
     .handle{ position:absolute; top:50%; width:26px; height:26px; border-radius:50%; transform:translateY(-50%); background:radial-gradient(circle at 30% 30%, #ffed9f, #b67c0d 70%, #7a4f00); box-shadow: inset 0 1px 4px rgba(255,255,255,.65), inset 0 -1px 3px rgba(0,0,0,.45), 0 3px 8px rgba(0,0,0,.6); transition:transform .2s ease, box-shadow .2s ease; }
-    .left .handle  { right:32px; }
-    .right .handle { left:32px;  }
+    .left .handle-base  { right:23px; }  .right .handle-base { left:23px;  }
+    .left .handle  { right:32px; }       .right .handle { left:32px;  }
     .leaf:hover .handle{ transform:translateY(-50%) scale(1.05); box-shadow: 0 4px 12px rgba(255,200,80,.5), inset 0 1px 4px rgba(255,255,255,.65), inset 0 -1px 3px rgba(0,0,0,.45); }
 
     /* Labels */
-    .label{ position:absolute; left:0; right:0; bottom:24px; text-align:center; z-index:2; }
-    .label h2{ margin:0; font-size:clamp(18px,2.3vw,28px); text-shadow:0 2px 10px rgba(0,0,0,.6); }
-    .label p { margin:.35rem 0 0; opacity:.9; font-size:13px; text-shadow:0 2px 8px rgba(0,0,0,.6); }
+    .label{ position:absolute; left:0; right:0; bottom:20px; text-align:center; z-index:2; padding:0 12px; }
+    .label h2{ margin:0; font-size:clamp(18px,4.5vw,28px); text-shadow:0 2px 10px rgba(0,0,0,.6); line-height:1.2; }
+    .label p { margin:.4rem auto 0; opacity:.9; font-size:clamp(13px,3.5vw,14px); max-width:36ch; text-shadow:0 2px 8px rgba(0,0,0,.6); }
 
     /* Center copy */
-    .logo{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; user-select:none; pointer-events:none; padding:0 16px; }
-    .logo h1{ margin:0; font-weight:800; letter-spacing:.01em; font-size:clamp(26px,4.6vw,54px); }
-    .logo p { margin:.5rem auto 0; opacity:.85; max-width:60ch; line-height:1.5; }
+    .logo{ position:relative; text-align:center; user-select:none; pointer-events:none; padding:20px 16px 8px; }
+    .logo h1{ margin:0; font-weight:800; letter-spacing:.01em; font-size:clamp(24px,6vw,48px); }
+    .logo p { margin:.5rem auto 0; opacity:.85; max-width:60ch; line-height:1.5; font-size:clamp(14px,3.8vw,16px); }
 
-    /* Open states */
+    /* Desktop “opening” effect */
+    .door.open-left  .left  { transform:perspective(1400px) rotateY(-105deg); }
+    .door.open-left  .right { transform:perspective(1400px) rotateY(0) scale(1.01); }
+    .door.open-right .right { transform:perspective(1400px) rotateY(105deg); }
+    .door.open-right .left  { transform:perspective(1400px) rotateY(0) scale(1.01); }
     .door:hover .left  { transform:perspective(1400px) rotateY(-2deg); }
     .door:hover .right { transform:perspective(1400px) rotateY( 2deg); }
-    .open-left  .left  { transform:rotateY(-105deg); }
-    .open-left  .right { transform:rotateY(0) scale(1.01); }
-    .open-right .right { transform:rotateY(105deg); }
-    .open-right .left  { transform:rotateY(0) scale(1.01); }
     .open-left  .left::before,
     .open-right .right::before{ filter:saturate(1.1) blur(0); }
 
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce){ .leaf, .leaf::before{ transition:none; } }
-
     /* Footer */
-    footer{ position:absolute; bottom:0; width:100%; background:rgba(0,0,0,.4); backdrop-filter:blur(6px); text-align:center; padding:10px 6px; font-size:14px; border-top:1px solid rgba(255,255,255,.1); letter-spacing:.4px; }
+    footer{
+      position:relative;
+      margin-top:16px;
+      width:100%;
+      background:rgba(0,0,0,.4);
+      backdrop-filter:blur(6px);
+      text-align:center;
+      padding:12px 8px;
+      font-size:14px;
+      border-top:1px solid rgba(255,255,255,.1);
+      letter-spacing:.2px;
+    }
     footer a{ color:#f8fafc; text-decoration:none; border-bottom:1px dashed rgba(255,255,255,.3); }
 
-    @media (max-width:820px){ .stage{ width:min(94vw,760px); height:min(74vh,680px); margin-top:11vh; } footer{font-size:13px;} }
-
     /* Skip link */
-    .skip{ position:absolute; left:-9999px; top:-9999px; background:#111827; color:#fff; padding:.5rem .75rem; border-radius:.5rem; }
+    .skip{ position:absolute; left:-9999px; top:-9999px; background:#111827; color:#fff; padding:.6rem .8rem; border-radius:.5rem; }
     .skip:focus{ left:16px; top:16px; z-index:50; }
 
-    noscript{ position:fixed; bottom:56px; left:50%; transform:translateX(-50%); background:#0b1224; color:#fff; padding:.5rem .75rem; border-radius:.5rem; border:1px solid rgba(255,255,255,.15); font-size:14px; }
+    noscript{
+      position:fixed; bottom:56px; left:50%; transform:translateX(-50%);
+      background:#0b1224; color:#fff; padding:.5rem .75rem; border-radius:.5rem;
+      border:1px solid rgba(255,255,255,.15); font-size:14px;
+    }
+
+    /* =========================
+       MOBILE LAYOUT (<= 768px)
+       ========================= */
+    @media (max-width: 768px){
+      .brand{ top:12px; left:12px; font-size:13px; }
+      .brand-logo{ width:48px; }
+
+      .stage{ width:min(96vw,760px); margin:10vh auto 0; perspective:none; }
+
+      .doorframe{ border-radius:16px; }
+      .door{
+        display:grid;
+        grid-template-columns:1fr;
+        gap:10px;
+        padding:10px;
+      }
+
+      /* Turn the “doors” into stacked cards for easy taps */
+      .leaf{
+        min-height:180px;
+        border-radius:14px;
+        transform:none !important; /* no 3D on mobile */
+      }
+      .leaf::before{ filter:saturate(1.05) blur(.8px); }
+      .handle-base, .handle{ display:none; } /* simpler UI on phones */
+
+      .logo{ padding:16px 12px 4px; }
+      .label{ bottom:16px; }
+      footer{ font-size:13px; padding:12px; }
+    }
+
+    /* TINY HANDSETS (<= 380px) */
+    @media (max-width: 380px){
+      .logo h1{ font-size:22px; }
+      .leaf{ min-height:160px; }
+      .label p{ font-size:12px; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .leaf, .leaf::before, .door{ transition:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -147,16 +229,21 @@
 
   <div class="scene" aria-label="ET Services. Choose a service by opening a door leaf.">
     <div class="brand">
-      <img src="./images/et-services-logo.png" alt="ET Services" class="brand-logo">
+      <img src="./images/et-services-logo.png" alt="ET Services" class="brand-logo" loading="lazy" decoding="async">
       <span>ET Services</span>
     </div>
 
     <div class="stage">
       <div class="doorframe">
+        <div class="logo">
+          <h1>Welcome to ET Services</h1>
+          <p>Tap a service to continue — <strong>Handyman</strong> or <strong>Removals</strong>.</p>
+        </div>
+
         <div class="door" id="door">
           <!-- LEFT = Handyman -->
-          <a class="leaf left" id="leaf-left" href="handman.html" aria-label="Open for Handyman Services" aria-expanded="false">
-            <div class="panel"></div>
+          <a class="leaf left" id="leaf-left" href="handman.html" aria-label="Go to Handyman Services" aria-expanded="false">
+            <div class="panel" aria-hidden="true"></div>
             <div class="handle-base" aria-hidden="true"></div>
             <div class="handle" aria-hidden="true"></div>
             <div class="label">
@@ -166,8 +253,8 @@
           </a>
 
           <!-- RIGHT = Removals -->
-          <a class="leaf right" id="leaf-right" href="removals.html" aria-label="Open for Removals Services" aria-expanded="false">
-            <div class="panel"></div>
+          <a class="leaf right" id="leaf-right" href="removals.html" aria-label="Go to Removals Services" aria-expanded="false">
+            <div class="panel" aria-hidden="true"></div>
             <div class="handle-base" aria-hidden="true"></div>
             <div class="handle" aria-hidden="true"></div>
             <div class="label">
@@ -175,17 +262,12 @@
               <p>Home & office moves with care 📦</p>
             </div>
           </a>
-
-          <div class="logo">
-            <h1>Welcome to ET Services</h1>
-            <p>Open the door you want to access — <strong>Handyman Services</strong> or <strong>Removal Services</strong>.</p>
-          </div>
         </div>
       </div>
     </div>
 
     <footer id="footer">
-      📞 <a href="tel:+447305848484">07305 848484</a> |
+      📞 <a href="tel:+447305848484" rel="nofollow">07305 848484</a> |
       ✉️ <a href="mailto:ely@etremovals.com">ely@etremovals.com</a><br>
       📍 Lincoln Court, Lincoln Ave, Peacehaven BN10 7FB
     </footer>
@@ -194,12 +276,17 @@
   <noscript>JavaScript is off — links still work, but animations are disabled.</noscript>
 
   <script>
-    // Door logic (progressive enhancement)
-    const door = document.getElementById('door');
-    const left = document.getElementById('leaf-left');
-    const right = document.getElementById('leaf-right');
+    // Door logic (desktop flair only). On mobile we skip 3D and just navigate.
+    const door   = document.getElementById('door');
+    const left   = document.getElementById('leaf-left');
+    const right  = document.getElementById('leaf-right');
+
+    // detect compact view (matches our CSS breakpoint)
+    const isCompact = () => window.matchMedia('(max-width: 768px)').matches;
 
     function openLeaf(which, url){
+      if (isCompact()) { window.location.href = url; return; } // simple + fast on phones
+
       if(which==='left'){
         door.classList.remove('open-right');
         door.classList.add('open-left');
@@ -212,11 +299,21 @@
       setTimeout(()=>{ window.location.href=url; }, 360);
     }
 
-    left.addEventListener('click', (e)=>{ e.preventDefault(); openLeaf('left',  left.href);  });
-    right.addEventListener('click',(e)=>{ e.preventDefault(); openLeaf('right', right.href); });
+    left.addEventListener('click', (e)=>{ e.preventDefault(); openLeaf('left',  left.href);  }, { passive:false });
+    right.addEventListener('click',(e)=>{ e.preventDefault(); openLeaf('right', right.href); }, { passive:false });
 
-    // Initial focus for keyboard users
-    setTimeout(()=>left.focus({preventScroll:true}),400);
+    // Improve keyboard UX; don’t force focus scroll on mobile
+    if (!isCompact()){
+      setTimeout(()=>left?.focus({preventScroll:true}),400);
+    }
+
+    // iOS 100vh fix: update svh on resize/orientation
+    const setSafeVh = () => {
+      document.documentElement.style.setProperty('--safe-vh', window.innerHeight + 'px');
+    };
+    setSafeVh();
+    window.addEventListener('resize', setSafeVh);
+    window.addEventListener('orientationchange', setSafeVh, { passive:true });
   </script>
 </body>
 </html>
