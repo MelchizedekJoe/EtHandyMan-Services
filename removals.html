@@ -6,6 +6,10 @@
   <title>ET Removal Services | Removals & Man with a Van</title>
   <meta name="description" content="Local & reliable removals: flats, houses, offices. Packing, loading, transport and setup. Get a quote fast."/>
   <link rel="preload" as="image" href="./images/et-removal-logo.jpg" />
+
+  <!-- ✅ Flatpickr Calendar CSS (added) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
   <style>
     :root{ --bg:#0f172a; --fg:#e5e7eb; --muted:#a7b0c0; --accent:#f59e0b; --glass:rgba(255,255,255,.06); --border:rgba(255,255,255,.09); --shadow:0 16px 32px rgba(0,0,0,.45); --header-h:72px; }
     *{box-sizing:border-box}
@@ -84,6 +88,14 @@
     input,select,textarea{ width:100%; padding:.7rem .8rem; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,.04); color:inherit }
     textarea{ min-height:120px; grid-column:1/-1 }
     .actions{ display:flex; gap:10px; align-items:center }
+
+    /* ✅ Input with icon (added) */
+    .input-icon{ position:relative; display:block }
+    .input-icon input{ padding-right:42px }
+    .input-icon .icon{
+      position:absolute; right:12px; top:50%; transform:translateY(-50%);
+      width:20px; height:20px; opacity:.85; color:#cbd5e1; pointer-events:none;
+    }
 
     /* Footer */
     footer{ margin:46px 0 70px }
@@ -228,13 +240,11 @@
     <h2>What customers say</h2>
     <p class="rating-badge">⭐ 98% recommend <span class="muted">· 34 Facebook reviews</span></p>
     <div class="testis">
-      <!-- Featured review (from Facebook) -->
       <article class="card quote">
         <div class="stars">★★★★★</div>
         <p>“Absolutely wonderful. Ely and the team moved our three bed house today for us and can’t rate or thank them highly enough. So professional, kind, caring and lovely. Will definitely use again and wouldn’t hesitate to recommend. Thank you guys for making the day stress-free and smooth. Legends.”</p>
         <p class="muted">— <strong>Sam Elp</strong>, 30 Dec 2024</p>
       </article>
-      <!-- Add two shorter supporting snippets -->
       <article class="card quote">
         <div class="stars">★★★★★</div>
         <p>“Outstanding — organised, friendly, affordable. Really pleased I picked this company. Will definitely use again.”</p>
@@ -259,7 +269,19 @@
           <div><label class="muted" style="font-size:12px">Full name</label><input required placeholder="Jane Doe"></div>
           <div><label class="muted" style="font-size:12px">Phone</label><input required placeholder="+44"></div>
           <div><label class="muted" style="font-size:12px">Email</label><input type="email" placeholder="e.tremovalservices@outlook.com"></div>
-          <div><label class="muted" style="font-size:12px">Moving date</label><input type="date"></div>
+
+          <!-- ✅ Moving date with calendar icon + popup (updated) -->
+          <div>
+            <label class="muted" style="font-size:12px" for="movingDate">Moving date</label>
+            <div class="input-icon">
+              <input id="movingDate" type="text" placeholder="Select a date" aria-label="Moving date">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M8 2v4M16 2v4M3 10h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </div>
+
           <div><label class="muted" style="font-size:12px">From (postcode)</label><input required placeholder="BN10"></div>
           <div><label class="muted" style="font-size:12px">To (postcode)</label><input required placeholder="BN1"></div>
           <div><label class="muted" style="font-size:12px">Move size</label>
@@ -310,6 +332,9 @@
     <a href="tel:+447305848484">Call</a>
     <a class="secondary" href="https://wa.me/447305848484" target="_blank" rel="noopener">WhatsApp</a>
   </div>
+
+  <!-- ✅ Flatpickr JS (added) -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
   <script>
     // Year
@@ -381,6 +406,15 @@
     });
     lb.addEventListener('click', ()=> lb.classList.remove('open'));
     addEventListener('keydown', (e)=>{ if(e.key==='Escape') lb.classList.remove('open'); });
+
+    // ✅ Calendar popup for Moving date
+    flatpickr("#movingDate", {
+      dateFormat: "Y-m-d",   // value behind the scenes
+      altInput: true,        // user sees a nicer format
+      altFormat: "D, j M Y",
+      minDate: "today",      // no past dates
+      disableMobile: true    // force popup on iOS/Android too
+    });
 
     // Fake submit (swap with real endpoint later)
     function fakeSubmit(){
