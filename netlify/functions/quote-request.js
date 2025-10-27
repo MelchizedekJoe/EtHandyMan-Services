@@ -1,97 +1,152 @@
 // netlify/functions/quote-request.js
-import fetch from "node-fetch";
+// Sends the quote form to Eli via MailerSend.
+// Requires Netlify ENV VARS: MAILERSEND_TOKEN, MAILERSEND_FROM, MAILERSEND_TO
 
-export const handler = async (event) => {
+// Small helper for responses
+const json = (status, data) => ({
+  statusCode: status,
+  headers: {
+    "Content-Type": "application/json",
+    // Allow your site to call this function from the browser
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+  },
+  body: JSON.stringify(data),
+});
+
+exports.handler = async (event) => {
+  if (event.httpMethod === "OPTIONS") return json(200, { ok: true });
+  if (event.httpMethod !== "POST")
+    return json(405, { error: "Method not allowed" });
+
+  // ---- 1) Read env vars (set these in Netlify UI -> Site settings -> Environment variables)
+  const API_TOKEN = process.env.MAILERSEND_TOKEN;     // e.g. mlsn_xxx...
+  const FROM_EMAIL = process.env.MAILERSEND_FROM;     // e.g. no-reply@test-xxxxx.mlsender.net
+  const TO_EMAIL   = process.env.MAILERSEND_TO;       // e.g. eli_etremovals@proton.me
+
+  if (!API_TOKEN || !FROM_EMAIL || !TO_EMAIL) {
+    return json(500, { error: "Server not configured. Missing env vars." });
+  }
+
+  // ---- 2) Parse and validate incoming JSON
+  let payload;
   try {
-    const data = JSON.parse(event.body || "{}");
+    payload = JSON.parse(event.body || "{}");
+  } catch {
+    return json(400, { error: "Bad JSON" });
+  }
 
-    const {
-      fullName,
-      email,
-      phone,
-      address,
-      service,
-      date,
-      message,
-      attachments = [],
-    } = data;
+  // Honeypot stops bots (your form includes name="company")
+  if (payload.company) {
+    return json(200, { ok: true, skipped: true }); // pretend success, but drop it
+  }
 
-    // --- Build email content ---
-    const text = `
-New quote request from ET Handyman Services website
+  const {
+    fullName = "",
+    phone = "",
+    email = "",
+    address = "",
+    service = "",
+    date = "",
+    message = "",
+    attachments = [], // optional: [{ filename, content_type, base64 }]
+  } = payload || {};
 
-Name: ${fullName}
-Email: ${email}
-Phone: ${phone}
-Address: ${address}
-Service: ${service}
-Preferred Date: ${date || "Not specified"}
+  const missing =
+    !fullName.trim()
+      ? "name"
+      : !/^\S+@\S+\.\S+$/.test(email)
+      ? "valid email"
+      : !phone.trim()
+      ? "phone"
+      : !address.trim()
+      ? "postcode"
+      : !service
+      ? "service"
+      : !message.trim()
+      ? "message"
+      : null;
+
+  if (missing) return json(400, { error: `Please provide a ${missing}.` });
+
+  // ---- 3) Build email content
+  const safe = (s) => String(s || "").toString();
+
+  const subject = `New Quote Request — ${safe(fullName)} (${safe(service)})`;
+
+  const textBody = `
+New quote request
+
+Full name: ${safe(fullName)}
+Phone: ${safe(phone)}
+Email: ${safe(email)}
+Postcode: ${safe(address)}
+Service: ${safe(service)}
+Preferred date: ${safe(date)}
+
 Message:
-${message}
-    `;
+${safe(message)}
+`.trim();
 
-    // MailerSend API setup
-    const MAILERSEND_API_KEY = process.env.MAILERSEND_API_KEY;
-    const MAIL_FROM = process.env.MAIL_FROM || "eli_etremovals@proton.me";
-    const MAIL_TO = process.env.MAIL_TO || "eli_etremovals@proton.me";
+  const htmlBody = `
+  <h2>New quote request</h2>
+  <p><strong>Full name:</strong> ${safe(fullName)}</p>
+  <p><strong>Phone:</strong> ${safe(phone)}</p>
+  <p><strong>Email:</strong> ${safe(email)}</p>
+  <p><strong>Postcode:</strong> ${safe(address)}</p>
+  <p><strong>Service:</strong> ${safe(service)}</p>
+  <p><strong>Preferred date:</strong> ${safe(date || "n/a")}</p>
+  <p><strong>Message:</strong><br>${safe(message).replace(/\n/g, "<br>")}</p>
+  `.trim();
 
-    // --- Send email to business (you) ---
-    const sendBusinessEmail = await fetch("https://api.mailersend.com/v1/email", {
+  // ---- 4) Convert any attachments to MailerSend format
+  // MailerSend expects: { filename, content } where content = base64 string
+  let msAttachments = [];
+  if (Array.isArray(attachments) && attachments.length) {
+    msAttachments = attachments.slice(0, 5).map((a) => ({
+      filename: a.filename || "photo",
+      content: a.base64 || "",
+    }));
+  }
+
+  // ---- 5) Send via MailerSend API
+  try {
+    const resp = await fetch("https://api.mailersend.com/v1/email", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${MAILERSEND_API_KEY}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${API_TOKEN}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: { email: MAIL_FROM, name: "ET Handyman Services Website" },
-        to: [{ email: MAIL_TO, name: "ET Handyman Services" }],
-        subject: `New Quote Request from ${fullName}`,
-        text,
-        attachments: attachments.map(f => ({
-          content: f.base64,
-          filename: f.filename,
-          disposition: "attachment",
-          type: f.content_type
-        }))
-      })
+        from: { email: FROM_EMAIL },                   // your test domain sender
+        to: [{ email: TO_EMAIL }],                     // Eli's inbox
+        reply_to: { email },                           // hitting Reply goes to the customer
+        subject,
+        text: textBody,
+        html: htmlBody,
+        attachments: msAttachments,                    // optional
+      }),
     });
 
-    if (!sendBusinessEmail.ok) {
-      const errText = await sendBusinessEmail.text();
-      throw new Error(`MailerSend error: ${errText}`);
+    // Try to read JSON even if not-ok, to surface message
+    let data = {};
+    try { data = await resp.json(); } catch {}
+
+    if (!resp.ok) {
+      console.error("MailerSend error:", resp.status, data);
+      return json(500, {
+        error:
+          data?.message ||
+          "Email send failed. Please try again or call 07305 848484.",
+      });
     }
 
-    // --- Send confirmation to client ---
-    await fetch("https://api.mailersend.com/v1/email", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${MAILERSEND_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        from: { email: MAIL_FROM, name: "ET Handyman Services" },
-        to: [{ email, name: fullName }],
-        subject: "Quote Request Received — ET Handyman Services",
-        text: `Hi ${fullName},
-
-Thanks for reaching out! We’ve received your quote request for "${service}" and will get back to you shortly.
-
-Kind regards,
-ET Handyman Services
-        `
-      })
-    });
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ success: true })
-    };
-
+    return json(200, { ok: true, id: data?.message_id || "sent" });
   } catch (err) {
-    console.error("Error:", err);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: err.message || "Server error" })
-    };
+    console.error(err);
+    return json(500, {
+      error: "Network error sending email. Please try again later.",
+    });
   }
 };

@@ -4,15 +4,14 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>ET Handyman Services | Brighton & Peacehaven</title>
-<meta name="description" content="ET Handyman Services — roofing, tiling, driveways, landscaping, painting, flooring and plumbing across Brighton, Hove & Peacehaven."/>
-<link rel="preload" as="image" href="./images/et-handyman-logo.jpg" />
+<meta name="description" content="ET Handyman Services — roofing, tiling, driveways, landscaping, painting, flooring and plumbing across Brighton, Hove & Peacehaven." />
 
 <!-- Flatpickr Calendar CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 <style>
 :root{
-  --bg:#0f172a; --panel:#0b1220; --fg:#e5e7eb; --muted:#a7b0c0;
+  --bg:#0f172a; --fg:#e5e7eb; --muted:#a7b0c0;
   --border:rgba(255,255,255,.09); --glass:rgba(255,255,255,.06);
   --shadow:0 16px 32px rgba(0,0,0,.45); --accent:#38bdf8; --header-h:64px;
 }
@@ -37,7 +36,6 @@ body{
 nav{display:flex;align-items:center;gap:8px}
 nav a{color:inherit;text-decoration:none;margin:0 8px;padding:6px 0;border-bottom:2px solid transparent;transition:.2s}
 nav a:hover{border-bottom-color:rgba(255,255,255,.35)}
-nav a.active{border-bottom-color:rgba(255,255,255,.75)}
 .spacer{flex:1}
 .cta{display:inline-flex;align-items:center;gap:8px;padding:.55rem .9rem;border-radius:9999px;border:1px solid var(--border);background:var(--glass);text-decoration:none;color:inherit}
 .menu-btn{display:none;border:1px solid var(--border);background:var(--glass);border-radius:10px;padding:.5rem .7rem;cursor:pointer}
@@ -199,7 +197,7 @@ footer{margin:46px 0 70px}
     </div>
   </div>
   <aside class="heroCard">
-    <img class="heroImg" src="./images/Tiling%209.jpg" alt="Outdoor porcelain tiling project" loading="lazy" width="1200" height="800">
+    <img class="heroImg" src="./images/Tiling%209.jpg" alt="Outdoor porcelain tiling project" loading="eager" width="1200" height="800">
   </aside>
 </section>
 
@@ -228,7 +226,12 @@ footer{margin:46px 0 70px}
     <figure class="tile"><img src="./images/Grandting3.jpg" data-cap="Resin driveway — East Sussex" alt="Resin driveway finish" loading="lazy" width="1000" height="700"></figure>
     <figure class="tile"><img src="./images/Marbling.jpg" data-cap="Patterned tiling — Brighton" alt="Patterned tiling" loading="lazy" width="1000" height="700"></figure>
   </div>
-  <div class="lightbox" id="lightbox"><div><img class="lb-img" id="lbImg" alt=""><div class="lb-cap" id="lbCap"></div></div></div>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <div>
+      <img class="lb-img" id="lbImg" alt="">
+      <div class="lb-cap" id="lbCap"></div>
+    </div>
+  </div>
 </section>
 
 <!-- Reviews -->
@@ -260,7 +263,7 @@ footer{margin:46px 0 70px}
         </div>
 
         <div><label for="postcode">Postcode</label>
-          <input id="postcode" name="address" required placeholder="BN10 7FB" autocomplete="postal-code">
+          <input id="postcode" name="postcode" required placeholder="BN10 7FB" autocomplete="postal-code">
         </div>
 
         <div><label for="service">Service</label>
@@ -312,7 +315,7 @@ footer{margin:46px 0 70px}
     <aside class="card" style="padding:16px">
       <h3 style="margin-top:0">Contact</h3>
       <p><strong>Phone:</strong> <a href="tel:+447305848484">+44 7305 848484</a></p>
-      <p><strong>Email:</strong> <a href="mailto:ely@etremovals.com">ely@etremovals.com</a></p>
+      <p><strong>Email:</strong> <a href="mailto:eli_etremovals@proton.me">eli_etremovals@proton.me</a></p>
       <p><strong>WhatsApp:</strong> <a href="https://wa.me/447305848484" target="_blank" rel="noopener">Chat now</a></p>
       <p><strong>Facebook:</strong> <a href="https://www.facebook.com/profile.php?id=61559444704457&sk=about" target="_blank" rel="noopener">Visit our Facebook</a></p>
       <p class="muted">Service area: Peacehaven · Brighton & Hove · East Sussex</p>
@@ -339,7 +342,7 @@ footer{margin:46px 0 70px}
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <!-- Flatpickr JS -->
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
 
 <script>
 // Header offset
@@ -379,7 +382,11 @@ lb.addEventListener('click',()=>lb.classList.remove('open'));
 addEventListener('keydown',e=>{if(e.key==='Escape') lb.classList.remove('open')});
 
 // Calendar popup
-flatpickr("#date", { dateFormat: "Y-m-d", altInput: true, altFormat: "D, j M Y", minDate: "today", disableMobile: true });
+document.addEventListener('DOMContentLoaded', function(){
+  if (window.flatpickr) {
+    flatpickr("#date", { dateFormat: "Y-m-d", altInput: true, altFormat: "D, j M Y", minDate: "today", disableMobile: true });
+  }
+});
 
 // --- Helpers for image handling ---
 const MAX_FILES = 5;
@@ -418,6 +425,10 @@ function toast(msg){
 }
 
 // --- Quote form submit (MailerSend via Netlify Function) ---
+// IMPORTANT: This page DOES NOT include your MailerSend API key.
+// The browser will POST to /.netlify/functions/quote-request
+// and your serverless function (with the secret key in Netlify Env Vars)
+// will send the email to eli_etremovals@proton.me.
 (function(){
   const form = document.getElementById('quoteForm');
   if(!form) return;
@@ -429,7 +440,7 @@ function toast(msg){
     if(!p.fullName?.trim()) return 'Please enter your name';
     if(!/^\S+@\S+\.\S+$/.test(p.email||'')) return 'Please enter a valid email';
     if(!p.phone?.trim()) return 'Please enter your phone';
-    if(!p.address?.trim()) return 'Please enter your postcode';
+    if(!p.postcode?.trim()) return 'Please enter your postcode';
     if(!p.service) return 'Please select a service';
     if(!p.message?.trim()) return 'Please describe the job';
     return null;
@@ -463,7 +474,7 @@ function toast(msg){
       let data = {}; try { data = JSON.parse(text); } catch {}
       if(!res.ok) throw new Error(data?.error || text || 'Submission failed');
 
-      statusEl.textContent = 'Thanks! Your quote request has been received. We’ve emailed you a confirmation.';
+      statusEl.textContent = 'Thanks! Your quote request has been received.';
       toast('Request sent ✔');
       form.reset();
       const fp = document.getElementById('date')._flatpickr; if(fp) fp.clear();
