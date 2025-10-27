@@ -1,9 +1,14 @@
 # netlify.toml
+
 [build]
-  functions = "netlify/functions"
-  publish   = "."
+  publish   = "."                  # your site folder (where index.html lives)
+  functions = "netlify/functions"  # location of your serverless functions
+
+[functions]
+  node_bundler = "esbuild"         # ensures modern JS builds correctly
 
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Frame-Options = "SAMEORIGIN"
+    Access-Control-Allow-Origin = "*"   # allows browser to call your function (CORS)
+    X-Frame-Options = "SAMEORIGIN"      # protects against clickjacking
