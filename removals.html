@@ -265,16 +265,17 @@
     <p class="muted">Tell us about your move. We’ll confirm by phone or WhatsApp.</p>
     <div class="contactGrid">
       <div class="card" style="padding:18px">
-        <form id="quoteForm" onsubmit="event.preventDefault(); fakeSubmit();">
-          <div><label class="muted" style="font-size:12px">Full name</label><input required placeholder="Jane Doe"></div>
-          <div><label class="muted" style="font-size:12px">Phone</label><input required placeholder="+44"></div>
-          <div><label class="muted" style="font-size:12px">Email</label><input type="email" placeholder="e.tremovalservices@outlook.com"></div>
+        <!-- ✅ Names added + real submit handler -->
+        <form id="quoteForm" novalidate>
+          <div><label class="muted" style="font-size:12px" for="fullName">Full name</label><input id="fullName" name="fullName" required placeholder="Jane Doe" autocomplete="name"></div>
+          <div><label class="muted" style="font-size:12px" for="phone">Phone</label><input id="phone" name="phone" required placeholder="+44" autocomplete="tel"></div>
+          <div><label class="muted" style="font-size:12px" for="email">Email</label><input id="email" name="email" type="email" placeholder="e.tremovalservices@outlook.com" autocomplete="email"></div>
 
-          <!-- ✅ Moving date with calendar icon + popup (updated) -->
+          <!-- Moving date -->
           <div>
             <label class="muted" style="font-size:12px" for="movingDate">Moving date</label>
             <div class="input-icon">
-              <input id="movingDate" type="text" placeholder="Select a date" aria-label="Moving date">
+              <input id="movingDate" name="date" type="text" placeholder="Select a date" aria-label="Moving date">
               <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/>
                 <path d="M8 2v4M16 2v4M3 10h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -282,10 +283,12 @@
             </div>
           </div>
 
-          <div><label class="muted" style="font-size:12px">From (postcode)</label><input required placeholder="BN10"></div>
-          <div><label class="muted" style="font-size:12px">To (postcode)</label><input required placeholder="BN1"></div>
-          <div><label class="muted" style="font-size:12px">Move size</label>
-            <select required>
+          <div><label class="muted" style="font-size:12px" for="from">From (postcode)</label><input id="from" name="from" required placeholder="BN10" autocomplete="postal-code"></div>
+          <div><label class="muted" style="font-size:12px" for="to">To (postcode)</label><input id="to" name="to" required placeholder="BN1" autocomplete="postal-code"></div>
+
+          <div>
+            <label class="muted" style="font-size:12px" for="moveSize">Move size</label>
+            <select id="moveSize" name="moveSize" required>
               <option value="">Choose…</option>
               <option>Room / Small load</option>
               <option>1-bed flat</option>
@@ -295,16 +298,28 @@
               <option>Office</option>
             </select>
           </div>
-          <div><label class="muted" style="font-size:12px">Services</label>
-            <select>
+          <div>
+            <label class="muted" style="font-size:12px" for="services">Services</label>
+            <select id="services" name="services">
               <option>Packing</option>
               <option>Disassemble/Re-assemble</option>
               <option>Deliver packing materials</option>
               <option>Just transport</option>
             </select>
           </div>
-          <textarea placeholder="Floors/stairs, lift access, parking info, large items (sofa, wardrobe), special care, etc."></textarea>
-          <div class="actions"><button class="btn primary" type="submit">Request quote</button><span class="muted" id="formMsg" aria-live="polite" style="font-size:12px"></span></div>
+
+          <div style="grid-column:1/-1">
+            <label class="muted" style="font-size:12px" for="message">Details</label>
+            <textarea id="message" name="message" placeholder="Floors/stairs, lift access, parking info, large items (sofa, wardrobe), special care, etc."></textarea>
+          </div>
+
+          <!-- Honeypot -->
+          <input type="text" name="company" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0">
+
+          <div class="actions" style="grid-column:1/-1">
+            <button class="btn primary" id="quoteSubmit" type="submit">Request quote</button>
+            <span class="muted" id="formMsg" aria-live="polite" style="font-size:12px"></span>
+          </div>
         </form>
       </div>
       <aside class="card" style="padding:18px">
@@ -409,19 +424,84 @@
 
     // ✅ Calendar popup for Moving date
     flatpickr("#movingDate", {
-      dateFormat: "Y-m-d",   // value behind the scenes
-      altInput: true,        // user sees a nicer format
+      dateFormat: "Y-m-d",
+      altInput: true,
       altFormat: "D, j M Y",
-      minDate: "today",      // no past dates
-      disableMobile: true    // force popup on iOS/Android too
+      minDate: "today",
+      disableMobile: true
     });
 
-    // Fake submit (swap with real endpoint later)
-    function fakeSubmit(){
-      const msg = document.getElementById('formMsg');
-      msg.textContent = 'Thanks! We\'ll be in touch shortly.';
-      setTimeout(()=>{ msg.textContent=''; document.getElementById('quoteForm').reset(); }, 3000);
-    }
+    // ✅ Minimal email submit to Netlify function
+    (function(){
+      const form = document.getElementById('quoteForm');
+      const msg  = document.getElementById('formMsg');
+      const btn  = document.getElementById('quoteSubmit');
+
+      function err(t){ msg.textContent = t; }
+
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        msg.textContent = '';
+        btn.disabled = true;
+
+        // Grab values
+        const fullName = document.getElementById('fullName').value.trim();
+        const phone    = document.getElementById('phone').value.trim();
+        const email    = document.getElementById('email').value.trim();
+        const date     = document.getElementById('movingDate').value.trim();
+        const from     = document.getElementById('from').value.trim();
+        const to       = document.getElementById('to').value.trim();
+        const moveSize = document.getElementById('moveSize').value;
+        const services = document.getElementById('services').value;
+        const details  = document.getElementById('message').value.trim();
+        const company  = form.querySelector('input[name="company"]').value;
+
+        // Honeypot
+        if (company) { msg.textContent = 'Thanks!'; form.reset(); btn.disabled=false; return; }
+
+        // Minimal validation matching the function
+        if (!fullName) return err('Please enter your name'), btn.disabled=false;
+        if (email && !/^\S+@\S+\.\S+$/.test(email)) return err('Please enter a valid email'), btn.disabled=false;
+        if (!phone) return err('Please enter your phone'), btn.disabled=false;
+        if (!from || !to) return err('Please enter from/to postcodes'), btn.disabled=false;
+        if (!moveSize) return err('Please select a move size'), btn.disabled=false;
+
+        // Map to function fields
+        const payload = {
+          fullName,
+          phone,
+          email,
+          // function accepts address OR postcode. We'll send a single combined address string.
+          address: `${from} ➝ ${to}`,
+          service: `${moveSize}${services ? ' · ' + services : ''}`,
+          date,
+          message: details || `Move request from ${from} to ${to}`
+          // (no attachments in this minimal version)
+        };
+
+        try{
+          const res = await fetch('/.netlify/functions/quote-request', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(payload)
+          });
+          const text = await res.text();
+          let data = {}; try { data = JSON.parse(text); } catch {}
+
+          if(!res.ok) throw new Error(data?.error || text || 'Submission failed');
+
+          msg.textContent = 'Thanks! Your quote request has been received.';
+          form.reset();
+          // clear date widget
+          const fp = document.getElementById('movingDate')._flatpickr; if (fp) fp.clear();
+        }catch(e){
+          msg.textContent = 'Sorry, something went wrong. Please try again or call 07305 848484.';
+          console.error(e);
+        }finally{
+          btn.disabled = false;
+        }
+      });
+    })();
   </script>
 </body>
 </html>
