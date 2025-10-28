@@ -46,7 +46,7 @@ exports.handler = async (event) => {
     fullName = "",
     phone = "",
     email = "",
-    address = "",
+    address = payload.address || payload.postcode || "",
     service = "",
     date = "",
     message = "",
