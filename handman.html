@@ -437,14 +437,14 @@ function toast(msg){
   const photosInput = document.getElementById('photos');
 
   function validate(p){
-    if(!p.fullName?.trim()) return 'Please enter your name';
-    if(!/^\S+@\S+\.\S+$/.test(p.email||'')) return 'Please enter a valid email';
-    if(!p.phone?.trim()) return 'Please enter your phone';
-    if(!p.postcode?.trim()) return 'Please enter your postcode';
-    if(!p.service) return 'Please select a service';
-    if(!p.message?.trim()) return 'Please describe the job';
-    return null;
-  }
+  if(!p.fullName?.trim()) return 'Please enter your name';
+  if(!/^\S+@\S+\.\S+$/.test(p.email||'')) return 'Please enter a valid email';
+  if(!p.phone?.trim()) return 'Please enter your phone';
+  if(!(p.address || p.postcode)?.trim()) return 'Please enter your postcode';
+  if(!p.service) return 'Please select a service';
+  if(!p.message?.trim()) return 'Please describe the job';
+  return null;
+}
 
   form.addEventListener('submit', async (e)=>{
     e.preventDefault();
