@@ -17,13 +17,35 @@ const json = (status, data) => ({
 
 exports.handler = async (event) => {
   if (event.httpMethod === "OPTIONS") return json(200, { ok: true });
-  if (event.httpMethod !== "POST")
-    return json(405, { error: "Method not allowed" });
+  if (event.httpMethod !== "POST") return json(405, { error: "Method not allowed" });
+
+  // ---- 0) Simple per-IP rate-limit (5 requests / 10 minutes)
+  try {
+    const RATE = 5;
+    const WINDOW_MS = 10 * 60 * 1000;
+    const now = Date.now();
+    const ip =
+      (event.headers["x-forwarded-for"] || event.headers["client-ip"] || "")
+        .split(",")[0]
+        .trim() || "unknown";
+
+    const store = (globalThis.__hits ||= new Map());
+    const bucket = (store.get(ip) || []).filter((t) => now - t < WINDOW_MS);
+    bucket.push(now);
+    store.set(ip, bucket);
+
+    if (bucket.length > RATE) {
+      return json(429, { error: "Too many requests. Please try again later." });
+    }
+  } catch (e) {
+    // If rate-limit storage fails for any reason, continue without blocking
+    console.warn("Rate limit check failed:", e?.message || e);
+  }
 
   // ---- 1) Read env vars (set these in Netlify UI -> Site settings -> Environment variables)
-  const API_TOKEN = process.env.MAILERSEND_TOKEN;     // e.g. mlsn_xxx...
-  const FROM_EMAIL = process.env.MAILERSEND_FROM;     // e.g. no-reply@test-xxxxx.mlsender.net
-  const TO_EMAIL   = process.env.MAILERSEND_TO;       // e.g. eli_etremovals@proton.me
+  const API_TOKEN = process.env.MAILERSEND_TOKEN; // e.g. mlsn_xxx...
+  const FROM_EMAIL = process.env.MAILERSEND_FROM; // e.g. no-reply@test-xxxxx.mlsender.net
+  const TO_EMAIL = process.env.MAILERSEND_TO; // e.g. eli_etremovals@proton.me
 
   if (!API_TOKEN || !FROM_EMAIL || !TO_EMAIL) {
     return json(500, { error: "Server not configured. Missing env vars." });
@@ -100,17 +122,17 @@ ${safe(message)}
   <p><strong>Message:</strong><br>${safe(message).replace(/\n/g, "<br>")}</p>
   `.trim();
 
-  // ---- 4) Convert any attachments to MailerSend format
+  // ---- 4) Convert any attachments to MailerSend format (cap at 5)
   // MailerSend expects: { filename, content } where content = base64 string
   let msAttachments = [];
   if (Array.isArray(attachments) && attachments.length) {
-    msAttachments = attachments.slice(0, 5).map((a) => ({
-      filename: a.filename || "photo",
+    msAttachments = attachments.slice(0, 5).map((a, i) => ({
+      filename: a.filename || `photo-${i + 1}.jpg`,
       content: a.base64 || "",
     }));
   }
 
-  // ---- 5) Send via MailerSend API
+  // ---- 5) Send to Eli via MailerSend API
   try {
     const resp = await fetch("https://api.mailersend.com/v1/email", {
       method: "POST",
@@ -119,19 +141,21 @@ ${safe(message)}
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: { email: FROM_EMAIL },                   // your test domain sender
-        to: [{ email: TO_EMAIL }],                     // Eli's inbox
-        reply_to: { email },                           // hitting Reply goes to the customer
+        from: { email: FROM_EMAIL }, // your test domain sender
+        to: [{ email: TO_EMAIL }], // Eli's inbox
+        reply_to: { email }, // hitting Reply goes to the customer
         subject,
         text: textBody,
         html: htmlBody,
-        attachments: msAttachments,                    // optional
+        attachments: msAttachments, // optional
       }),
     });
 
     // Try to read JSON even if not-ok, to surface message
     let data = {};
-    try { data = await resp.json(); } catch {}
+    try {
+      data = await resp.json();
+    } catch {}
 
     if (!resp.ok) {
       console.error("MailerSend error:", resp.status, data);
@@ -142,6 +166,46 @@ ${safe(message)}
       });
     }
 
+    // ---- 6) Fire-and-forget confirmation email to customer (best-effort)
+    (async () => {
+      try {
+        await fetch("https://api.mailersend.com/v1/email", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${API_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: { email: FROM_EMAIL, name: "ET Handyman Services" },
+            to: [{ email }], // customer's email
+            subject: "We’ve received your quote request ✅",
+            text: `Hi ${fullName || ""},
+
+Thanks for your request. Here’s what we got:
+- Service: ${service || "Handyman service"}
+- Postcode/Address: ${address || ""}
+- Preferred date: ${date || "Not specified"}
+
+We’ll contact you shortly. If urgent, call 07305 848484.
+
+— ET Handyman Services`,
+            html: `<p>Hi ${fullName || "there"},</p>
+                   <p>Thanks for your request. We’ve logged the details below:</p>
+                   <ul>
+                     <li><b>Service:</b> ${service || "Handyman service"}</li>
+                     <li><b>Postcode/Address:</b> ${address || ""}</li>
+                     <li><b>Preferred date:</b> ${date || "Not specified"}</li>
+                   </ul>
+                   <p>We’ll get back to you shortly. For urgent jobs, call <a href="tel:+447305848484">07305 848484</a>.</p>
+                   <p>— ET Handyman Services</p>`,
+          }),
+        });
+      } catch (e) {
+        console.warn("Confirmation email failed:", e?.message || e);
+      }
+    })();
+
+    // Main success response (don't wait for confirmation)
     return json(200, { ok: true, id: data?.message_id || "sent" });
   } catch (err) {
     console.error(err);
