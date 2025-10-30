@@ -2,34 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>ET Services | Handyman & Removals in Peacehaven</title>
 
   <!-- Core SEO -->
   <meta name="description" content="Repairs, installations & house/office removals across Peacehaven & Brighton. Fast, friendly, reliable. Call 07305 848484." />
-  <link rel="canonical" href="https://your-domain.example/" />
+  <link rel="canonical" href="https://et-services.co.uk/" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+
+  <!-- Optional security hardening (prefer sending as HTTP headers in production) -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self';">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Icons -->
   <link rel="icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="theme-color" content="#0f172a" />
+
+  <!-- Open Graph / Twitter -->
   <meta property="og:title" content="ET Services — Handyman & Removals" />
   <meta property="og:description" content="Repairs, installations & house/office removals across Peacehaven & Brighton." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://your-domain.example/images/social-card.jpg" />
-  <meta property="og:url" content="https://your-domain.example/" />
+  <meta property="og:image" content="https://et-services.co.uk/images/social-card.jpg" />
+  <meta property="og:url" content="https://et-services.co.uk/" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Helpful preloads (safe to remove if not needed) -->
-  <link rel="preload" as="image" href="./images/et-services-logo.png">
-  <link rel="preload" as="image" href="./images/placeholder-hero1.jpg">
-  <link rel="preload" as="image" href="./images/removals-hero.jpg">
+  <!-- Helpful preloads (ensure these files exist or remove) -->
+  <link rel="preload" as="image" href="/images/et-services-logo.png" fetchpriority="high">
+  <link rel="preload" as="image" href="/images/placeholder-hero1.jpg">
+  <link rel="preload" as="image" href="/images/removals-hero.jpg">
 
-  <!-- LocalBusiness schema (keep for rich results) -->
+  <!-- LocalBusiness schema -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@type":"LocalBusiness",
+    "@id":"https://et-services.co.uk/#business",
     "name":"ET Services",
-    "url":"https://your-domain.example/",
+    "url":"https://et-services.co.uk/",
     "telephone":"+44 7305 848484",
-    "email":"Ely@etremovals.com",
+    "email":"ely@et-services.co.uk",
     "address":{
       "@type":"PostalAddress",
       "streetAddress":"Lincoln Court, Lincoln Ave",
@@ -37,8 +51,8 @@
       "postalCode":"BN10 7FB",
       "addressCountry":"GB"
     },
-    "image":"https://your-domain.example/images/et-handyman-logo.jpg",
-    "areaServed":"Peacehaven, Brighton & Hove, East Sussex"
+    "image":"https://et-services.co.uk/images/et-handyman-logo.jpg",
+    "areaServed":["Peacehaven","Brighton & Hove","East Sussex"]
   }
   </script>
 
@@ -49,6 +63,7 @@
       --glass:rgba(255,255,255,.06);
       --border:rgba(255,255,255,.1);
       --shadow:0 20px 40px rgba(0,0,0,.45);
+      --focus:#38bdf8;
     }
 
     html,body{height:100%}
@@ -73,6 +88,7 @@
       color:inherit; text-decoration:none;
     }
     .brand-logo{ width:60px; height:auto; object-fit:contain; border-radius:10px; }
+    .brand:focus-visible{ outline:3px solid var(--focus); outline-offset:3px; }
 
     /* Stage */
     .stage{position:relative; width:min(88vw,860px); height:min(78vh,680px); margin-inline:auto; margin-top:9vh; perspective:1400px; perspective-origin:50% 50%;}
@@ -89,16 +105,19 @@
       contain: layout style paint;
       min-width:44px; min-height:44px; /* touch targets */
     }
-
-    /* Focus styles for a11y */
-    .leaf:focus-visible { outline:3px solid rgba(56,189,248,.6); outline-offset:-3px; }
-
+    .leaf:focus-visible { outline:3px solid var(--focus); outline-offset:-3px; }
     .leaf.left  { transform-origin:left  center; border-top-left-radius:20px;  border-bottom-left-radius:20px; }
     .leaf.right { transform-origin:right center; border-top-right-radius:20px; border-bottom-right-radius:20px; }
 
-    .leaf::before{content:""; position:absolute; inset:0; background-position:center; background-size:cover; background-repeat:no-repeat; filter:saturate(1.05) blur(1.2px); transition:transform .8s cubic-bezier(.4,0,.2,1), filter .6s ease; will-change: transform, filter;}
-    .leaf.left::before  { background-image:url('./images/placeholder-hero1.jpg'); }
-    .leaf.right::before { background-image:url('./images/removals-hero.jpg'); }
+    .leaf::before{
+      content:""; position:absolute; inset:0; background-position:center; background-size:cover; background-repeat:no-repeat;
+      filter:saturate(1.05) blur(1.2px);
+      transition:transform .8s cubic-bezier(.4,0,.2,1), filter .6s ease;
+      will-change: transform, filter;
+    }
+    .leaf.left::before  { background-image:url('/images/placeholder-hero1.jpg'); }
+    .leaf.right::before { background-image:url('/images/removals-hero.jpg'); }
+
     .leaf::after{content:""; position:absolute; inset:0; background:radial-gradient(120% 100% at 50% 20%, rgba(0,0,0,.15), rgba(0,0,0,.55));}
     .leaf:hover{ filter:brightness(1.06); }
     .leaf:hover::before{ transform:scale(1.03); }
@@ -113,7 +132,10 @@
     .handle{ position:absolute; top:50%; width:26px; height:26px; border-radius:50%; transform:translateY(-50%); background:radial-gradient(circle at 30% 30%, #ffed9f, #b67c0d 70%, #7a4f00); box-shadow: inset 0 1px 4px rgba(255,255,255,.65), inset 0 -1px 3px rgba(0,0,0,.45), 0 3px 8px rgba(0,0,0,.6); transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease; }
     .left .handle  { right:32px; }
     .right .handle { left:32px;  }
-    .leaf:hover .handle, .leaf:focus-visible .handle{ transform:translateY(-50%) scale(1.08); box-shadow: 0 4px 16px rgba(255,200,80,.6), 0 0 20px rgba(255,200,80,.3), inset 0 1px 4px rgba(255,255,255,.65), inset 0 -1px 3px rgba(0,0,0,.45); }
+    .leaf:hover .handle, .leaf:focus-visible .handle{
+      transform:translateY(-50%) scale(1.08);
+      box-shadow: 0 4px 16px rgba(255,200,80,.6), 0 0 20px rgba(255,200,80,.3), inset 0 1px 4px rgba(255,255,255,.65), inset 0 -1px 3px rgba(0,0,0,.45);
+    }
 
     /* Labels */
     .label{ position:absolute; left:0; right:0; bottom:24px; text-align:center; z-index:2; }
@@ -148,6 +170,7 @@
     /* Footer */
     footer{ position:absolute; bottom:0; width:100%; background:rgba(0,0,0,.4); backdrop-filter:blur(6px); text-align:center; padding:10px 6px; font-size:14px; border-top:1px solid rgba(255,255,255,.1); letter-spacing:.4px; }
     footer a{ color:#f8fafc; text-decoration:none; border-bottom:1px dashed rgba(255,255,255,.3); }
+    footer a:focus-visible{ outline:3px solid var(--focus); outline-offset:3px; }
 
     @media (max-width:820px){
       .stage{ width:min(94vw,760px); height:min(74vh,680px); margin-top:11vh; }
@@ -155,10 +178,17 @@
     }
 
     /* Skip link */
-    .skip{ position:absolute; left:-9999px; top:-9999px; background:#111827; color:#fff; padding:.5rem .75rem; border-radius:.5rem; }
+    .skip{
+      position:absolute; left:-9999px; top:-9999px; background:#111827; color:#fff; padding:.5rem .75rem; border-radius:.5rem;
+    }
     .skip:focus{ left:16px; top:16px; z-index:50; }
 
-    noscript{ position:fixed; bottom:56px; left:50%; transform:translateX(-50%); background:#0b1224; color:#fff; padding:.5rem .75rem; border-radius:.5rem; border:1px solid rgba(255,255,255,.15); font-size:14px; }
+    /* noscript gets a readable badge */
+    noscript{
+      position:fixed; bottom:56px; left:50%; transform:translateX(-50%);
+      background:#0b1224; color:#fff; padding:.5rem .75rem; border-radius:.5rem;
+      border:1px solid rgba(255,255,255,.15); font-size:14px;
+    }
   </style>
 </head>
 <body>
@@ -166,30 +196,33 @@
 
   <div class="scene" aria-label="ET Services. Choose a service by opening a door leaf.">
     <a class="brand" href="/" aria-label="ET Services home">
-      <img src="./images/et-services-logo.png" alt="ET Services" class="brand-logo">
+      <!-- Above-the-fold logo should not be lazy -->
+      <img src="/images/et-services-logo.png" width="120" height="120" alt="ET Services logo" class="brand-logo">
       <span>ET Services</span>
     </a>
 
     <div class="stage">
       <div class="doorframe">
-        <div class="door" id="door">
+        <div class="door" id="door" role="group" aria-label="Service doors">
           <!-- LEFT = Handyman -->
-          <a class="leaf left" id="leaf-left" href="handyman.html" aria-label="Open for Handyman Services" aria-expanded="false">
-            <div class="panel"></div>
+          <a class="leaf left" id="leaf-left" href="/handyman.html"
+             aria-label="Open for Handyman Services" aria-expanded="false">
+            <div class="panel" aria-hidden="true"></div>
             <div class="handle-base" aria-hidden="true"></div>
             <div class="handle" aria-hidden="true"></div>
-            <div class="label">
+            <div class="label" aria-hidden="true">
               <h2>Handyman Services</h2>
               <p>Repairs, installations & quick fixes 🛠️</p>
             </div>
           </a>
 
           <!-- RIGHT = Removals -->
-          <a class="leaf right" id="leaf-right" href="removals.html" aria-label="Open for Removals Services" aria-expanded="false">
-            <div class="panel"></div>
+          <a class="leaf right" id="leaf-right" href="/removals.html"
+             aria-label="Open for Removals Services" aria-expanded="false">
+            <div class="panel" aria-hidden="true"></div>
             <div class="handle-base" aria-hidden="true"></div>
             <div class="handle" aria-hidden="true"></div>
-            <div class="label">
+            <div class="label" aria-hidden="true">
               <h2>Removals Services</h2>
               <p>Home & office moves with care 📦</p>
             </div>
@@ -204,8 +237,8 @@
     </div>
 
     <footer id="footer">
-      📞 <a href="tel:+447305848484">07305 848484</a> |
-      ✉️ <a href="mailto:ely@etremovals.com">ely@etremovals.com</a><br>
+      📞 <a href="tel:+447305848484" rel="nofollow">07305 848484</a> |
+      ✉️ <a href="mailto:ely@et-services.co.uk">ely@et-services.co.uk</a><br>
       📍 Lincoln Court, Lincoln Ave, Peacehaven BN10 7FB
     </footer>
   </div>
@@ -214,58 +247,62 @@
 
   <script>
     // Progressive enhancement door logic with a11y + reduced-motion + debounce
-    const door = document.getElementById('door');
-    const left = document.getElementById('leaf-left');
-    const right = document.getElementById('leaf-right');
+    (function () {
+      const door  = document.getElementById('door');
+      const left  = document.getElementById('leaf-left');
+      const right = document.getElementById('leaf-right');
 
-    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let navigating = false;
+      if (!door || !left || !right) return;
 
-    function openLeaf(which, url){
-      if (navigating) return;
-      navigating = true;
+      const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let navigating = false;
 
-      if (prefersReduced) {
-        window.location.href = url;
-        return;
+      function openLeaf(which, url){
+        if (navigating) return;
+        navigating = true;
+
+        if (prefersReduced) {
+          window.location.href = url;
+          return;
+        }
+
+        if(which==='left'){
+          door.classList.remove('open-right');
+          door.classList.add('open-left');
+          left.setAttribute('aria-expanded','true');
+        } else {
+          door.classList.remove('open-left');
+          door.classList.add('open-right');
+          right.setAttribute('aria-expanded','true');
+        }
+
+        // Delay navigation just enough to feel the swing
+        window.setTimeout(function(){ window.location.href=url; }, 380);
       }
 
-      if(which==='left'){
-        door.classList.remove('open-right');
-        door.classList.add('open-left');
-        left.setAttribute('aria-expanded','true');
-      } else {
-        door.classList.remove('open-left');
-        door.classList.add('open-right');
-        right.setAttribute('aria-expanded','true');
-      }
-
-      // Delay navigation just enough to feel the swing
-      const delay = 380; // ms
-      window.setTimeout(()=>{ window.location.href=url; }, delay);
-    }
-
-    function handleClick(e, side){
-      e.preventDefault();
-      const url = e.currentTarget.href;
-      openLeaf(side, url);
-    }
-
-    function handleKey(e, side){
-      if (e.key === 'Enter' || e.key === ' ') {
+      function handleClick(e, side){
+        // Only intercept primary clicks with no modifier
+        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
         e.preventDefault();
         openLeaf(side, e.currentTarget.href);
       }
-    }
 
-    left.addEventListener('click', (e)=> handleClick(e,'left'));
-    right.addEventListener('click',(e)=> handleClick(e,'right'));
+      function handleKey(e, side){
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openLeaf(side, e.currentTarget.href);
+        }
+      }
 
-    left.addEventListener('keydown', (e)=> handleKey(e,'left'));
-    right.addEventListener('keydown',(e)=> handleKey(e,'right'));
+      left.addEventListener('click',  function(e){ handleClick(e,'left'); });
+      right.addEventListener('click', function(e){ handleClick(e,'right'); });
 
-    // Initial focus for keyboard users
-    window.setTimeout(()=> left.focus({preventScroll:true}), 400);
+      left.addEventListener('keydown',  function(e){ handleKey(e,'left'); });
+      right.addEventListener('keydown', function(e){ handleKey(e,'right'); });
+
+      // Initial focus for keyboard users after paint
+      window.setTimeout(function(){ try { left.focus({preventScroll:true}); } catch(_){} }, 400);
+    })();
   </script>
 </body>
 </html>
