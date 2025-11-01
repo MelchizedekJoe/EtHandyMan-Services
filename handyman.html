@@ -384,7 +384,7 @@ footer{margin:46px 0 70px}
 
 <!-- Sticky mobile action bar (phones only) -->
 <div class="mobile-bar" role="group" aria-label="Quick actions">
-  <a href="tel:+447305848484">Call</a>
+  <a href="tel:01273 569343">Call</a>
   <a class="secondary" href="https://wa.me/447305848484" target="_blank" rel="noopener">WhatsApp</a>
 </div>
 
@@ -597,7 +597,7 @@ function syncInputWithSelection(){
       updatePreview();
       const fp = document.getElementById('date')._flatpickr; if(fp) fp.clear();
     }catch(e){
-      statusEl.textContent = e?.message?.includes('images') ? e.message : 'Sorry, something went wrong. Please try again or call 07305 848484.';
+      statusEl.textContent = e?.message?.includes('images') ? e.message : 'Sorry, something went wrong. Please try again or call 01273 569343.';
       toast('Could not send. Please try again.');
       console.error(e);
     }finally{
