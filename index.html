@@ -8,7 +8,7 @@
   <title>ET Services | Handyman & Removals in Peacehaven</title>
 
   <!-- Core SEO -->
-  <meta name="description" content="Repairs, installations & house/office removals across Peacehaven & Brighton. Fast, friendly, reliable. Call 01273 569343
+  <meta name="description" content="Repairs, installations & house/office removals across Peacehaven & Brighton. Fast, friendly, reliable. Call 01273 569343">
   <meta name="robots" content="index,follow,max-image-preview:large" />
 
   <!-- Optional security hardening (prefer sending as HTTP headers in production) -->
@@ -30,8 +30,8 @@
 
   <!-- Helpful preloads (ensure these files exist or remove) -->
   <link rel="preload" as="image" href="/images/et-services-logo.png" fetchpriority="high">
-  <link rel="preload" as="image" href="/images/placeholder-hero1.jpg">
-  <link rel="preload" as="image" href="/images/removals-hero.jpg">
+  <link rel="preload" as="image" href="/images/handyman-hero.png">
+  <link rel="preload" as="image" href="/images/removal-hero.png">
 
   <!-- LocalBusiness schema -->
   <script type="application/ld+json">
@@ -93,42 +93,93 @@
     .stage{position:relative; width:min(88vw,860px); height:min(78vh,680px); margin-inline:auto; margin-top:9vh; perspective:1400px; perspective-origin:50% 50%;}
     .doorframe{position:absolute; inset:0; border-radius:24px; box-shadow:0 0 0 2px rgba(255,255,255,.08), 0 0 0 4px rgba(255,255,255,.03), var(--shadow), 0 20px 40px rgba(0,0,0,.3); background:linear-gradient(180deg,#0b1224 0%,#0a0f1e 60%,#07101e 100%); overflow:hidden; contain:layout style;}
 
-    /* Doors */
-    .door{position:absolute; inset:12px; border-radius:20px; transform-style:preserve-3d; display:flex;}
+    /* Doors container */
+    .door{
+      position:absolute; inset:12px;
+      border-radius:20px;
+      transform-style:preserve-3d;
+      display:flex;
+      overflow:hidden;
+      box-shadow:0 0 0 2px rgba(255,255,255,.05), inset 0 0 40px rgba(0,0,0,.5);
+    }
+
+    /* Create a visible central seam */
+    .door::after{
+      content:"";
+      position:absolute;
+      top:0; bottom:0; left:50%;
+      width:3px;
+      background:rgba(0,0,0,.45);
+      border-left:1px solid rgba(255,255,255,.1);
+      border-right:1px solid rgba(255,255,255,.1);
+      z-index:3;
+      pointer-events:none;
+    }
+
+    /* Individual door leaves */
     .leaf{
-      position:relative; flex:1 1 50%; display:block; text-decoration:none; color:inherit;
-      background:#0f172a; border:1px solid var(--border); cursor:pointer; overflow:hidden;
+      position:relative;
+      flex:1 1 50%;
+      display:block;
+      text-decoration:none;
+      color:inherit;
+      background:#0f172a;
+      border:none;
+      cursor:pointer;
+      overflow:hidden;
       transition:transform 1.05s cubic-bezier(.2,.7,.1,1), filter .3s ease;
-      box-shadow:inset 0 0 60px rgba(0,0,0,.45);
-      will-change: transform;
+      box-shadow:inset 0 0 60px rgba(0,0,0,.35);
       contain: layout style paint;
       min-width:44px; min-height:44px; /* touch targets */
     }
     .leaf:focus-visible { outline:3px solid var(--focus); outline-offset:-3px; }
-    .leaf.left  { transform-origin:left  center; border-top-left-radius:20px;  border-bottom-left-radius:20px; }
-    .leaf.right { transform-origin:right center; border-top-right-radius:20px; border-bottom-right-radius:20px; }
+    .leaf.left  { transform-origin:left center;  border-right:1px solid rgba(255,255,255,.1); }
+    .leaf.right { transform-origin:right center; border-left:1px solid rgba(255,255,255,.1); }
 
+    /* Background images on leaves */
     .leaf::before{
-      content:""; position:absolute; inset:0; background-position:center; background-size:cover; background-repeat:no-repeat;
-      filter:saturate(1.05) blur(1.2px);
+      content:""; position:absolute; inset:0;
+      background-position:center; background-size:cover; background-repeat:no-repeat;
+      filter:saturate(1.05) brightness(.95) blur(1.2px);
       transition:transform .8s cubic-bezier(.4,0,.2,1), filter .6s ease;
       will-change: transform, filter;
     }
-    .leaf.left::before  { background-image:url('/images/placeholder-hero1.jpg'); }
-    .leaf.right::before { background-image:url('/images/removals-hero.jpg'); }
+    .leaf.left::before  { background-image:url('/images/handyman-hero.png'); }
+    .leaf.right::before { background-image:url('/images/removal-hero.png'); }
 
-    .leaf::after{content:""; position:absolute; inset:0; background:radial-gradient(120% 100% at 50% 20%, rgba(0,0,0,.15), rgba(0,0,0,.55));}
+    /* Vignette + edge shading for depth */
+    .leaf::after{
+      content:""; position:absolute; inset:0;
+      background:
+        radial-gradient(120% 100% at 50% 20%, rgba(0,0,0,.15), rgba(0,0,0,.55)),
+        linear-gradient(to right, rgba(0,0,0,.45) 0%, transparent 20%, transparent 80%, rgba(0,0,0,.45) 100%);
+      z-index:1; pointer-events:none;
+    }
+
     .leaf:hover{ filter:brightness(1.06); }
     .leaf:hover::before{ transform:scale(1.03); }
 
     .panel{position:absolute; inset:22px; border-radius:12px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.12));}
 
     /* Handles */
-    .handle-base{ position:absolute; top:50%; width:46px; height:46px; border-radius:50%; transform:translateY(-50%); background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.15), rgba(0,0,0,.45)); box-shadow:inset 0 0 4px rgba(255,255,255,.25), 0 2px 6px rgba(0,0,0,.5); }
+    .handle-base{
+      position:absolute; top:50%;
+      width:46px; height:46px; border-radius:50%; transform:translateY(-50%);
+      background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.2), rgba(0,0,0,.45));
+      box-shadow:inset 0 0 4px rgba(255,255,255,.25), 0 2px 6px rgba(0,0,0,.5);
+      z-index:4;
+    }
     .left .handle-base  { right:23px; }
     .right .handle-base { left:23px;  }
 
-    .handle{ position:absolute; top:50%; width:26px; height:26px; border-radius:50%; transform:translateY(-50%); background:radial-gradient(circle at 30% 30%, #ffed9f, #b67c0d 70%, #7a4f00); box-shadow: inset 0 1px 4px rgba(255,255,255,.65), inset 0 -1px 3px rgba(0,0,0,.45), 0 3px 8px rgba(0,0,0,.6); transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease; }
+    .handle{
+      position:absolute; top:50%; width:26px; height:26px; border-radius:50%;
+      transform:translateY(-50%);
+      background:radial-gradient(circle at 30% 30%, #ffed9f, #b67c0d 70%, #7a4f00);
+      box-shadow: inset 0 1px 4px rgba(255,255,255,.65), inset 0 -1px 3px rgba(0,0,0,.45), 0 3px 8px rgba(0,0,0,.6);
+      transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease;
+      z-index:5;
+    }
     .left .handle  { right:32px; }
     .right .handle { left:32px;  }
     .leaf:hover .handle, .leaf:focus-visible .handle{
