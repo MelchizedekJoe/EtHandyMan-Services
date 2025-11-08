@@ -221,6 +221,8 @@ footer{margin:46px 0 70px}
       <a href="#work">Our Work</a>
       <a href="#reviews">Reviews</a>
       <a href="#booking">Book</a>
+      <!-- Blog link added -->
+      <a href="#blog">Blog</a>
     </nav>
     <a class="cta" href="https://www.facebook.com/profile.php?id=61559444704457&sk=about" target="_blank" rel="noopener">Facebook</a>
     <a class="cta" href="https://wa.me/447305848484" target="_blank" rel="noopener">WhatsApp</a>
@@ -346,14 +348,10 @@ footer{margin:46px 0 70px}
             <p class="muted" style="font-size:12px;margin-top:4px">JPG, PNG, HEIC/HEIF, WebP • Max 4 MB each</p>
           </div>
 
-          <!-- Hidden file input (multiple) -->
           <input id="photos" name="photos" type="file" accept="image/*" capture="environment" multiple hidden />
-
-          <!-- Live previews -->
           <div id="preview" class="preview" aria-live="polite"></div>
         </div>
 
-        <!-- Honeypot -->
         <input type="text" name="company" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0">
 
         <div class="actions" style="grid-column:1/-1">
@@ -372,6 +370,55 @@ footer{margin:46px 0 70px}
     </aside>
   </div>
 </section>
+
+<!-- ===== Blog (UPDATED) ===== -->
+<section class="section" id="blog" tabindex="-1">
+  <h2>Blog Posts</h2>
+  <p class="muted">Stories and tips from real jobs across Peacehaven & Brighton.</p>
+
+  <div class="grid">
+    <!-- Post 1 -->
+    <article class="card svc">
+      <img src="./images/ET Service Blog.jpg" alt="ET Services collage" loading="lazy" width="240" height="240">
+      <div>
+        <h3>Welcome to ET Services Stories</h3>
+        <p>Stories and lessons from our everyday work.</p>
+        <p style="margin-top:8px">
+          <a class="btn" href="https://tahzimaelyassir.substack.com/p/welcome-to-et-services-stories" target="_blank" rel="noopener">Read post</a>
+        </p>
+      </div>
+    </article>
+
+    <!-- Post 2 -->
+    <article class="card svc">
+      <img src="./images/Gardening Blog.png" alt="Soil and roots close-up" loading="lazy" width="240" height="240">
+      <div>
+        <h3>Life Beneath the Soil</h3>
+        <p>You start a job, and nature starts a conversation.</p>
+        <p style="margin-top:8px">
+          <a class="btn" href="https://tahzimaelyassir.substack.com/p/life-beneath-the-soil" target="_blank" rel="noopener">Read post</a>
+        </p>
+      </div>
+    </article>
+
+    <!-- Post 3 -->
+    <article class="card svc">
+      <img src="./images/mole-story.jpg" alt="Gently moving a mole to safety" loading="lazy" width="240" height="240">
+      <div>
+        <h3>The Day We Met Some Moles</h3>
+        <p>How a small encounter reminded us that care for nature is part of every good job.</p>
+        <p style="margin-top:8px">
+          <a class="btn" href="https://tahzimaelyassir.substack.com/p/the-day-we-met-some-moles" target="_blank" rel="noopener">Read post</a>
+        </p>
+      </div>
+    </article>
+  </div>
+
+  <p style="margin-top:14px">
+    <a class="btn primary" href="https://tahzimaelyassir.substack.com" target="_blank" rel="noopener">View all posts on Substack</a>
+  </p>
+</section>
+
 
 <!-- Footer -->
 <footer class="section">
@@ -542,10 +589,6 @@ function syncInputWithSelection(){
 }
 
 // --- Quote form submit (MailerSend via Netlify Function) ---
-// IMPORTANT: This page DOES NOT include your MailerSend API key.
-// The browser will POST to /.netlify/functions/quote-request
-// and your serverless function (with the secret key in Netlify Env Vars)
-// will send the email to eli_etremovals@proton.me.
 (function(){
   const form = document.getElementById('quoteForm');
   if(!form) return;
