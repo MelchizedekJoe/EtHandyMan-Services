@@ -709,8 +709,8 @@ function openGroupFrom(imgEl){
     .filter(fig => fig.style.display !== 'none')
     .map(fig => {
       const i = fig.querySelector('img');
-      return { el: i, src: i.src, cap: i.dataset.cap || '' };
-    });
+      return { el: i, src: i.src, cap: i.dataset.cap || '', phase: i.dataset.phase || '' };
+  });
 
   currentGroup = items;
   currentIndex = items.findIndex(it => it.el === imgEl);
@@ -721,16 +721,36 @@ function openGroupFrom(imgEl){
   document.body.style.overflow = 'hidden';
 }
 
-function updateNavVisibility(){
-  const atStart = currentIndex === 0;
-  const atEnd   = currentIndex === currentGroup.length - 1;
+function updateNavForPhase(phase){
+  // reset defaults
+  prevBtn.style.display = 'grid';
+  nextBtn.style.display = 'grid';
+  prevBtn.textContent = '←';
+  nextBtn.textContent = '→';
+  prevBtn.setAttribute('aria-hidden','false');
+  nextBtn.setAttribute('aria-hidden','false');
 
-  prevBtn.style.display = atStart ? 'none' : 'grid';
-  prevBtn.setAttribute('aria-hidden', atStart ? 'true' : 'false');
-
-  nextBtn.style.display = atEnd ? 'none' : 'grid';
-  nextBtn.setAttribute('aria-hidden', atEnd ? 'true' : 'false');
+  if(phase === 'before'){
+    // only go forward
+    prevBtn.style.display = 'none';
+    prevBtn.setAttribute('aria-hidden','true');
+    nextBtn.textContent = '→';
+    nextBtn.setAttribute('aria-label','Next (During/After)');
+  } else if(phase === 'during'){
+    // both directions
+    prevBtn.textContent = '←';
+    nextBtn.textContent = '→';
+    prevBtn.setAttribute('aria-label','Back to Before');
+    nextBtn.setAttribute('aria-label','Forward to After');
+  } else if(phase === 'after'){
+    // only go back
+    nextBtn.style.display = 'none';
+    nextBtn.setAttribute('aria-hidden','true');
+    prevBtn.textContent = '←';
+    prevBtn.setAttribute('aria-label','Back to During/Before');
+  }
 }
+
 
 function showIndex(i){
   if(!currentGroup.length) return;
@@ -738,8 +758,9 @@ function showIndex(i){
   const it = currentGroup[currentIndex];
   lbImg.src = it.src;
   lbCap.textContent = it.cap;
-  updateNavVisibility();
+  updateNavForPhase(it.phase || '');
 }
+
 
 function closeLightbox(){
   lb.classList.remove('open');
