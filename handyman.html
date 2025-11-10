@@ -72,7 +72,7 @@ nav a:hover{border-bottom-color:rgba(255,255,255,.35)}
 .triptych .tile:hover img{transform:scale(1.03)}
 .badge{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);border:1px solid var(--border);padding:.25rem .5rem;border-radius:9999px;font-size:12px;color:var(--fg)}
 
-/* ===== Lightbox (base) ===== */
+/* ===== Lightbox ===== */
 .lightbox{
   position:fixed;inset:0;background:rgba(0,0,0,.88);
   display:none;z-index:1050;
@@ -94,7 +94,7 @@ nav a:hover{border-bottom-color:rgba(255,255,255,.35)}
   padding:8px 12px;background:rgba(17,24,39,.72);
   border:1px solid var(--border);border-radius:12px;backdrop-filter:blur(6px)
 }
-/* Floating nav + close so they never push the image */
+/* Floating nav + close */
 .lb-nav,.lb-close{
   background:rgba(17,24,39,.9);border:1px solid var(--border);color:var(--fg);
   width:44px;height:44px;border-radius:9999px;display:grid;place-items:center;
@@ -221,7 +221,7 @@ footer{margin:46px 0 70px}
   <h2>What we do</h2>
   <p class="muted">Professional workmanship across exterior and interior projects.</p>
   <div class="grid">
-    <article class="card svc"><img src="./images/Roofing%20repairs.jpg" alt="Roof repair" loading="lazy" width="240" height="240"><div><h3>Roofing & Repairs</h3><p>Tile/slate replacement, valleys & lead flashing, underlay & battens, gutters and leaks.</p></div></article>
+    <article class="card svc"><img src="./images/Roofing repairs.jpg" alt="Roof repair" loading="lazy" width="240" height="240"><div><h3>Roofing & Repairs</h3><p>Tile/slate replacement, valleys & lead flashing, underlay & battens, gutters and leaks.</p></div></article>
     <article class="card svc"><img src="./images/Tiling7.jpg" alt="Tiling" loading="lazy" width="240" height="240"><div><h3>Tiling & Paving</h3><p>Indoor/outdoor tiling, patios & steps, porcelain/ceramic, grouting and levelling.</p></div></article>
     <article class="card svc"><img src="./images/Grandting3.jpg" alt="Driveway" loading="lazy" width="240" height="240"><div><h3>Driveways & Resin</h3><p>Resin-bound finishes, edging and drainage for durable, low-maintenance driveways.</p></div></article>
     <article class="card svc"><img src="./images/Landscaping3.jpg" alt="Landscaping" loading="lazy" width="240" height="240"><div><h3>Landscaping & Groundworks</h3><p>Garden clearance, paths & edging, gravel/turf, levels and makeovers.</p></div></article>
@@ -230,7 +230,7 @@ footer{margin:46px 0 70px}
   </div>
 </section>
 
-<!-- Work Gallery -->
+<!-- Work Gallery (Before / During / After) -->
 <section class="section" id="work" tabindex="-1">
   <h2>What we’ve done</h2>
   <p class="muted">Each project shows a clear Before → During → After sequence. Filter by phase or open any image to view.</p>
@@ -243,35 +243,35 @@ footer{margin:46px 0 70px}
   </div>
 
   <div class="projects">
-    <!-- Project 1: Carpeting — Brighton -->
+    <!-- Project 1 -->
     <article class="card project" data-project="p1">
       <header class="project-head">
         <h3 class="project-title">Carpeting <span class="muted">— Brighton</span></h3>
       </header>
       <div class="triptych">
         <figure class="tile phase-before">
-          <img src="./images/Rug%201.jpg" alt="Before — Carpeting in Brighton" data-cap="BEFORE — Carpeting — Brighton" data-project="p1" data-phase="before" width="1000" height="700">
+          <img src="./images/Rug 1.jpg" alt="Before — Carpeting in Brighton" data-cap="BEFORE — Carpeting — Brighton" data-project="p1" data-phase="before" width="1000" height="700">
           <span class="badge">Before</span>
         </figure>
         <figure class="tile phase-during">
-          <img src="./images/rug%202.jpg" alt="During — Carpeting in Brighton" data-cap="DURING — Carpeting — Brighton" data-project="p1" data-phase="during" width="1000" height="700">
+          <img src="./images/rug 2.jpg" alt="During — Carpeting in Brighton" data-cap="DURING — Carpeting — Brighton" data-project="p1" data-phase="during" width="1000" height="700">
           <span class="badge">During</span>
         </figure>
         <figure class="tile phase-after">
-          <img src="./images/rugging%202.jpg" alt="After — Carpeting in Brighton" data-cap="AFTER — Carpeting — Brighton" data-project="p1" data-phase="after" width="1000" height="700">
+          <img src="./images/rugging 2.jpg" alt="After — Carpeting in Brighton" data-cap="AFTER — Carpeting — Brighton" data-project="p1" data-phase="after" width="1000" height="700">
           <span class="badge">After</span>
         </figure>
       </div>
     </article>
 
-    <!-- Project 2: Path & gravel — Peacehaven -->
+    <!-- Project 2 -->
     <article class="card project" data-project="p2">
       <header class="project-head">
         <h3 class="project-title">Path & gravel <span class="muted">— Peacehaven</span></h3>
       </header>
       <div class="triptych">
         <figure class="tile phase-before">
-          <img src="./images/6%20Before%20Tiling.jpg" alt="Before — Path & gravel in Peacehaven" data-cap="BEFORE — Path & gravel — Peacehaven" data-project="p2" data-phase="before" width="1000" height="700">
+          <img src="./images/6 Before Tiling.jpg" alt="Before — Path & gravel in Peacehaven" data-cap="BEFORE — Path & gravel — Peacehaven" data-project="p2" data-phase="before" width="1000" height="700">
           <span class="badge">Before</span>
         </figure>
         <figure class="tile phase-during">
@@ -285,58 +285,58 @@ footer{margin:46px 0 70px}
       </div>
     </article>
 
-    <!-- Project 3: Garden clearance — Hove -->
+    <!-- Project 3 -->
     <article class="card project" data-project="p3">
       <header class="project-head"><h3 class="project-title">Garden clearance <span class="muted">— Hove</span></h3></header>
       <div class="triptych">
         <figure class="tile phase-before">
-          <img src="./images/Weeding%20Before.jpg" alt="Before — Garden clearance in Hove" data-cap="BEFORE — Garden clearance — Hove" data-project="p3" data-phase="before" width="1000" height="700">
+          <img src="./images/Weeding Before.jpg" alt="Before — Garden clearance in Hove" data-cap="BEFORE — Garden clearance — Hove" data-project="p3" data-phase="before" width="1000" height="700">
           <span class="badge">Before</span>
         </figure>
         <figure class="tile phase-during">
-          <img src="./images/Weeding%20During.jpg" alt="During — Garden clearance in Hove" data-cap="DURING — Garden clearance — Hove" data-project="p3" data-phase="during" width="1000" height="700">
+          <img src="./images/Weeding During.jpg" alt="During — Garden clearance in Hove" data-cap="DURING — Garden clearance — Hove" data-project="p3" data-phase="during" width="1000" height="700">
           <span class="badge">During</span>
         </figure>
         <figure class="tile phase-after">
-          <img src="./images/Weeding%20After.jpg" alt="After — Garden clearance in Hove" data-cap="AFTER — Garden clearance — Hove" data-project="p3" data-phase="after" width="1000" height="700">
+          <img src="./images/Weeding After.jpg" alt="After — Garden clearance in Hove" data-cap="AFTER — Garden clearance — Hove" data-project="p3" data-phase="after" width="1000" height="700">
           <span class="badge">After</span>
         </figure>
       </div>
     </article>
 
-    <!-- Project 4: Roof valley repair — Brighton -->
+    <!-- Project 4 -->
     <article class="card project" data-project="p4">
       <header class="project-head">
         <h3 class="project-title">Roof valley repair <span class="muted">— Brighton</span></h3>
       </header>
       <div class="triptych">
         <figure class="tile phase-before">
-          <img src="./images/Roofing%20.jpg" alt="Before — Roof valley repair in Brighton" data-cap="BEFORE — Roof valley repair — Brighton" data-project="p4" data-phase="before" width="1000" height="700">
+          <img src="./images/Roofing .jpg" alt="Before — Roof valley repair in Brighton" data-cap="BEFORE — Roof valley repair — Brighton" data-project="p4" data-phase="before" width="1000" height="700">
           <span class="badge">Before</span>
         </figure>
         <figure class="tile phase-during">
-          <img src="./images/Roof%20repairs.jpg" alt="During — Roof valley repair in Brighton" data-cap="DURING — Roof valley repair — Brighton" data-project="p4" data-phase="during" width="1000" height="700">
+          <img src="./images/Roof repairs.jpg" alt="During — Roof valley repair in Brighton" data-cap="DURING — Roof valley repair — Brighton" data-project="p4" data-phase="during" width="1000" height="700">
           <span class="badge">During</span>
         </figure>
         <figure class="tile phase-after">
-          <img src="./images/Roof%20finish.jpg" alt="After — Roof valley repair in Brighton" data-cap="AFTER — Roof valley repair — Brighton" data-project="p4" data-phase="after" width="1000" height="700">
+          <img src="./images/Roof finish.jpg" alt="After — Roof valley repair in Brighton" data-cap="AFTER — Roof valley repair — Brighton" data-project="p4" data-phase="after" width="1000" height="700">
           <span class="badge">After</span>
         </figure>
       </div>
     </article>
 
-    <!-- Project 5: Resin driveway — East Sussex -->
+    <!-- Project 5 -->
     <article class="card project" data-project="p5">
       <header class="project-head">
         <h3 class="project-title">Resin driveway <span class="muted">— East Sussex</span></h3>
       </header>
       <div class="triptych">
         <figure class="tile phase-before">
-          <img src="./images/4%20Before%20Driveway.jpg" alt="Before — Resin driveway in East Sussex" data-cap="BEFORE — Resin driveway — East Sussex" data-project="p5" data-phase="before" width="1000" height="700">
+          <img src="./images/4 Before Driveway.jpg" alt="Before — Resin driveway in East Sussex" data-cap="BEFORE — Resin driveway — East Sussex" data-project="p5" data-phase="before" width="1000" height="700">
           <span class="badge">Before</span>
         </figure>
         <figure class="tile phase-during">
-          <img src="./images/2%20During%20Driveway%201.jpg" alt="During — Resin driveway in East Sussex" data-cap="DURING — Resin driveway — East Sussex" data-project="p5" data-phase="during" width="1000" height="700">
+          <img src="./images/2 During Driveway 1.jpg" alt="During — Resin driveway in East Sussex" data-cap="DURING — Resin driveway — East Sussex" data-project="p5" data-phase="during" width="1000" height="700">
           <span class="badge">During</span>
         </figure>
         <figure class="tile phase-after">
@@ -346,14 +346,14 @@ footer{margin:46px 0 70px}
       </div>
     </article>
 
-    <!-- Project 6: Patterned tiling — Brighton -->
+    <!-- Project 6 -->
     <article class="card project" data-project="p6">
       <header class="project-head">
         <h3 class="project-title">Patterned tiling <span class="muted">— Brighton</span></h3>
       </header>
       <div class="triptych">
         <figure class="tile phase-before">
-          <img src="./images/Pattern%20Tiling%20Before.jpg" alt="Before — Patterned tiling in Brighton" data-cap="BEFORE — Patterned tiling — Brighton" data-project="p6" data-phase="before" width="1000" height="700">
+          <img src="./images/Pattern Tiling Before.jpg" alt="Before — Patterned tiling in Brighton" data-cap="BEFORE — Patterned tiling — Brighton" data-project="p6" data-phase="before" width="1000" height="700">
           <span class="badge">Before</span>
         </figure>
         <figure class="tile phase-during">
@@ -361,28 +361,28 @@ footer{margin:46px 0 70px}
           <span class="badge">During</span>
         </figure>
         <figure class="tile phase-after">
-          <img src="./images/Pattern%20Tiling%20Finishing.jpg" alt="After — Patterned tiling in Brighton" data-cap="AFTER — Patterned tiling — Brighton" data-project="p6" data-phase="after" width="1000" height="700">
+          <img src="./images/Pattern Tiling Finishing.jpg" alt="After — Patterned tiling in Brighton" data-cap="AFTER — Patterned tiling — Brighton" data-project="p6" data-phase="after" width="1000" height="700">
           <span class="badge">After</span>
         </figure>
       </div>
     </article>
 
-    <!-- Project 7: Shopfront tiling & edging — London Road -->
+    <!-- Project 7 -->
     <article class="card project" data-project="p7">
       <header class="project-head">
         <h3 class="project-title">Shopfront tiling & edging <span class="muted">— London Road</span></h3>
       </header>
       <div class="triptych">
         <figure class="tile phase-before">
-          <img src="./images/Marbling%201.jpg" alt="Before — cracked shopfront tiles and damaged border" data-cap="BEFORE — Shopfront tiling & edging — London Road" data-project="p7" data-phase="before" width="1000" height="700">
+          <img src="./images/Marbling 1.jpg" alt="Before — cracked shopfront tiles and damaged border" data-cap="BEFORE — Shopfront tiling & edging — London Road" data-project="p7" data-phase="before" width="1000" height="700">
           <span class="badge">Before</span>
         </figure>
         <figure class="tile phase-during">
-          <img src="./images/Marbling%202.jpg" alt="During — repairs to tiles, grout and edging border" data-cap="DURING — Shopfront tiling & edging — London Road" data-project="p7" data-phase="during" width="1000" height="700">
+          <img src="./images/Marbling 2.jpg" alt="During — repairs to tiles, grout and edging border" data-cap="DURING — Shopfront tiling & edging — London Road" data-project="p7" data-phase="during" width="1000" height="700">
           <span class="badge">During</span>
         </figure>
         <figure class="tile phase-after">
-          <img src="./images/Marbling%203.jpg" alt="After — refreshed shopfront tiles with neat dark border" data-cap="AFTER — Shopfront tiling & edging — London Road" data-project="p7" data-phase="after" width="1000" height="700">
+          <img src="./images/Marbling 3.jpg" alt="After — refreshed shopfront tiles with neat dark border" data-cap="AFTER — Shopfront tiling & edging — London Road" data-project="p7" data-phase="after" width="1000" height="700">
           <span class="badge">After</span>
         </figure>
       </div>
@@ -715,11 +715,21 @@ function openGroupFrom(imgEl){
   currentGroup = items;
   currentIndex = items.findIndex(it => it.el === imgEl);
   if(currentIndex < 0) currentIndex = 0;
+
   showIndex(currentIndex);
   lb.classList.add('open');
-
-  // Prevent background scroll while open
   document.body.style.overflow = 'hidden';
+}
+
+function updateNavVisibility(){
+  const atStart = currentIndex === 0;
+  const atEnd   = currentIndex === currentGroup.length - 1;
+
+  prevBtn.style.display = atStart ? 'none' : 'grid';
+  prevBtn.setAttribute('aria-hidden', atStart ? 'true' : 'false');
+
+  nextBtn.style.display = atEnd ? 'none' : 'grid';
+  nextBtn.setAttribute('aria-hidden', atEnd ? 'true' : 'false');
 }
 
 function showIndex(i){
@@ -728,6 +738,7 @@ function showIndex(i){
   const it = currentGroup[currentIndex];
   lbImg.src = it.src;
   lbCap.textContent = it.cap;
+  updateNavVisibility();
 }
 
 function closeLightbox(){
@@ -742,7 +753,6 @@ document.getElementById('work').addEventListener('click', (e)=>{
   openGroupFrom(img);
 });
 
-// Backdrop click: close if click is NOT inside inner content or on nav buttons
 lb.addEventListener('click', (e)=>{
   const inside = e.target.closest('.lb-inner, .lb-nav');
   if(!inside) closeLightbox();
@@ -775,15 +785,6 @@ addEventListener('keydown', (e)=>{
     }
   }, {passive:true});
 })();
-
-// --- Optional: Log any missing images to help debugging ---
-document.querySelectorAll('img').forEach(img => {
-  img.addEventListener('error', () => {
-    console.warn('Missing image:', img.getAttribute('src'));
-    img.style.opacity = '0.35';
-    img.title = 'Image not found: ' + img.getAttribute('src');
-  }, { once: true });
-});
 </script>
 </body>
 </html>
