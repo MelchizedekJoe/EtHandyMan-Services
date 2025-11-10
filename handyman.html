@@ -67,7 +67,7 @@ nav a:hover{border-bottom-color:rgba(255,255,255,.35)}
 .project-head{padding:12px 14px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02);border-top-left-radius:16px;border-top-right-radius:16px}
 .project-title{margin:0;font-size:18px}
 .triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px}
-.triptych .tile{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--border);cursor:pointer}
+.triptych .tile{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--border);cursor:pointer; margin:0; width:100%;}
 .triptych .tile img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .25s ease}
 .triptych .tile:hover img{transform:scale(1.03)}
 .badge{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);border:1px solid var(--border);padding:.25rem .5rem;border-radius:9999px;font-size:12px;color:var(--fg)}
@@ -76,7 +76,7 @@ nav a:hover{border-bottom-color:rgba(255,255,255,.35)}
 .lightbox{
   position:fixed;inset:0;background:rgba(0,0,0,.9);
   display:none;grid-template-columns:auto 1fr auto;align-items:center;z-index:1050;
-  padding:16px; /* easier to hit backdrop */
+  padding:16px;
 }
 .lightbox.open{display:grid}
 .lb-inner{display:grid;place-items:center;position:relative}
@@ -155,11 +155,14 @@ footer{margin:46px 0 70px}
   .heroImg{height:260px}
   .preview{grid-template-columns:repeat(3,1fr)}
 }
+/* ✅ Mobile fix for Before/During/After alignment & centering */
 @media (max-width:600px){
   .grid,.testis{grid-template-columns:1fr}
   .mobile-bar{display:flex}
   .preview{grid-template-columns:repeat(2,1fr)}
-  .triptych{grid-template-columns:1fr}
+  .triptych{grid-template-columns:1fr; justify-items:stretch;}
+  .triptych .tile{aspect-ratio:4 / 3;}              /* uniform tile height */
+  .triptych .tile img{width:100%; height:100%; object-fit:cover; display:block;} /* consistent crop */
 }
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}.triptych .tile img{transition:none}}
 </style>
@@ -355,45 +358,26 @@ footer{margin:46px 0 70px}
       </div>
     </article>
 
-    <!-- Project 6 -->
-<article class="card project" data-project="p7">
-  <header class="project-head">
-    <h3 class="project-title">Shopfront tiling & edging <span class="muted">— London Road</span></h3>
-  </header>
-
-  <div class="triptych">
-    <!-- BEFORE -->
-    <figure class="tile phase-before">
-      <img
-        src="./images/Marbling 1.jpg"
-        alt="Before — cracked shopfront tiles and damaged border"
-        data-cap="BEFORE — Shopfront tiling & edging — London Road"
-        data-project="p7" data-phase="before" width="1000" height="700">
-      <span class="badge">Before</span>
-    </figure>
-
-    <!-- DURING -->
-    <figure class="tile phase-during">
-      <img
-        src="./images/Marbling 2.jpg"
-        alt="During — repairs to tiles, grout and edging border"
-        data-cap="DURING — Shopfront tiling & edging — London Road"
-        data-project="p7" data-phase="during" width="1000" height="700">
-      <span class="badge">During</span>
-    </figure>
-
-    <!-- AFTER -->
-    <figure class="tile phase-after">
-      <img
-        src="./images/Marbling 3.jpg"
-        alt="After — refreshed shopfront tiles with neat dark border"
-        data-cap="AFTER — Shopfront tiling & edging — London Road"
-        data-project="p7" data-phase="after" width="1000" height="700">
-      <span class="badge">After</span>
-    </figure>
-  </div>
-</article>
-
+    <!-- Project 7 -->
+    <article class="card project" data-project="p7">
+      <header class="project-head">
+        <h3 class="project-title">Shopfront tiling & edging <span class="muted">— London Road</span></h3>
+      </header>
+      <div class="triptych">
+        <figure class="tile phase-before">
+          <img src="./images/Marbling 1.jpg" alt="Before — cracked shopfront tiles and damaged border" data-cap="BEFORE — Shopfront tiling & edging — London Road" data-project="p7" data-phase="before" width="1000" height="700">
+          <span class="badge">Before</span>
+        </figure>
+        <figure class="tile phase-during">
+          <img src="./images/Marbling 2.jpg" alt="During — repairs to tiles, grout and edging border" data-cap="DURING — Shopfront tiling & edging — London Road" data-project="p7" data-phase="during" width="1000" height="700">
+          <span class="badge">During</span>
+        </figure>
+        <figure class="tile phase-after">
+          <img src="./images/Marbling 3.jpg" alt="After — refreshed shopfront tiles with neat dark border" data-cap="AFTER — Shopfront tiling & edging — London Road" data-project="p7" data-phase="after" width="1000" height="700">
+          <span class="badge">After</span>
+        </figure>
+      </div>
+    </article>
   </div>
 
   <!-- Shared lightbox -->
