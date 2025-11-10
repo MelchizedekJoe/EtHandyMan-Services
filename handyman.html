@@ -20,6 +20,13 @@ body{
   background:radial-gradient(1200px 700px at 50% 0%, #111827 0%, var(--bg) 55%);
   color:var(--fg); -webkit-text-size-adjust:100%;
 }
+/* Lightbox nav: disabled state */
+.lb-nav.is-disabled{
+  opacity:.35;
+  pointer-events:none;
+  filter:grayscale(30%);
+}
+
 
 /* ===== Header ===== */
 .header{position:fixed;inset:0 0 auto 0;z-index:1000;background:rgba(7,12,24,.78);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
@@ -722,31 +729,33 @@ function openGroupFrom(imgEl){
 }
 
 function updateNavForPhase(phase){
-  // reset defaults
+  // Always show both buttons with correct arrow glyphs
   prevBtn.style.display = 'grid';
   nextBtn.style.display = 'grid';
   prevBtn.textContent = '←';
   nextBtn.textContent = '→';
-  prevBtn.setAttribute('aria-hidden','false');
-  nextBtn.setAttribute('aria-hidden','false');
+
+  // Reset disabled state
+  prevBtn.classList.remove('is-disabled');
+  nextBtn.classList.remove('is-disabled');
+  prevBtn.setAttribute('aria-disabled','false');
+  nextBtn.setAttribute('aria-disabled','false');
 
   if(phase === 'before'){
-    // only go forward
-    prevBtn.style.display = 'none';
-    prevBtn.setAttribute('aria-hidden','true');
-    nextBtn.textContent = '→';
+    // Only allow moving forward
+    prevBtn.classList.add('is-disabled');
+    prevBtn.setAttribute('aria-disabled','true');
+    prevBtn.setAttribute('aria-label','No previous image');
     nextBtn.setAttribute('aria-label','Next (During/After)');
   } else if(phase === 'during'){
-    // both directions
-    prevBtn.textContent = '←';
-    nextBtn.textContent = '→';
+    // Both directions available
     prevBtn.setAttribute('aria-label','Back to Before');
     nextBtn.setAttribute('aria-label','Forward to After');
   } else if(phase === 'after'){
-    // only go back
-    nextBtn.style.display = 'none';
-    nextBtn.setAttribute('aria-hidden','true');
-    prevBtn.textContent = '←';
+    // Only allow moving back
+    nextBtn.classList.add('is-disabled');
+    nextBtn.setAttribute('aria-disabled','true');
+    nextBtn.setAttribute('aria-label','No next image');
     prevBtn.setAttribute('aria-label','Back to During/Before');
   }
 }
