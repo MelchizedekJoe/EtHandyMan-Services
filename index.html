@@ -31,7 +31,8 @@
   <!-- Helpful preloads (ensure these files exist or remove) -->
   <link rel="preload" as="image" href="/images/et-services-logo.png" fetchpriority="high">
   <link rel="preload" as="image" href="/images/handyman-hero.png">
-  <link rel="preload" as="image" href="/images/removal-hero.png">
+  <!-- swapped to the new removals image -->
+  <link rel="preload" as="image" href="/images/removals.jpg">
 
   <!-- LocalBusiness schema -->
   <script type="application/ld+json">
@@ -103,7 +104,7 @@
       box-shadow:0 0 0 2px rgba(255,255,255,.05), inset 0 0 40px rgba(0,0,0,.5);
     }
 
-    /* Create a visible central seam */
+    /* Central seam */
     .door::after{
       content:"";
       position:absolute;
@@ -116,7 +117,7 @@
       pointer-events:none;
     }
 
-    /* Individual door leaves */
+    /* Leaves */
     .leaf{
       position:relative;
       flex:1 1 50%;
@@ -130,13 +131,13 @@
       transition:transform 1.05s cubic-bezier(.2,.7,.1,1), filter .3s ease;
       box-shadow:inset 0 0 60px rgba(0,0,0,.35);
       contain: layout style paint;
-      min-width:44px; min-height:44px; /* touch targets */
+      min-width:44px; min-height:44px;
     }
     .leaf:focus-visible { outline:3px solid var(--focus); outline-offset:-3px; }
     .leaf.left  { transform-origin:left center;  border-right:1px solid rgba(255,255,255,.1); }
     .leaf.right { transform-origin:right center; border-left:1px solid rgba(255,255,255,.1); }
 
-    /* Background images on leaves */
+    /* Background images */
     .leaf::before{
       content:""; position:absolute; inset:0;
       background-position:center; background-size:cover; background-repeat:no-repeat;
@@ -145,9 +146,10 @@
       will-change: transform, filter;
     }
     .leaf.left::before  { background-image:url('/images/handyman-hero.png'); }
-    .leaf.right::before { background-image:url('/images/removal-hero.png'); }
+    /* swapped to the new removals image */
+    .leaf.right::before { background-image:url('/images/removals.jpg'); }
 
-    /* Vignette + edge shading for depth */
+    /* Vignette */
     .leaf::after{
       content:""; position:absolute; inset:0;
       background:
@@ -213,7 +215,7 @@
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
-      .leaf, .leaf::before, .handle{ transition:none !important; }
+      .leaf, .leaf::before, .handle{ transition:none !IMPORTANT; }
       .door:hover .left, .door:hover .right { transform:none; }
     }
 
@@ -239,56 +241,42 @@
       background:#0b1224; color:#fff; padding:.5rem .75rem; border-radius:.5rem;
       border:1px solid rgba(255,255,255,.15); font-size:14px;
     }
-    /* ===== Mobile fixes (paste at end) ===== */
-@supports (height: 100svh) {
-  .scene { min-height: 100svh; } /* use small viewport unit on iOS */
-}
 
-@media (max-width: 600px) {
-  /* allow scrolling; fixed-hero was hiding content on iOS */
-  body { overflow:auto; }
-
-  /* give the layout breathing room inside notches/home bars */
-  .scene { padding-top: calc(env(safe-area-inset-top, 0px) + 8px);
-           padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px); }
-
-  /* stage scales for phones; height follows aspect ratio instead of hard vh */
-  .stage {
-    width: 94vw;
-    aspect-ratio: 3 / 4;       /* keeps doors fully visible */
-    height: auto;              /* let aspect-ratio control height */
-    margin-top: 7vh;
-  }
-
-  /* don’t crop the door images on small screens */
-  .leaf::before {
-    background-size: contain !important;   /* show full image */
-    background-position: center center;
-    background-color: #0f172a;             /* letterbox fill */
-    filter: saturate(1.05) brightness(.98) blur(.6px);
-  }
-
-  /* trim heavy inner shadows and seam for clarity on tiny screens */
-  .leaf { box-shadow: inset 0 0 30px rgba(0,0,0,.25); }
-  .door::after { width: 2px; background: rgba(0,0,0,.35); }
-
-  /* slightly smaller type so labels don’t wrap awkwardly */
-  .label h2 { font-size: clamp(16px, 4.5vw, 22px); }
-  .label p  { font-size: 12px; }
-  .logo h1  { font-size: clamp(22px, 6vw, 34px); }
-  .logo p   { font-size: 14px; max-width: 32ch; }
-
-  /* keep handles visible within narrower leaves */
-  .handle-base { width: 42px; height: 42px; }
-  .handle      { width: 24px; height: 24px; }
-}
-
-/* Users who prefer reduced motion should jump straight without long swing */
-@media (prefers-reduced-motion: reduce) {
-  .open-left  .left,
-  .open-right .right { transform:none !important; }
-}
-
+    /* ===== Mobile fixes ===== */
+    @supports (height: 100svh) {
+      .scene { min-height: 100svh; }
+    }
+    @media (max-width: 600px) {
+      body { overflow:auto; }
+      .scene {
+        padding-top: calc(env(safe-area-inset-top, 0px) + 8px);
+        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
+      }
+      .stage {
+        width: 94vw;
+        aspect-ratio: 3 / 4;
+        height: auto;
+        margin-top: 7vh;
+      }
+      .leaf::before {
+        background-size: contain !important;
+        background-position: center center;
+        background-color: #0f172a;
+        filter: saturate(1.05) brightness(.98) blur(.6px);
+      }
+      .leaf { box-shadow: inset 0 0 30px rgba(0,0,0,.25); }
+      .door::after { width: 2px; background: rgba(0,0,0,.35); }
+      .label h2 { font-size: clamp(16px, 4.5vw, 22px); }
+      .label p  { font-size: 12px; }
+      .logo h1  { font-size: clamp(22px, 6vw, 34px); }
+      .logo p   { font-size: 14px; max-width: 32ch; }
+      .handle-base { width: 42px; height: 42px; }
+      .handle      { width: 24px; height: 24px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .open-left  .left,
+      .open-right .right { transform:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -296,7 +284,6 @@
 
   <div class="scene" aria-label="ET Services. Choose a service by opening a door leaf.">
     <a class="brand" href="/" aria-label="ET Services home">
-      <!-- Above-the-fold logo should not be lazy -->
       <img src="/images/et-services-logo.png" width="120" height="120" alt="ET Services logo" class="brand-logo">
       <span>ET Services</span>
     </a>
@@ -346,12 +333,10 @@
   <noscript>JavaScript is off — links still work, but animations are disabled.</noscript>
 
   <script>
-    // Progressive enhancement door logic with a11y + reduced-motion + debounce
     (function () {
       const door  = document.getElementById('door');
       const left  = document.getElementById('leaf-left');
       const right = document.getElementById('leaf-right');
-
       if (!door || !left || !right) return;
 
       const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -361,10 +346,7 @@
         if (navigating) return;
         navigating = true;
 
-        if (prefersReduced) {
-          window.location.href = url;
-          return;
-        }
+        if (prefersReduced) { window.location.href = url; return; }
 
         if(which==='left'){
           door.classList.remove('open-right');
@@ -375,18 +357,14 @@
           door.classList.add('open-right');
           right.setAttribute('aria-expanded','true');
         }
-
-        // Delay navigation just enough to feel the swing
         window.setTimeout(function(){ window.location.href=url; }, 380);
       }
 
       function handleClick(e, side){
-        // Only intercept primary clicks with no modifier
         if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
         e.preventDefault();
         openLeaf(side, e.currentTarget.href);
       }
-
       function handleKey(e, side){
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -394,14 +372,12 @@
         }
       }
 
-      left.addEventListener('click',  function(e){ handleClick(e,'left'); });
-      right.addEventListener('click', function(e){ handleClick(e,'right'); });
+      left.addEventListener('click',  (e)=>handleClick(e,'left'));
+      right.addEventListener('click', (e)=>handleClick(e,'right'));
+      left.addEventListener('keydown',  (e)=>handleKey(e,'left'));
+      right.addEventListener('keydown', (e)=>handleKey(e,'right'));
 
-      left.addEventListener('keydown',  function(e){ handleKey(e,'left'); });
-      right.addEventListener('keydown', function(e){ handleKey(e,'right'); });
-
-      // Initial focus for keyboard users after paint
-      window.setTimeout(function(){ try { left.focus({preventScroll:true}); } catch(_){} }, 400);
+      setTimeout(()=>{ try { left.focus({preventScroll:true}); } catch(_){} }, 400);
     })();
   </script>
 </body>
