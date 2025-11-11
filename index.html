@@ -239,6 +239,56 @@
       background:#0b1224; color:#fff; padding:.5rem .75rem; border-radius:.5rem;
       border:1px solid rgba(255,255,255,.15); font-size:14px;
     }
+    /* ===== Mobile fixes (paste at end) ===== */
+@supports (height: 100svh) {
+  .scene { min-height: 100svh; } /* use small viewport unit on iOS */
+}
+
+@media (max-width: 600px) {
+  /* allow scrolling; fixed-hero was hiding content on iOS */
+  body { overflow:auto; }
+
+  /* give the layout breathing room inside notches/home bars */
+  .scene { padding-top: calc(env(safe-area-inset-top, 0px) + 8px);
+           padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px); }
+
+  /* stage scales for phones; height follows aspect ratio instead of hard vh */
+  .stage {
+    width: 94vw;
+    aspect-ratio: 3 / 4;       /* keeps doors fully visible */
+    height: auto;              /* let aspect-ratio control height */
+    margin-top: 7vh;
+  }
+
+  /* don’t crop the door images on small screens */
+  .leaf::before {
+    background-size: contain !important;   /* show full image */
+    background-position: center center;
+    background-color: #0f172a;             /* letterbox fill */
+    filter: saturate(1.05) brightness(.98) blur(.6px);
+  }
+
+  /* trim heavy inner shadows and seam for clarity on tiny screens */
+  .leaf { box-shadow: inset 0 0 30px rgba(0,0,0,.25); }
+  .door::after { width: 2px; background: rgba(0,0,0,.35); }
+
+  /* slightly smaller type so labels don’t wrap awkwardly */
+  .label h2 { font-size: clamp(16px, 4.5vw, 22px); }
+  .label p  { font-size: 12px; }
+  .logo h1  { font-size: clamp(22px, 6vw, 34px); }
+  .logo p   { font-size: 14px; max-width: 32ch; }
+
+  /* keep handles visible within narrower leaves */
+  .handle-base { width: 42px; height: 42px; }
+  .handle      { width: 24px; height: 24px; }
+}
+
+/* Users who prefer reduced motion should jump straight without long swing */
+@media (prefers-reduced-motion: reduce) {
+  .open-left  .left,
+  .open-right .right { transform:none !important; }
+}
+
   </style>
 </head>
 <body>
