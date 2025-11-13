@@ -11,208 +11,271 @@
   <meta name="description" content="Repairs, installations & house/office removals across Peacehaven & Brighton. Fast, friendly, reliable. Call 01273 569343">
   <meta name="robots" content="index,follow,max-image-preview:large" />
 
+  <!-- Optional security hardening (prefer sending as HTTP headers in production) -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self';">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
   <!-- Icons -->
   <link rel="icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta name="theme-color" content="#0f172a" />
 
-  <!-- Open Graph -->
+  <!-- Open Graph / Twitter -->
   <meta property="og:title" content="ET Services — Handyman & Removals" />
   <meta property="og:description" content="Repairs, installations & house/office removals across Peacehaven & Brighton." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://et-services.co.uk/images/social-card.jpg" />
   <meta property="og:url" content="https://et-services.co.uk/" />
+  <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Preload images -->
+  <!-- Helpful preloads (ensure these files exist or remove) -->
   <link rel="preload" as="image" href="/images/et-services-logo.png" fetchpriority="high">
   <link rel="preload" as="image" href="/images/handyman-hero.png">
+  <!-- swapped to the new removals image -->
   <link rel="preload" as="image" href="/images/removals.jpg">
 
-  <!-- Schema -->
+  <!-- LocalBusiness schema -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "ET Services",
-    "url": "https://et-services.co.uk/",
-    "telephone": "+44 7305 848484",
-    "email": "ely@et-services.co.uk",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Lincoln Court, Lincoln Ave",
-      "addressLocality": "Peacehaven",
-      "postalCode": "BN10 7FB",
-      "addressCountry": "GB"
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "@id":"https://et-services.co.uk/#business",
+    "name":"ET Services",
+    "url":"https://et-services.co.uk/",
+    "telephone":"+44 7305 848484",
+    "email":"ely@et-services.co.uk",
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"Lincoln Court, Lincoln Ave",
+      "addressLocality":"Peacehaven",
+      "postalCode":"BN10 7FB",
+      "addressCountry":"GB"
     },
-    "image": "https://et-services.co.uk/images/et-handyman-logo.jpg",
-    "areaServed": ["Peacehaven", "Brighton & Hove", "East Sussex"]
+    "image":"https://et-services.co.uk/images/et-handyman-logo.jpg",
+    "areaServed":["Peacehaven","Brighton & Hove","East Sussex"]
   }
   </script>
 
   <style>
-    :root {
-      --bg:#0f172a;
-      --fg:#e5e7eb;
+    :root{
+      --bg:#0f172a; /* slate-900 */
+      --fg:#e5e7eb; /* gray-200 */
       --glass:rgba(255,255,255,.06);
+      --border:rgba(255,255,255,.1);
       --shadow:0 20px 40px rgba(0,0,0,.45);
       --focus:#38bdf8;
     }
 
-    html, body { height:100%; }
-    body {
-      margin:0;
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--fg);
       font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,Arial;
-      color:var(--fg);
       background: radial-gradient(1200px 700px at 50% 0%, #111827 0%, var(--bg) 55%);
-      overflow:hidden;
-      -webkit-text-size-adjust:100%;
+      overflow:hidden; /* single-screen hero */
+      -webkit-text-size-adjust: 100%;
     }
 
-    .scene {
-      position:relative;
-      height:100dvh;
-      display:grid;
-      grid-template-rows:auto 1fr auto;
-    }
+    .scene{position:relative; height:100dvh; display:grid; grid-template-rows:auto 1fr auto;}
 
-    /* --- Brand --- */
-    .brand {
+    /* Brand chip */
+    .brand{
       position:absolute; top:20px; left:20px; z-index:3;
       display:inline-flex; align-items:center; gap:12px;
-      letter-spacing:.06em; text-transform:uppercase; font-weight:800;
+      letter-spacing:.06em; text-transform:uppercase; font-weight:800; font-size:15px;
       padding:.6rem 1rem; background:var(--glass);
-      border-radius:9999px;
-      backdrop-filter:blur(6px);
-      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.08); border-radius:9999px;
+      backdrop-filter:blur(6px); box-shadow:var(--shadow);
       color:inherit; text-decoration:none;
     }
-    .brand-logo { width:60px; height:auto; border-radius:10px; }
+    .brand-logo{ width:60px; height:auto; object-fit:contain; border-radius:10px; }
+    .brand:focus-visible{ outline:3px solid var(--focus); outline-offset:3px; }
 
-    /* --- Stage & Door --- */
-    .stage {
-      position:relative;
-      width:min(88vw,860px);
-      height:min(78vh,680px);
-      margin-inline:auto;
-      margin-top:9vh;
-      perspective:1400px;
-    }
+    /* Stage */
+    .stage{position:relative; width:min(88vw,860px); height:min(78vh,680px); margin-inline:auto; margin-top:9vh; perspective:1400px; perspective-origin:50% 50%;}
+    .doorframe{position:absolute; inset:0; border-radius:24px; box-shadow:0 0 0 2px rgba(255,255,255,.08), 0 0 0 4px rgba(255,255,255,.03), var(--shadow), 0 20px 40px rgba(0,0,0,.3); background:linear-gradient(180deg,#0b1224 0%,#0a0f1e 60%,#07101e 100%); overflow:hidden; contain:layout style;}
 
-    .doorframe {
-      position:absolute; inset:0;
-      border-radius:24px;
-      box-shadow:0 0 0 2px rgba(255,255,255,.08),
-                 0 0 0 4px rgba(255,255,255,.03),
-                 var(--shadow);
-      background:linear-gradient(180deg,#0b1224 0%,#0a0f1e 60%,#07101e 100%);
-      overflow:hidden;
-    }
-
-    .door {
+    /* Doors container */
+    .door{
       position:absolute; inset:12px;
       border-radius:20px;
       transform-style:preserve-3d;
-      display:flex; overflow:hidden;
-      box-shadow:inset 0 0 40px rgba(0,0,0,.5);
+      display:flex;
+      overflow:hidden;
+      box-shadow:0 0 0 2px rgba(255,255,255,.05), inset 0 0 40px rgba(0,0,0,.5);
     }
 
-    .door::after {
-      content:""; position:absolute; top:0; bottom:0; left:50%;
-      width:3px; background:rgba(0,0,0,.45);
+    /* Central seam */
+    .door::after{
+      content:"";
+      position:absolute;
+      top:0; bottom:0; left:50%;
+      width:3px;
+      background:rgba(0,0,0,.45);
       border-left:1px solid rgba(255,255,255,.1);
       border-right:1px solid rgba(255,255,255,.1);
       z-index:3;
+      pointer-events:none;
     }
 
-    /* --- Leaves --- */
-    .leaf {
-      flex:1; position:relative; overflow:hidden;
-      text-decoration:none; color:inherit;
+    /* Leaves */
+    .leaf{
+      position:relative;
+      flex:1 1 50%;
+      display:block;
+      text-decoration:none;
+      color:inherit;
       background:#0f172a;
+      border:none;
       cursor:pointer;
+      overflow:hidden;
       transition:transform 1.05s cubic-bezier(.2,.7,.1,1), filter .3s ease;
       box-shadow:inset 0 0 60px rgba(0,0,0,.35);
+      contain: layout style paint;
+      min-width:44px; min-height:44px;
     }
-    .leaf.left  { transform-origin:left center; }
-    .leaf.right { transform-origin:right center; }
+    .leaf:focus-visible { outline:3px solid var(--focus); outline-offset:-3px; }
+    .leaf.left  { transform-origin:left center;  border-right:1px solid rgba(255,255,255,.1); }
+    .leaf.right { transform-origin:right center; border-left:1px solid rgba(255,255,255,.1); }
 
-    .leaf::before {
+    /* Background images */
+    .leaf::before{
       content:""; position:absolute; inset:0;
-      background-position:center;
-      background-size:cover;
-      background-repeat:no-repeat;
-      filter:saturate(1.05) brightness(.95);
-      transition:transform .8s cubic-bezier(.4,0,.2,1);
+      background-position:center; background-size:cover; background-repeat:no-repeat;
+      filter:saturate(1.05) brightness(.95) blur(1.2px);
+      transition:transform .8s cubic-bezier(.4,0,.2,1), filter .6s ease;
+      will-change: transform, filter;
     }
     .leaf.left::before  { background-image:url('/images/handyman-hero.png'); }
+    /* swapped to the new removals image */
     .leaf.right::before { background-image:url('/images/removals.jpg'); }
 
-    .leaf:hover::before { transform:scale(1.03); }
-
-    /* --- Labels --- */
-    .label {
-      position:absolute; left:0; right:0; bottom:24px;
-      text-align:center; z-index:2;
+    /* Vignette */
+    .leaf::after{
+      content:""; position:absolute; inset:0;
+      background:
+        radial-gradient(120% 100% at 50% 20%, rgba(0,0,0,.15), rgba(0,0,0,.55)),
+        linear-gradient(to right, rgba(0,0,0,.45) 0%, transparent 20%, transparent 80%, rgba(0,0,0,.45) 100%);
+      z-index:1; pointer-events:none;
     }
-    .label h2 { margin:0; font-size:clamp(18px,2.3vw,28px); text-shadow:0 2px 10px rgba(0,0,0,.6); }
-    .label p  { margin:.35rem 0 0; opacity:.9; font-size:13px; text-shadow:0 2px 8px rgba(0,0,0,.6); }
 
-    /* --- Center copy --- */
-    .logo {
-      position:absolute; top:50%; left:50%;
-      transform:translate(-50%,-50%);
-      text-align:center; user-select:none; pointer-events:none;
-      padding:0 16px;
+    .leaf:hover{ filter:brightness(1.06); }
+    .leaf:hover::before{ transform:scale(1.03); }
+
+    .panel{position:absolute; inset:22px; border-radius:12px; border:1px solid rgba(255,255,255,.08); background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.12));}
+
+    /* Handles */
+    .handle-base{
+      position:absolute; top:50%;
+      width:46px; height:46px; border-radius:50%; transform:translateY(-50%);
+      background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.2), rgba(0,0,0,.45));
+      box-shadow:inset 0 0 4px rgba(255,255,255,.25), 0 2px 6px rgba(0,0,0,.5);
+      z-index:4;
     }
-    .logo h1 { margin:0; font-weight:800; font-size:clamp(26px,4.6vw,54px); }
-    .logo p  { margin:.5rem auto 0; opacity:.85; max-width:60ch; line-height:1.5; }
+    .left .handle-base  { right:23px; }
+    .right .handle-base { left:23px;  }
 
-    /* --- Footer --- */
-    footer {
-      position:absolute; bottom:0; width:100%;
-      background:rgba(0,0,0,.4);
-      backdrop-filter:blur(6px);
-      text-align:center; padding:10px 6px;
-      font-size:14px;
-      border-top:1px solid rgba(255,255,255,.1);
-      color:#cbd5e1;
+    .handle{
+      position:absolute; top:50%; width:26px; height:26px; border-radius:50%;
+      transform:translateY(-50%);
+      background:radial-gradient(circle at 30% 30%, #ffed9f, #b67c0d 70%, #7a4f00);
+      box-shadow: inset 0 1px 4px rgba(255,255,255,.65), inset 0 -1px 3px rgba(0,0,0,.45), 0 3px 8px rgba(0,0,0,.6);
+      transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease;
+      z-index:5;
     }
-    footer a { color:#f8fafc; text-decoration:none; border-bottom:1px dashed rgba(255,255,255,.3); }
+    .left .handle  { right:32px; }
+    .right .handle { left:32px;  }
+    .leaf:hover .handle, .leaf:focus-visible .handle{
+      transform:translateY(-50%) scale(1.08);
+      box-shadow: 0 4px 16px rgba(255,200,80,.6), 0 0 20px rgba(255,200,80,.3), inset 0 1px 4px rgba(255,255,255,.65), inset 0 -1px 3px rgba(0,0,0,.45);
+    }
 
-    /* --- Mobile Fixes --- */
+    /* Labels */
+    .label{ position:absolute; left:0; right:0; bottom:24px; text-align:center; z-index:2; }
+    .label h2{ margin:0; font-size:clamp(18px,2.3vw,28px); text-shadow:0 2px 10px rgba(0,0,0,.6); }
+    .label p { margin:.35rem 0 0; opacity:.9; font-size:13px; text-shadow:0 2px 8px rgba(0,0,0,.6); }
+
+    /* Center copy (non-interactive) */
+    .logo{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; user-select:none; pointer-events:none; padding:0 16px; }
+    .logo h1{ margin:0; font-weight:800; letter-spacing:.01em; font-size:clamp(26px,4.6vw,54px); }
+    .logo p { margin:.5rem auto 0; opacity:.85; max-width:60ch; line-height:1.5; }
+
+    /* Hover breathing (desktop only) */
+    @media (hover: hover) {
+      .door:hover .left  { transform:perspective(1400px) rotateY(-2deg); }
+      .door:hover .right { transform:perspective(1400px) rotateY( 2deg); }
+    }
+
+    /* Open states */
+    .open-left  .left  { transform:rotateY(-105deg); }
+    .open-left  .right { transform:rotateY(0) scale(1.01); }
+    .open-right .right { transform:rotateY(105deg); }
+    .open-right .left  { transform:rotateY(0) scale(1.01); }
+    .open-left  .left::before,
+    .open-right .right::before{ filter:saturate(1.1) blur(0); }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .leaf, .leaf::before, .handle{ transition:none !IMPORTANT; }
+      .door:hover .left, .door:hover .right { transform:none; }
+    }
+
+    /* Footer */
+    footer{ position:absolute; bottom:0; width:100%; background:rgba(0,0,0,.4); backdrop-filter:blur(6px); text-align:center; padding:10px 6px; font-size:14px; border-top:1px solid rgba(255,255,255,.1); letter-spacing:.4px; }
+    footer a{ color:#f8fafc; text-decoration:none; border-bottom:1px dashed rgba(255,255,255,.3); }
+    footer a:focus-visible{ outline:3px solid var(--focus); outline-offset:3px; }
+
+    @media (max-width:820px){
+      .stage{ width:min(94vw,760px); height:min(74vh,680px); margin-top:11vh; }
+      footer{font-size:13px;}
+    }
+
+    /* Skip link */
+    .skip{
+      position:absolute; left:-9999px; top:-9999px; background:#111827; color:#fff; padding:.5rem .75rem; border-radius:.5rem;
+    }
+    .skip:focus{ left:16px; top:16px; z-index:50; }
+
+    /* noscript gets a readable badge */
+    noscript{
+      position:fixed; bottom:56px; left:50%; transform:translateX(-50%);
+      background:#0b1224; color:#fff; padding:.5rem .75rem; border-radius:.5rem;
+      border:1px solid rgba(255,255,255,.15); font-size:14px;
+    }
+
+    /* ===== Mobile fixes ===== */
     @supports (height: 100svh) {
       .scene { min-height: 100svh; }
     }
     @media (max-width: 600px) {
       body { overflow:auto; }
-
       .scene {
         padding-top: calc(env(safe-area-inset-top, 0px) + 8px);
         padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
       }
-
       .stage {
         width: 94vw;
         aspect-ratio: 3 / 4;
         height: auto;
         margin-top: 7vh;
       }
-
-      .door { inset: 12px; }
-      .leaf { height: 100%; }
-
-      /* Equal height & sharper images */
       .leaf::before {
-        background-size: cover !important;
+        background-size: contain !important;
         background-position: center center;
         background-color: #0f172a;
-        filter: saturate(1.08) brightness(1) blur(0) !important;
+        filter: saturate(1.05) brightness(.98) blur(.6px);
       }
-
+      .leaf { box-shadow: inset 0 0 30px rgba(0,0,0,.25); }
+      .door::after { width: 2px; background: rgba(0,0,0,.35); }
       .label h2 { font-size: clamp(16px, 4.5vw, 22px); }
       .label p  { font-size: 12px; }
       .logo h1  { font-size: clamp(22px, 6vw, 34px); }
       .logo p   { font-size: 14px; max-width: 32ch; }
+      .handle-base { width: 42px; height: 42px; }
+      .handle      { width: 24px; height: 24px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .open-left  .left,
+      .open-right .right { transform:none !important; }
     }
   </style>
 </head>
@@ -221,25 +284,31 @@
 
   <div class="scene" aria-label="ET Services. Choose a service by opening a door leaf.">
     <a class="brand" href="/" aria-label="ET Services home">
-      <img src="/images/et-services-logo.png" alt="ET Services logo" class="brand-logo">
+      <img src="/images/et-services-logo.png" width="120" height="120" alt="ET Services logo" class="brand-logo">
       <span>ET Services</span>
     </a>
 
     <div class="stage">
       <div class="doorframe">
         <div class="door" id="door" role="group" aria-label="Service doors">
-          <!-- Left Door -->
-          <a class="leaf left" id="leaf-left" href="/handyman.html"
-             aria-label="Open for Handyman Services">
+          <!-- LEFT = Handyman -->
+          <a class="leaf left" id="leaf-left" href="/mobileview.html"
+             aria-label="Open for Handyman Services" aria-expanded="false">
+            <div class="panel" aria-hidden="true"></div>
+            <div class="handle-base" aria-hidden="true"></div>
+            <div class="handle" aria-hidden="true"></div>
             <div class="label" aria-hidden="true">
               <h2>Handyman Services</h2>
               <p>Repairs, installations & quick fixes 🛠️</p>
             </div>
           </a>
 
-          <!-- Right Door -->
+          <!-- RIGHT = Removals -->
           <a class="leaf right" id="leaf-right" href="/removals.html"
-             aria-label="Open for Removals Services">
+             aria-label="Open for Removals Services" aria-expanded="false">
+            <div class="panel" aria-hidden="true"></div>
+            <div class="handle-base" aria-hidden="true"></div>
+            <div class="handle" aria-hidden="true"></div>
             <div class="label" aria-hidden="true">
               <h2>Removals Services</h2>
               <p>Home & office moves with care 📦</p>
@@ -255,7 +324,7 @@
     </div>
 
     <footer id="footer">
-      📞 <a href="tel:+447305848484">01273 569343</a> |
+      📞 <a href="tel:+447305848484" rel="nofollow">01273 569343</a> |
       ✉️ <a href="mailto:ely@et-services.co.uk">ely@et-services.co.uk</a><br>
       📍 Lincoln Court, Lincoln Ave, Peacehaven BN10 7FB
     </footer>
@@ -265,40 +334,50 @@
 
   <script>
     (function () {
-      const door = document.getElementById('door');
-      const left = document.getElementById('leaf-left');
+      const door  = document.getElementById('door');
+      const left  = document.getElementById('leaf-left');
       const right = document.getElementById('leaf-right');
       if (!door || !left || !right) return;
 
+      const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       let navigating = false;
-      function openLeaf(which, url) {
+
+      function openLeaf(which, url){
         if (navigating) return;
         navigating = true;
+
+        if (prefersReduced) { window.location.href = url; return; }
 
         if(which==='left'){
           door.classList.remove('open-right');
           door.classList.add('open-left');
+          left.setAttribute('aria-expanded','true');
         } else {
           door.classList.remove('open-left');
           door.classList.add('open-right');
+          right.setAttribute('aria-expanded','true');
         }
-
-        setTimeout(()=>window.location.href=url, 380);
+        window.setTimeout(function(){ window.location.href=url; }, 380);
       }
 
-      const handle = (e, side)=>{
-        if(e.type==='click'){
-          if(e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey) return;
-          e.preventDefault(); openLeaf(side,e.currentTarget.href);
-        } else if(e.key==='Enter'||e.key===' '){
-          e.preventDefault(); openLeaf(side,e.currentTarget.href);
+      function handleClick(e, side){
+        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        e.preventDefault();
+        openLeaf(side, e.currentTarget.href);
+      }
+      function handleKey(e, side){
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openLeaf(side, e.currentTarget.href);
         }
-      };
+      }
 
-      left.addEventListener('click',e=>handle(e,'left'));
-      right.addEventListener('click',e=>handle(e,'right'));
-      left.addEventListener('keydown',e=>handle(e,'left'));
-      right.addEventListener('keydown',e=>handle(e,'right'));
+      left.addEventListener('click',  (e)=>handleClick(e,'left'));
+      right.addEventListener('click', (e)=>handleClick(e,'right'));
+      left.addEventListener('keydown',  (e)=>handleKey(e,'left'));
+      right.addEventListener('keydown', (e)=>handleKey(e,'right'));
+
+      setTimeout(()=>{ try { left.focus({preventScroll:true}); } catch(_){} }, 400);
     })();
   </script>
 </body>
