@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>ET Services | Handyman & Removals in Peacehaven</title>
+
+  <meta name="description" content="Repairs, installations & house/office removals across Peacehaven & Brighton. Fast, friendly, reliable. Call 01273 569343">
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+
+  <style>
+    :root{
+      --bg-from: hsl(220,25%,8%);
+      --bg-via:  hsl(220,20%,12%);
+      --bg-to:   hsl(220,25%,10%);
+      --fg:      hsl(210,40%,98%);
+      --muted:   hsla(210,40%,96%,0.7);
+      --primary: hsl(45,100%,55%);
+      --secondary: hsl(210,80%,70%);
+      --glass:   hsla(220,20%,15%,0.6);
+      --border:  hsla(210,40%,98%,0.10);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;-webkit-text-size-adjust:100%}
+    body{
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,Arial,sans-serif;
+      color:var(--fg);
+      background:
+        radial-gradient(circle at top, rgba(15,23,42,.85), transparent 55%),
+        linear-gradient(to bottom right,var(--bg-from),var(--bg-via),var(--bg-to));
+      overflow-x:hidden;
+    }
+    @supports(height:100svh){ body{min-height:100svh;} }
+
+    .page{position:relative;min-height:100vh;width:100%;overflow:hidden;}
+
+    /* Brand */
+    .brand-badge{
+      position:absolute;left:1.5rem;top:1.5rem;z-index:20;
+      display:inline-flex;align-items:center;gap:.75rem;
+      padding:.75rem 1.5rem;border-radius:999px;
+      border:1px solid var(--border);background:var(--glass);
+      backdrop-filter:blur(10px);
+      text-decoration:none;color:var(--fg);font-weight:700;
+      letter-spacing:.04em;text-transform:uppercase;font-size:.9rem;
+      box-shadow:0 18px 50px rgba(0,0,0,.45);
+    }
+    .brand-logo{width:32px;height:32px;border-radius:.75rem;object-fit:cover;background:#020617;}
+    .brand-badge:focus-visible{outline:3px solid var(--primary);outline-offset:3px;}
+
+    main{
+      min-height:100vh;display:flex;align-items:center;justify-content:center;
+      padding:5rem 1.5rem 6rem;
+    }
+    .hero-inner{width:100%;max-width:72rem;margin-inline:auto;text-align:center;}
+    .hero-title{font-size:clamp(2.4rem,4vw,3.8rem);font-weight:800;margin-bottom:1rem;}
+    .hero-subtitle{font-size:clamp(1.05rem,2vw,1.35rem);color:var(--muted);max-width:42rem;margin-inline:auto;}
+
+    /* Door container */
+    .door-shell{
+      margin:3rem auto 0;max-width:1000px;aspect-ratio:16/9;
+      border-radius:1.75rem;border:1px solid var(--border);
+      background:hsla(220,20%,15%,0.4);padding:.5rem;
+      backdrop-filter:blur(14px);
+      box-shadow:0 0 60px hsla(36, 100%, 55%, 0.2),0 20px 40px rgba(0,0,0,0.4);
+      perspective:2000px;perspective-origin:50% 50%;
+    }
+    .door-row{
+      position:relative;display:flex;height:100%;width:100%;
+      gap:.5rem;overflow:hidden;border-radius:1.5rem;
+      flex-direction:column;
+    }
+    @media (min-width:768px){
+      .door-row{flex-direction:row;}
+    }
+
+    .door{
+      position:relative;flex:1 1 0;cursor:pointer;
+      overflow:visible;border-radius:1rem;outline:none;
+      transform-style:preserve-3d;transform:rotateY(0deg);
+      background-position:center;background-size:cover;background-repeat:no-repeat;
+      transition:transform .8s cubic-bezier(.4,0,.2,1), box-shadow .3s ease;
+      min-height:300px;
+      box-shadow:inset 0 0 20px rgba(0,0,0,0.3),0 8px 32px rgba(0,0,0,0.5);
+      border:2px solid rgba(255,255,255,0.1);
+    }
+    @media (min-width:768px){
+      .door{min-height:0;}
+    }
+
+    .door-left{
+      transform-origin:left center;
+      background-image:url('/images/handyman-door.png');
+      box-shadow:inset 0 0 20px rgba(0,0,0,0.3),
+                 0 8px 32px rgba(0,0,0,0.5),
+                 inset -3px 0 8px rgba(0,0,0,0.4);
+      border-color:rgba(36,100%,55%,0.15);
+    }
+    .door-right{
+      transform-origin:right center;
+      background-image:url('/images/removals-door.jpg');
+      box-shadow:inset 0 0 20px rgba(0,0,0,0.3),
+                 0 8px 32px rgba(0,0,0,0.5),
+                 inset 3px 0 8px rgba(0,0,0,0.4);
+      border-color:rgba(210,50%,50%,0.15);
+    }
+
+    /* Hover tilt on desktop */
+    @media (min-width:768px){
+      .door-left:hover{transform:rotateY(-3deg);}
+      .door-right:hover{transform:rotateY(3deg);}
+    }
+
+    .door::before{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(to bottom,rgba(0,0,0,.2),transparent 30%,rgba(0,0,0,.6));
+      transition:opacity .3s ease;opacity:1;z-index:1;
+    }
+    .door:hover::before,
+    .door:focus-visible::before{opacity:.75;}
+    .door:hover,
+    .door:focus-visible{box-shadow:0 20px 50px rgba(0,0,0,.65);}
+
+    /* Label */
+    .door-label-wrap{
+      position:absolute;inset-inline:0;bottom:0;padding:1.25rem;
+      z-index:2;display:flex;justify-content:center;text-align:center;
+    }
+    .door-label{
+      max-width:20rem;background:rgba(0,0,0,.6);
+      padding:.85rem 1.15rem;border-radius:.9rem;
+      backdrop-filter:blur(8px);
+    }
+    .door-label h2{margin:0 0 .4rem;font-size:clamp(1.35rem,2.1vw,1.8rem);font-weight:700;}
+    .door-label p{margin:0;font-size:.9rem;color:rgba(248,250,252,.9);}
+
+    /* Hover outline */
+    .door-outline{
+      position:absolute;inset:0;border-radius:inherit;border:4px solid transparent;
+      opacity:0;transition:opacity .25s ease, border-color .25s ease;
+      z-index:2;pointer-events:none;
+    }
+    .door-left .door-outline{border-color:hsla(45,100%,55%,0.6);}
+    .door-right .door-outline{border-color:hsla(210,80%,70%,0.6);}
+    .door:hover .door-outline,
+    .door:focus-visible .door-outline{opacity:1;}
+    .door-left:hover .door-outline{box-shadow:0 0 30px rgba(255,177,0,0.5);}
+    .door-right:hover .door-outline{box-shadow:0 0 30px rgba(96,165,250,0.5);}
+
+    /* Glowing vertical handles */
+    .door-handle-bar{
+      position:absolute;top:50%;width:20px;height:120px;
+      transform:translateY(-50%);
+      background:linear-gradient(90deg,
+        hsl(45 85% 40%) 0%,
+        hsl(45 100% 55%) 40%,
+        hsl(45 100% 65%) 50%,
+        hsl(45 100% 55%) 60%,
+        hsl(45 85% 40%) 100%);
+      border-radius:10px;
+      box-shadow:
+        0 0 20px hsla(36,100%,55%,0.6),
+        0 0 40px hsla(36,100%,55%,0.4),
+        0 8px 16px rgba(0,0,0,0.6),
+        inset 2px 0 4px rgba(255,255,255,0.5),
+        inset -2px 0 4px rgba(0,0,0,0.5);
+      animation:pulse-glow 2s ease-in-out infinite;
+      z-index:10;
+    }
+    .door-left .door-handle-bar{right:1rem;}
+    .door-right .door-handle-bar{
+      left:1rem;
+      animation-delay:1s;
+    }
+    @media (min-width:768px){
+      .door-left .door-handle-bar{right:1.5rem;}
+      .door-right .door-handle-bar{left:1.5rem;}
+      .door-left:hover .door-handle-bar{transform:translateY(-50%) translateX(0.5rem);}
+      .door-right:hover .door-handle-bar{transform:translateY(-50%) translateX(-0.5rem);}
+    }
+
+    .door-handle-knob{
+      position:absolute;top:50%;left:50%;
+      width:40px;height:40px;border-radius:999px;
+      transform:translate(-50%,-50%);
+      background:radial-gradient(circle at 35% 35%,
+        hsl(45 100% 70%),
+        hsl(45 100% 50%),
+        hsl(45 80% 30%));
+      box-shadow:
+        0 0 15px hsla(36,100%,55%,0.8),
+        0 4px 12px rgba(0,0,0,0.6),
+        inset 2px 2px 4px rgba(255,255,255,0.6),
+        inset -2px -2px 4px rgba(0,0,0,0.4);
+    }
+    .door-handle-knob::after{
+      content:"";position:absolute;inset:4px;border-radius:inherit;
+      background:radial-gradient(circle at 30% 30%,rgba(255,255,255,0.4),transparent);
+    }
+    .door:hover .door-handle-knob{transform:translate(-50%,-50%) scale(1.08);}
+
+    @keyframes pulse-glow{
+      0%,100%{
+        box-shadow:
+          0 0 20px hsla(36,100%,55%,0.6),
+          0 0 40px hsla(36,100%,55%,0.4),
+          0 8px 16px rgba(0,0,0,0.6),
+          inset 2px 0 4px rgba(255,255,255,0.5),
+          inset -2px 0 4px rgba(0,0,0,0.5);
+      }
+      50%{
+        box-shadow:
+          0 0 30px hsla(36,100%,55%,0.8),
+          0 0 60px hsla(36,100%,55%,0.6),
+          0 8px 16px rgba(0,0,0,0.6),
+          inset 2px 0 4px rgba(255,255,255,0.5),
+          inset -2px 0 4px rgba(0,0,0,0.5);
+      }
+    }
+
+    /* Open states for click */
+    .door-shell.open-left  .door-left{transform:rotateY(-75deg);}
+    .door-shell.open-right .door-right{transform:rotateY(75deg);}
+
+    footer{
+      position:absolute;left:0;right:0;bottom:0;
+      border-top:1px solid var(--border);
+      background:var(--glass);
+      backdrop-filter:blur(14px);
+      font-size:.9rem;
+    }
+    .footer-inner{
+      max-width:72rem;margin:0 auto;padding:.9rem 1.5rem;
+      display:flex;flex-direction:column;gap:.75rem;
+      align-items:center;justify-content:center;text-align:center;
+      color:var(--muted);
+    }
+    .footer-links{
+      display:flex;flex-wrap:wrap;gap:1.5rem;
+      justify-content:center;align-items:center;
+    }
+    .footer-links a{
+      color:inherit;text-decoration:none;transition:color .2s ease;
+    }
+    .footer-links a:hover,
+    .footer-links a:focus-visible{color:var(--primary);outline:none;}
+    @media (min-width:768px){
+      .footer-inner{flex-direction:row;justify-content:space-between;text-align:left;}
+    }
+
+    @media (max-width:640px){
+      .brand-badge{left:1rem;top:1rem;padding:.55rem 1.1rem;gap:.5rem;}
+      .hero-title{font-size:clamp(2.1rem,7vw,2.8rem);}
+      .door-shell{aspect-ratio:3/4;}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .door,
+      .door-shell.open-left .door-left,
+      .door-shell.open-right .door-right{
+        transition:none !important;
+        transform:none !important;
+      }
+      .door-handle-bar{animation:none !important;}
+    }
+  </style>
+</head>
+<body>
+  <div class="page" aria-label="ET Services. Choose a door for handyman or removals services.">
+    <a href="/" class="brand-badge" aria-label="ET Services home">
+      <img src="/images/et-logo.png" alt="ET Services logo" class="brand-logo" width="32" height="32">
+      <span>ET Services</span>
+    </a>
+
+    <main>
+      <div class="hero-inner">
+        <h1 class="hero-title">Welcome to ET Services</h1>
+        <p class="hero-subtitle">
+          Choose a door to enter — <strong>Handyman Services</strong> or <strong>Removals Services</strong>.
+        </p>
+
+        <section class="door-shell" id="door-shell">
+          <div class="door-row">
+            <!-- Left Door: Handyman -->
+            <a
+              href="/handyman.html"
+              class="door door-left"
+              id="door-left"
+              aria-label="Open Handyman Services door"
+            >
+              <span class="door-outline" aria-hidden="true"></span>
+              <span class="door-handle-bar" aria-hidden="true">
+                <span class="door-handle-knob"></span>
+              </span>
+              <span class="door-label-wrap" aria-hidden="true">
+                <span class="door-label">
+                  <h2>Handyman Services</h2>
+                  <p>Repairs, installations &amp; quick fixes 🛠️</p>
+                </span>
+              </span>
+            </a>
+
+            <!-- Right Door: Removals -->
+            <a
+              href="/removals.html"
+              class="door door-right"
+              id="door-right"
+              aria-label="Open Removals Services door"
+            >
+              <span class="door-outline" aria-hidden="true"></span>
+              <span class="door-handle-bar" aria-hidden="true">
+                <span class="door-handle-knob"></span>
+              </span>
+              <span class="door-label-wrap" aria-hidden="true">
+                <span class="door-label">
+                  <h2>Removals Services</h2>
+                  <p>Home &amp; office moves with care 📦</p>
+                </span>
+              </span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a href="tel:01273569343">📞 01273 569343</a>
+          <a href="mailto:ely@et-services.co.uk">✉️ ely@et-services.co.uk</a>
+        </div>
+        <div>📍 Lincoln Court, Lincoln Ave, Peacehaven BN10 7FB</div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function(){
+      const shell = document.getElementById('door-shell');
+      const left  = document.getElementById('door-left');
+      const right = document.getElementById('door-right');
+      if (!shell || !left || !right) return;
+
+      const prefersReduced =
+        window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      let navigating = false;
+
+      function openAndGo(side, url){
+        if (navigating) return;
+        navigating = true;
+
+        if (prefersReduced){
+          window.location.href = url;
+          return;
+        }
+
+        shell.classList.remove('open-left','open-right');
+        shell.classList.add(side === 'left' ? 'open-left' : 'open-right');
+
+        setTimeout(function(){
+          window.location.href = url;
+        }, 800); // match your new timing
+      }
+
+      function makeClickHandler(side, url){
+        return function(e){
+          if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          e.preventDefault();
+          openAndGo(side,url);
+        };
+      }
+      function makeKeyHandler(side, url){
+        return function(e){
+          if (e.key === 'Enter' || e.key === ' '){
+            e.preventDefault();
+            openAndGo(side,url);
+          }
+        };
+      }
+
+      left.addEventListener('click',   makeClickHandler('left','/handyman.html'));
+      right.addEventListener('click',  makeClickHandler('right','/removals.html'));
+      left.addEventListener('keydown', makeKeyHandler('left','/handyman.html'));
+      right.addEventListener('keydown',makeKeyHandler('right','/removals.html'));
+    })();
+  </script>
+</body>
+</html>
