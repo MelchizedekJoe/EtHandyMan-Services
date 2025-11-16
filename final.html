@@ -130,64 +130,69 @@
     </footer>
   </div>
 
-    <script>
-    // Fade-in card
-    window.addEventListener("load", () => {
-      document.getElementById("heroCard").classList.add("is-visible");
-    });
+<script>
+  // Fade-in card
+  window.addEventListener("load", () => {
+    document.getElementById("heroCard").classList.add("is-visible");
+  });
 
-    // Door open/close animation
-    (function(){
-      const shell = document.getElementById('door-shell');
-      const left  = document.getElementById('door-left');
-      const right = document.getElementById('door-right');
-      if (!shell || !left || !right) return;
+  (function(){
+    const shell = document.getElementById('door-shell');
+    const left  = document.getElementById('door-left');
+    const right = document.getElementById('door-right');
+    if (!shell || !left || !right) return;
 
-      const prefersReduced =
-        window.matchMedia &&
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReduced =
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      let navigating = false;
+    let navigating = false;
 
-      function openAndGo(side, url){
-        if (navigating) return;
-        navigating = true;
+    function openAndGo(side, url){
+      if (navigating) return;
+      navigating = true;
 
-        if (prefersReduced){
-          window.location.href = url;
-          return;
-        }
-
-        shell.classList.remove('open-left','open-right');
-        shell.classList.add(side === 'left' ? 'open-left' : 'open-right');
-
-        setTimeout(() => {
-          window.location.href = url;
-        }, 700); // matches CSS transition timing
+      if (prefersReduced){
+        window.location.href = url;
+        return;
       }
 
-      function makeClickHandler(side, url){
-        return function(e){
-          if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      shell.classList.remove('open-left','open-right');
+      shell.classList.add(side === 'left' ? 'open-left' : 'open-right');
+
+      setTimeout(() => {
+        window.location.href = url;
+      }, 700);
+    }
+
+    function makeClickHandler(side, url){
+      return function(e){
+        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        e.preventDefault();
+        openAndGo(side,url);
+      };
+    }
+
+    function makeKeyHandler(side, url){
+      return function(e){
+        if (e.key === 'Enter' || e.key === ' '){
           e.preventDefault();
           openAndGo(side,url);
-        };
-      }
+        }
+      };
+    }
 
-      function makeKeyHandler(side, url){
-        return function(e){
-          if (e.key === 'Enter' || e.key === ' '){
-            e.preventDefault();
-            openAndGo(side,url);
-          }
-        };
-      }
+    left.addEventListener('click',   makeClickHandler('left','/handyman.html'));
+    right.addEventListener('click',  makeClickHandler('right','/removals.html'));
+    left.addEventListener('keydown', makeKeyHandler('left','/handyman.html'));
+    right.addEventListener('keydown',makeKeyHandler('right','/removals.html'));
 
-      left.addEventListener('click',   makeClickHandler('left','/handyman.html'));
-      right.addEventListener('click',  makeClickHandler('right','/removals.html'));
-      left.addEventListener('keydown', makeKeyHandler('left','/handyman.html'));
-      right.addEventListener('keydown',makeKeyHandler('right','/removals.html'));
-    })();
-  </script>
+    // Reset doors when coming back via browser navigation
+    window.addEventListener("pageshow", () => {
+      shell.classList.remove('open-left','open-right');
+      navigating = false;
+    });
+  })();
+</script>
 </body>
 </html>
