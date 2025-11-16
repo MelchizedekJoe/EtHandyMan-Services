@@ -230,7 +230,7 @@
           <!-- Left Door -->
           <a href="/handyman.html" class="door door-left" id="door-left" aria-label="Open Handyman Services">
             <span class="door-handle-bar"><span class="door-handle-knob"></span></span>
-            <video id="video-handyman" class="door-video" preload="auto" muted>
+            <video id="video-handyman" class="door-video" preload="auto" muted playsinline>
               <source src="/videos/handyman.mp4" type="video/mp4" />
             </video>
             <div class="door-label"><h2>Handyman Services</h2><p>Repairs & quick fixes 🔧</p></div>
@@ -239,7 +239,7 @@
           <a href="/removals.html" class="door door-right" id="door-right" aria-label="Open Removals Services">
             <span class="door-handle-bar"><span class="door-handle-knob"></span></span>
             <span class="hand-icon">🖐️</span>
-            <video id="video-removals" class="door-video" preload="auto" muted>
+            <video id="video-removals" class="door-video" preload="auto" muted playsinline>
               <source src="/videos/removals.mp4" type="video/mp4" />
             </video>
             <div class="door-label"><h2>Removals Services</h2><p>Home & office moves 🚚</p></div>
@@ -281,11 +281,11 @@
         // Trigger hand animation
         door.classList.add("clicked");
 
-        // Play video
+        // Play video inline
         const video = door.querySelector(".door-video");
         if (video){
           video.style.display = "block";
-          video.play();
+          video.play().catch(err => console.log("Video play blocked:", err));
         }
 
         // Open door after video starts
@@ -294,7 +294,7 @@
           shell.classList.add(side === 'left' ? 'open-left' : 'open-right');
         }, 600);
 
-        // Navigate after video finishes
+        // Navigate after video finishes (or fixed duration)
         setTimeout(() => {
           window.location.href = url;
         }, 3000); // matches video duration
