@@ -26,6 +26,20 @@ body{
 .wrap{max-width:1200px;margin:auto;padding:10px 16px;display:flex;align-items:center;gap:12px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px;letter-spacing:.02em}
 .brand-logo{width:28px;height:28px;object-fit:contain;border-radius:6px;box-shadow:0 0 0 1px rgba(255,255,255,.15),0 4px 10px rgba(0,0,0,.35)}
+/* Make the logo link look like the old brand (white, no underline) */
+.brand,
+.brand:link,
+.brand:visited {
+  color: var(--fg);      /* same white as the header text */
+  text-decoration: none;
+}
+
+.brand:hover,
+.brand:focus-visible {
+  text-decoration: none;
+  opacity: 0.9;         /* subtle hover feedback */
+}
+
 nav{display:flex;align-items:center;gap:8px}
 nav a{color:inherit;text-decoration:none;margin:0 8px;padding:6px 0;border-bottom:2px solid transparent;transition:.2s}
 nav a:hover{border-bottom-color:rgba(255,255,255,.35)}
@@ -191,10 +205,11 @@ footer{margin:46px 0 70px}
     <button class="menu-btn" aria-label="Toggle menu" aria-controls="mainnav" aria-expanded="false">
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
     </button>
-    <div class="brand">
-      <img class="brand-logo" src="./images/et-handyman-logo.jpg" alt="ET Handyman logo" width="28" height="28">
-      ET Handyman Services
-    </div>
+<a href="/index.html" class="brand">
+  <img class="brand-logo" src="./images/et-handyman-logo.jpg" alt="ET Handyman logo" width="28" height="28">
+  <span>ET Handyman Services</span>
+</a>
+
     <div class="spacer"></div>
     <nav id="mainnav" aria-label="Main navigation">
       <a href="#services">Services</a>
