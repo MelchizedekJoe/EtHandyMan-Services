@@ -10,9 +10,10 @@
       --bg: #0f172a;
       --fg: #f8fafc;
       --muted: #cbd5f5;
-      --handle-brown: #5c4033; /* coffee brown */
+      --handle-brown: #5c4033;
       --border: rgba(255,255,255,0.1);
       --focus: #38bdf8;
+      --olive-skin: #a67856;
     }
 
     body {
@@ -22,82 +23,195 @@
       margin: 0;
     }
 
-    .page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 1.5rem; }
-
-    .brand { display: flex; align-items: center; gap: .75rem; background: rgba(255,255,255,0.05);
-             padding: .6rem 1rem; border-radius: 999px; backdrop-filter: blur(8px); font-weight: 700;
-             text-transform: uppercase; margin-bottom: 1rem; }
-    .brand img { width: 42px; height: 42px; border-radius: 12px; }
-
-    .hero-card { text-align: center; max-width: 720px; background: rgba(255,255,255,0.03);
-                 border-radius: 24px; padding: 1.5rem; box-shadow: 0 20px 40px rgba(0,0,0,.5);
-                 transition: opacity 0.6s ease, transform 0.6s ease; opacity: 0; transform: translateY(20px); }
-    .hero-card.visible { opacity: 1; transform: none; }
-
-    .hero-card h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; margin-bottom: 0.5rem; }
-    .hero-card p { font-size: 1.1rem; color: var(--muted); }
-
-    .door-shell { margin-top: 2rem; max-width: 1000px; aspect-ratio: 16/9; border-radius: 1.5rem;
-                  border: 1px solid var(--border); background: rgba(255,255,255,0.03); padding: .5rem;
-                  backdrop-filter: blur(12px); perspective: 2000px; }
-    .door-row { display: flex; gap: .5rem; height: 100%; }
-    @media(max-width:768px){ .door-row{flex-direction:column;} .door-shell{aspect-ratio:3/4;width:94vw;} }
-
-    .door { flex:1; position:relative; cursor:pointer; border-radius:1rem; background-size:cover;
-            background-position:center; transition:transform .7s ease; min-height:280px; }
-    .door-left { background-image:url('/images/handyman-hero.png'); transform-origin:left center; }
-    .door-right { background-image:url('/images/Removals.jpg'); transform-origin:right center; }
-
-    .door-shell.open-left .door-left { transform:rotateY(-75deg); }
-    .door-shell.open-right .door-right { transform:rotateY(75deg); }
-
-    /* Darker coffee-brown handle */
-    .door-handle-bar {
-      position:absolute; top:50%; width:26px; height:110px; transform:translateY(-50%);
-      background: linear-gradient(90deg, var(--handle-brown), #3b2a20, var(--handle-brown));
-      border-radius:12px;
-      box-shadow: inset 0 0 6px #2a1a12, 0 0 20px rgba(92,64,51,0.8);
-      z-index:2;
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem;
     }
-    .door-left .door-handle-bar { right:1rem; }
-    .door-right .door-handle-bar { left:1rem; }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      background: rgba(255,255,255,0.05);
+      padding: .6rem 1rem;
+      border-radius: 999px;
+      backdrop-filter: blur(8px);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+    }
+
+    .hero-card {
+      text-align: center;
+      max-width: 720px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,.5);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-card.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .hero-card h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-card p {
+      font-size: 1.1rem;
+      color: var(--muted);
+    }
+
+    .door-shell {
+      margin-top: 2rem;
+      max-width: 1000px;
+      aspect-ratio: 16 / 9;
+      border-radius: 1.5rem;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      padding: 0.5rem;
+      backdrop-filter: blur(12px);
+      perspective: 2000px;
+    }
+
+    .door-row {
+      display: flex;
+      gap: 0.5rem;
+      height: 100%;
+    }
+
+    @media(max-width:768px){
+      .door-row{flex-direction:column;}
+      .door-shell{aspect-ratio:3/4;width:94vw;}
+    }
+
+    .door {
+      flex: 1;
+      position: relative;
+      cursor: pointer;
+      border-radius: 1rem;
+      background-size: cover;
+      background-position: center;
+      transition: transform .7s ease;
+      min-height: 280px;
+      overflow: hidden;
+    }
+
+    .door-left {
+      background-image: url('/images/handyman-hero.png');
+      transform-origin: left center;
+    }
+
+    .door-right {
+      background-image: url('/images/Removals.jpg');
+      transform-origin: right center;
+    }
+
+    .door-shell.open-left .door-left {
+      transform: rotateY(-75deg);
+    }
+
+    .door-shell.open-right .door-right {
+      transform: rotateY(75deg);
+    }
+
+    .door-handle-bar {
+      position: absolute;
+      top: 50%;
+      width: 26px;
+      height: 110px;
+      transform: translateY(-50%);
+      background: linear-gradient(90deg, var(--handle-brown), #3b2a20, var(--handle-brown));
+      border-radius: 12px;
+      box-shadow: inset 0 0 6px #2a1a12, 0 0 20px rgba(92,64,51,0.8);
+      z-index: 2;
+    }
+
+    .door-left .door-handle-bar { right: 1rem; }
+    .door-right .door-handle-bar { left: 1rem; }
 
     .door-handle-knob {
-      position:absolute; top:50%; left:50%; width:38px; height:38px; border-radius:50%;
-      transform:translate(-50%,-50%);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
       background: radial-gradient(circle at 30% 30%, #7a523f, #3b2a20);
       box-shadow: inset 2px 2px 4px rgba(255,255,255,0.3), inset -2px -2px 4px rgba(0,0,0,0.6);
     }
 
-    /* Hand icon hovering near handle */
     .hand-icon {
-      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) translateX(50px);
-      font-size:2rem; opacity:.9; animation:hoverHand 2s infinite ease-in-out;
-      z-index:3;
-    }
-    @keyframes hoverHand {
-      0%   { transform: translate(-50%,-50%) translateX(50px) translateY(-5px); }
-      50%  { transform: translate(-50%,-50%) translateX(50px) translateY(5px); }
-      100% { transform: translate(-50%,-50%) translateX(50px) translateY(-5px); }
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) translateX(50px);
+      font-size: 2rem;
+      opacity: 0;
+      transition: transform 0.6s ease, opacity 0.4s ease;
+      z-index: 3;
+      color: var(--olive-skin);
     }
 
-    /* Turning the handle when clicked */
     .door.clicked .hand-icon {
-      animation: turnHandle 0.6s forwards;
-    }
-    @keyframes turnHandle {
-      0%   { transform: translate(-50%,-50%) translateX(20px) rotate(0deg); }
-      50%  { transform: translate(-50%,-50%) translateX(20px) rotate(-30deg); }
-      100% { transform: translate(-50%,-50%) translateX(20px) rotate(0deg); }
+      opacity: 1;
+      transform: translate(-50%, -50%) translateX(20px) rotate(-30deg);
     }
 
-    .door-label { position:absolute; bottom:1rem; left:0; right:0; text-align:center;
-                  background:rgba(0,0,0,.6); padding:.6rem; border-radius:.6rem; }
-    .door-label h2 { margin:0; font-size:1.3rem; color:var(--fg); }
-    .door-label p { margin:.3rem 0 0; font-size:.95rem; color:var(--muted); }
+    .door-video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 1rem;
+      z-index: 4;
+      display: none;
+    }
 
-    footer { text-align:center; padding:1rem; font-size:.9rem; background:rgba(0,0,0,.4); margin-top:2rem; }
-    footer a { color:#f8fafc; text-decoration:none; border-bottom:1px dashed rgba(255,255,255,.3); }
+    .door-label {
+      position: absolute;
+      bottom: 1rem;
+      left: 0;
+      right: 0;
+      text-align: center;
+      background: rgba(0,0,0,.6);
+      padding: .6rem;
+      border-radius: .6rem;
+    }
+
+    .door-label h2 { margin: 0; font-size: 1.3rem; color: var(--fg); }
+    .door-label p { margin: .3rem 0 0; font-size: .95rem; color: var(--muted); }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: .9rem;
+      background: rgba(0,0,0,.4);
+      margin-top: 2rem;
+    }
+
+    footer a {
+      color: #f8fafc;
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(255,255,255,.3);
+    }
   </style>
 </head>
 <body>
@@ -116,13 +230,18 @@
           <!-- Left Door -->
           <a href="/handyman.html" class="door door-left" id="door-left" aria-label="Open Handyman Services">
             <span class="door-handle-bar"><span class="door-handle-knob"></span></span>
-            <span class="hand-icon">🖐️</span>
+            <video id="video-handyman" class="door-video" preload="auto" muted>
+              <source src="/videos/handyman.mp4" type="video/mp4" />
+            </video>
             <div class="door-label"><h2>Handyman Services</h2><p>Repairs & quick fixes 🔧</p></div>
           </a>
           <!-- Right Door -->
           <a href="/removals.html" class="door door-right" id="door-right" aria-label="Open Removals Services">
             <span class="door-handle-bar"><span class="door-handle-knob"></span></span>
             <span class="hand-icon">🖐️</span>
+            <video id="video-removals" class="door-video" preload="auto" muted>
+              <source src="/videos/removals.mp4" type="video/mp4" />
+            </video>
             <div class="door-label"><h2>Removals Services</h2><p>Home & office moves 🚚</p></div>
           </a>
         </div>
@@ -136,8 +255,7 @@
     </footer>
   </div>
 
-    <script>
-    // Fade-in hero card
+  <script>
     window.addEventListener("load", () => {
       document.getElementById("heroCard").classList.add("visible");
     });
@@ -155,31 +273,38 @@
         if (navigating) return;
         navigating = true;
 
-        if (prefersReduced){ 
-          window.location.href = url; 
-          return; 
+        if (prefersReduced){
+          window.location.href = url;
+          return;
         }
 
-        // Trigger hand turning animation
+        // Trigger hand animation
         door.classList.add("clicked");
 
-        // After hand turns, open the door
+        // Play video
+        const video = door.querySelector(".door-video");
+        if (video){
+          video.style.display = "block";
+          video.play();
+        }
+
+        // Open door after video starts
         setTimeout(() => {
           shell.classList.remove('open-left','open-right');
           shell.classList.add(side === 'left' ? 'open-left' : 'open-right');
-        }, 600); // matches turnHandle duration
+        }, 600);
 
-        // Navigate after door opens
+        // Navigate after video finishes
         setTimeout(() => {
           window.location.href = url;
-        }, 1300);
+        }, 3000); // matches video duration
       }
 
       function makeClickHandler(side, url, door){
         return function(e){
           if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
           e.preventDefault();
-          openAndGo(side,url,door);
+          openAndGo(side, url, door);
         };
       }
 
@@ -187,7 +312,7 @@
         return function(e){
           if (e.key === 'Enter' || e.key === ' '){
             e.preventDefault();
-            openAndGo(side,url,door);
+            openAndGo(side, url, door);
           }
         };
       }
@@ -197,11 +322,16 @@
       left.addEventListener('keydown', makeKeyHandler('left','/handyman.html',left));
       right.addEventListener('keydown',makeKeyHandler('right','/removals.html',right));
 
-      // Reset doors and hand animation when returning via browser back
       window.addEventListener("pageshow", () => {
         shell.classList.remove('open-left','open-right');
         left.classList.remove("clicked");
         right.classList.remove("clicked");
+        const videos = document.querySelectorAll(".door-video");
+        videos.forEach(v => {
+          v.pause();
+          v.currentTime = 0;
+          v.style.display = "none";
+        });
         navigating = false;
       });
     })();
