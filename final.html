@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>ET Services | Handyman & Removals in Peacehaven</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Repairs, installations & house/office removals across Peacehaven & Brighton. Fast, friendly, reliable. Call 01273 569343">
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="ET Services — Handyman & Removals" />
+  <meta property="og:description" content="Repairs, installations & house/office removals across Peacehaven & Brighton." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://et-services.co.uk/images/social-card.jpg" />
+  <meta property="og:url" content="https://et-services.co.uk/" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"ET Services",
+    "url":"https://et-services.co.uk/",
+    "telephone":"+44 7305 848484",
+    "email":"ely@et-services.co.uk",
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"Lincoln Court, Lincoln Ave",
+      "addressLocality":"Peacehaven",
+      "postalCode":"BN10 7FB",
+      "addressCountry":"GB"
+    },
+    "image":"https://et-services.co.uk/images/et-handyman-logo.jpg",
+    "areaServed":["Peacehaven","Brighton & Hove","East Sussex"]
+  }
+  </script>
+
+  <style>
+    :root{
+      --bg:#020617; --fg:#e5e7eb; --muted:#cbd5f5;
+      --primary:hsl(45,100%,55%); --secondary:hsl(210,80%,70%);
+      --border:rgba(148,163,184,.45); --focus:#38bdf8;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+         background:radial-gradient(circle at top,#1e293b,var(--bg) 65%);
+         color:var(--fg);overflow-x:hidden;}
+
+    .page{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:1.5rem;}
+
+    /* Hero */
+    .hero-card{max-width:720px;width:100%;background:rgba(15,23,42,.9);
+               border-radius:24px;padding:1.5rem;box-shadow:0 20px 40px rgba(0,0,0,.5);
+               opacity:0;transform:translateY(16px);transition:.6s ease;}
+    .hero-card.is-visible{opacity:1;transform:none;}
+    .hero-title{font-size:clamp(2rem,5vw,3rem);font-weight:800;margin-bottom:.5rem;}
+    .hero-subtitle{color:var(--muted);margin-bottom:1.5rem;}
+
+    /* Door shell */
+    .door-shell{margin:2rem auto;max-width:1000px;aspect-ratio:16/9;border-radius:1.5rem;
+                border:1px solid var(--border);background:rgba(15,23,42,.8);padding:.5rem;
+                backdrop-filter:blur(12px);box-shadow:0 0 40px rgba(248,113,22,.25);
+                perspective:2000px;}
+    .door-row{display:flex;gap:.5rem;height:100%;}
+    @media(max-width:768px){.door-row{flex-direction:column;}.door-shell{aspect-ratio:3/4;width:94vw;}}
+
+    .door{flex:1;position:relative;cursor:pointer;border-radius:1rem;
+          background-size:cover;background-position:center;transition:transform .7s ease;
+          min-height:280px;box-shadow:inset 0 0 20px rgba(0,0,0,.3);}
+    .door-left{background-image:url('/images/handyman-hero.png');transform-origin:left center;}
+    .door-right{background-image:url('/images/Removals.jpg');transform-origin:right center;}
+
+    /* Open states */
+    .door-shell.open-left .door-left{transform:rotateY(-75deg);}
+    .door-shell.open-right .door-right{transform:rotateY(75deg);}
+
+    /* Handles */
+    .door-handle-bar{position:absolute;top:50%;width:20px;height:100px;transform:translateY(-50%);
+                     background:linear-gradient(90deg,hsl(45 85% 40%),hsl(45 100% 65%),hsl(45 85% 40%));
+                     border-radius:10px;box-shadow:0 0 20px hsla(36,100%,55%,.6);animation:pulse 2s infinite;}
+    .door-left .door-handle-bar{right:1rem;}
+    .door-right .door-handle-bar{left:1rem;animation-delay:1s;}
+    .door-handle-knob{position:absolute;top:50%;left:50%;width:36px;height:36px;border-radius:50%;
+                      transform:translate(-50%,-50%);background:radial-gradient(circle,#facc15,#b67c0d);}
+    @keyframes pulse{0%,100%{box-shadow:0 0 20px hsla(36,100%,55%,.6);}50%{box-shadow:0 0 40px hsla(36,100%,55%,.8);}}
+
+    /* Labels */
+    .door-label{position:absolute;bottom:1rem;left:0;right:0;text-align:center;background:rgba(0,0,0,.6);
+                padding:.6rem;border-radius:.6rem;}
+    .door-label h2{margin:0;font-size:1.2rem;}
+    .door-label p{margin:.3rem 0 0;font-size:.9rem;color:var(--muted);}
+
+    /* Footer */
+    footer{text-align:center;padding:1rem;font-size:.9rem;background:rgba(0,0,0,.4);backdrop-filter:blur(6px);}
+    footer a{color:#f8fafc;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.3);}
+    footer a:focus-visible{outline:2px solid var(--focus);}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <main class="hero-card" id="heroCard">
+      <h1 class="hero-title">Welcome to ET Services</h1>
+      <p class="hero-subtitle">Choose a door — <strong>Handyman Services</strong> or <strong>Removals Services</strong>.</p>
+
+      <section class="door-shell" id="door-shell">
+        <div class="door-row">
+          <!-- Left Door -->
+          <a href="/handyman.html" class="door door-left" id="door-left" aria-label="Open Handyman Services">
+            <span class="door-handle-bar"><span class="door-handle-knob"></span></span>
+            <span class="door-label"><h2>Handyman Services</h2><p>Repairs & quick fixes 🛠️</p></span>
+          </a>
+          <!-- Right Door -->
+          <a href="/removals.html" class="door door-right" id="door-right" aria-label="Open Removals Services">
+            <span class="door-handle-bar"><span class="door-handle-knob"></span></span>
+            <span class="door-label"><h2>Removals Services</h2><p>Home & office moves 📦</p></span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      📞 <a href="tel:+447305848484">01273 569343</a> |
+      ✉️ <a href="mailto:ely@et-services.co.uk">ely@et-services.co.uk</a><br>
+      📍 Lincoln Court, Lincoln Ave, Peacehaven BN10 7FB
+    </footer>
+  </div>
+
+    <script>
+    // Fade-in card
+    window.addEventListener("load", () => {
+      document.getElementById("heroCard").classList.add("is-visible");
+    });
+
+    // Door open/close animation
+    (function(){
+      const shell = document.getElementById('door-shell');
+      const left  = document.getElementById('door-left');
+      const right = document.getElementById('door-right');
+      if (!shell || !left || !right) return;
+
+      const prefersReduced =
+        window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      let navigating = false;
+
+      function openAndGo(side, url){
+        if (navigating) return;
+        navigating = true;
+
+        if (prefersReduced){
+          window.location.href = url;
+          return;
+        }
+
+        shell.classList.remove('open-left','open-right');
+        shell.classList.add(side === 'left' ? 'open-left' : 'open-right');
+
+        setTimeout(() => {
+          window.location.href = url;
+        }, 700); // matches CSS transition timing
+      }
+
+      function makeClickHandler(side, url){
+        return function(e){
+          if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          e.preventDefault();
+          openAndGo(side,url);
+        };
+      }
+
+      function makeKeyHandler(side, url){
+        return function(e){
+          if (e.key === 'Enter' || e.key === ' '){
+            e.preventDefault();
+            openAndGo(side,url);
+          }
+        };
+      }
+
+      left.addEventListener('click',   makeClickHandler('left','/handyman.html'));
+      right.addEventListener('click',  makeClickHandler('right','/removals.html'));
+      left.addEventListener('keydown', makeKeyHandler('left','/handyman.html'));
+      right.addEventListener('keydown',makeKeyHandler('right','/removals.html'));
+    })();
+  </script>
+</body>
+</html>
