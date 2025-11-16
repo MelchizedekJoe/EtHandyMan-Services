@@ -2,50 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta http-equiv="x-ua-compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>ET Services | Handyman & Removals in Peacehaven</title>
 
   <!-- SEO -->
-  <meta name="description" content="Repairs, installations & house/office removals across Peacehaven & Brighton. Fast, friendly, reliable. Call 01273 569343">
-  <meta name="robots" content="index,follow,max-image-preview:large" />
-
-  <!-- Open Graph / Twitter -->
+  <meta name="description" content="Repairs, installations & removals across Peacehaven & Brighton. Fast, friendly, reliable. Call 01273 569343">
   <meta property="og:title" content="ET Services — Handyman & Removals" />
-  <meta property="og:description" content="Repairs, installations & house/office removals across Peacehaven & Brighton." />
-  <meta property="og:type" content="website" />
+  <meta property="og:description" content="Repairs, installations & removals across Peacehaven & Brighton." />
   <meta property="og:image" content="https://et-services.co.uk/images/social-card.jpg" />
   <meta property="og:url" content="https://et-services.co.uk/" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Schema -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"LocalBusiness",
-    "name":"ET Services",
-    "url":"https://et-services.co.uk/",
-    "telephone":"+44 7305 848484",
-    "email":"ely@et-services.co.uk",
-    "address":{
-      "@type":"PostalAddress",
-      "streetAddress":"Lincoln Court, Lincoln Ave",
-      "addressLocality":"Peacehaven",
-      "postalCode":"BN10 7FB",
-      "addressCountry":"GB"
-    },
-    "image":"https://et-services.co.uk/images/et-handyman-logo.jpg",
-    "areaServed":["Peacehaven","Brighton & Hove","East Sussex"]
-  }
-  </script>
-
   <style>
     :root {
-      --bg: #020617;
-      --fg: #e5e7eb;
-      --muted: #94a3b8;
-      --primary: #facc15;
+      --bg: #0f172a;
+      --fg: #f8fafc;
+      --muted: #cbd5f5;
+      --accent: #ffd700;
       --border: rgba(255,255,255,0.1);
       --focus: #38bdf8;
     }
@@ -67,34 +40,55 @@
       padding: 1.5rem;
     }
 
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(255,255,255,0.05);
+      padding: 0.6rem 1rem;
+      border-radius: 999px;
+      backdrop-filter: blur(8px);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      margin-bottom: 1rem;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      object-fit: contain;
+    }
+
     .hero-card {
       max-width: 720px;
       width: 100%;
-      background: rgba(15,23,42,.9);
+      text-align: center;
+      background: rgba(255,255,255,0.03);
       border-radius: 24px;
       padding: 1.5rem;
       box-shadow: 0 20px 40px rgba(0,0,0,.5);
+      transition: opacity 0.6s ease, transform 0.6s ease;
       opacity: 0;
-      transform: translateY(16px);
-      transition: .6s ease;
-      text-align: center;
+      transform: translateY(20px);
     }
 
-    .hero-card.is-visible {
+    .hero-card.visible {
       opacity: 1;
       transform: none;
     }
 
-    .hero-title {
+    .hero-card h1 {
       font-size: clamp(2rem, 5vw, 3rem);
       font-weight: 800;
-      margin-bottom: .5rem;
+      margin-bottom: 0.5rem;
     }
 
-    .hero-subtitle {
+    .hero-card p {
       font-size: 1.1rem;
       color: var(--muted);
-      margin-bottom: 1.5rem;
     }
 
     .door-shell {
@@ -117,13 +111,8 @@
     }
 
     @media (max-width: 768px) {
-      .door-row {
-        flex-direction: column;
-      }
-      .door-shell {
-        aspect-ratio: 3 / 4;
-        width: 94vw;
-      }
+      .door-row { flex-direction: column; }
+      .door-shell { aspect-ratio: 3 / 4; width: 94vw; }
     }
 
     .door {
@@ -138,33 +127,21 @@
       box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
     }
 
-    .door-left {
-      background-image: url('/images/handyman-hero.png');
-      transform-origin: left center;
-    }
+    .door-left { background-image: url('/images/handyman-hero.png'); transform-origin: left center; }
+    .door-right { background-image: url('/images/Removals.jpg'); transform-origin: right center; }
 
-    .door-right {
-      background-image: url('/images/Removals.jpg');
-      transform-origin: right center;
-    }
-
-    .door-shell.open-left .door-left {
-      transform: rotateY(-75deg);
-    }
-
-    .door-shell.open-right .door-right {
-      transform: rotateY(75deg);
-    }
+    .door-shell.open-left .door-left { transform: rotateY(-75deg); }
+    .door-shell.open-right .door-right { transform: rotateY(75deg); }
 
     .door-handle-bar {
       position: absolute;
       top: 50%;
-      width: 20px;
-      height: 100px;
+      width: 28px;
+      height: 120px;
       transform: translateY(-50%);
-      background: linear-gradient(90deg, #facc15, #fbbf24, #facc15);
-      border-radius: 10px;
-      box-shadow: 0 0 20px hsla(36,100%,55%,.6);
+      background: radial-gradient(circle, #ffd700, #ffae00, #ff8c00);
+      border-radius: 14px;
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.9), 0 0 80px rgba(255, 165, 0, 0.6);
       animation: pulse 2s infinite;
       z-index: 2;
     }
@@ -176,16 +153,34 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       transform: translate(-50%, -50%);
-      background: radial-gradient(circle, #facc15, #b67c0d);
+      background: radial-gradient(circle, #ffd700, #b67c0d);
+      box-shadow: 0 0 20px rgba(255,215,0,0.8);
     }
 
     @keyframes pulse {
-      0%,100% { box-shadow: 0 0 20px hsla(36,100%,55%,.6); }
-      50% { box-shadow: 0 0 40px hsla(36,100%,55%,.8); }
+      0%,100% { box-shadow: 0 0 40px rgba(255,215,0,0.9); }
+      50% { box-shadow: 0 0 80px rgba(255,165,0,0.6); }
+    }
+
+    .hand-icon {
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+      opacity: 0.8;
+      animation: reach 2s infinite;
+      z-index: 3;
+    }
+
+    @keyframes reach {
+      0% { transform: translate(-50%, 0) scale(1); opacity: 0.6; }
+      50% { transform: translate(-50%, -20px) scale(1.1); opacity: 1; }
+      100% { transform: translate(-50%, 0) scale(1); opacity: 0.6; }
     }
 
     .door-label {
@@ -200,16 +195,8 @@
       z-index: 3;
     }
 
-    .door-label h2 {
-      margin: 0;
-      font-size: 1.2rem;
-    }
-
-    .door-label p {
-      margin: .3rem 0 0;
-      font-size: .9rem;
-      color: var(--muted);
-    }
+    .door-label h2 { margin: 0; font-size: 1.3rem; color: var(--fg); }
+    .door-label p { margin: .3rem 0 0; font-size: .95rem; color: var(--muted); }
 
     footer {
       text-align: center;
@@ -226,28 +213,39 @@
       border-bottom: 1px dashed rgba(255,255,255,.3);
     }
 
-    footer a:focus-visible {
-      outline: 2px solid var(--focus);
-    }
+    footer a:focus-visible { outline: 2px solid var(--focus); }
   </style>
 </head>
 <body>
   <div class="page">
+    <header class="brand">
+      <img src="/images/et-services-logo.png" alt="ET Services logo" />
+      <span>ET Services</span>
+    </header>
+
     <main class="hero-card" id="heroCard">
-      <h1 class="hero-title">Welcome to ET Services</h1>
-      <p class="hero-subtitle">Choose a door — <strong>Handyman Services</strong> or <strong>Removals Services</strong>.</p>
+      <h1>Welcome to ET Services</h1>
+      <p>Choose a door — <strong>Handyman Services</strong> or <strong>Removals Services</strong>.</p>
 
       <section class="door-shell" id="door-shell">
         <div class="door-row">
           <!-- Left Door -->
           <a href="/handyman.html" class="door door-left" id="door-left" aria-label="Open Handyman Services">
             <span class="door-handle-bar"><span class="door-handle-knob"></span></span>
-            <div class="door-label"><h2>Handyman Services</h2><p>Repairs & quick fixes 🛠️</p></div>
+            <span class="hand-icon">🖐️</span>
+            <div class="door-label">
+              <h2>Handyman Services</h2>
+              <p>Repairs & quick fixes 🔧</p>
+            </div>
           </a>
           <!-- Right Door -->
           <a href="/removals.html" class="door door-right" id="door-right" aria-label="Open Removals Services">
             <span class="door-handle-bar"><span class="door-handle-knob"></span></span>
-            <div class="door-label"><h2>Removals Services</h2><p>Home & office moves 📦</p></div>
+            <span class="hand-icon">🖐️</span>
+            <div class="door-label">
+              <h2>Removals Services</h2>
+              <p>Home & office moves 🚚</p>
+            </div>
           </a>
         </div>
       </section>
@@ -263,7 +261,7 @@
   <script>
     // Fade-in hero card
     window.addEventListener("load", () => {
-      document.getElementById("heroCard").classList.add("is-visible");
+      document.getElementById("heroCard").classList.add("visible");
     });
 
     // Door open/close animation
