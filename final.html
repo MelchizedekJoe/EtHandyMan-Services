@@ -18,10 +18,92 @@
 
     body {
       font-family: system-ui, sans-serif;
-      background: radial-gradient(circle at top, #1e293b, var(--bg));
+      background: #020617; /* fallback */
       color: var(--fg);
       margin: 0;
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
+
+    /* ================================
+       BACKGROUND SLIDESHOW (DESKTOP)
+       ================================ */
+
+    .bg-slider {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+    }
+
+    /* Make any video inside slider fill the viewport */
+    .bg-slider video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .bg-slide {
+      position: absolute;
+      inset: 0;
+      background-position: center;
+      background-size: cover;
+      opacity: 0;
+      animation: bgFade 32s infinite;
+      filter: blur(3px) brightness(0.75);
+      transform: scale(1.03);
+    }
+
+    /* Image slides */
+    .bg-slide-1 {
+      background-image: url('/Images/Staff-team.jpg');
+      animation-delay: 0s;
+    }
+
+    .bg-slide-2 {
+      background-image: url('/Images/Men%20at%20Work.jpg');
+      animation-delay: 8s;
+    }
+
+    .bg-slide-3 {
+      background-image: url('/Images/Removal%20team.jpg');
+      animation-delay: 16s;
+    }
+
+    /* Video slide – ensure full-screen coverage */
+    .bg-slide-4 {
+      animation-delay: 24s;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Fade timing: each slide ~8s visible */
+    @keyframes bgFade {
+      0%, 20%   { opacity: 1; }
+      25%, 100% { opacity: 0; }
+    }
+
+    /* Dark overlay on top of slideshow so UI stays readable */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(15,23,42,0.50), rgba(2,6,23,0.70));
+      z-index: -1;
+    }
+
+    /*
+    Optional: keep plain bg on very small screens
+    @media (max-width: 768px) {
+      .bg-slider { display: none; }
+    }
+    */
+
+    /* ======================
+       MAIN PAGE LAYOUT
+       ====================== */
 
     .page {
       min-height: 100vh;
@@ -53,10 +135,10 @@
     .hero-card {
       text-align: center;
       max-width: 720px;
-      background: rgba(255,255,255,0.03);
+      background: rgba(8,12,24,0.9);
       border-radius: 24px;
       padding: 1.5rem;
-      box-shadow: 0 20px 40px rgba(0,0,0,.5);
+      box-shadow: 0 20px 40px rgba(0,0,0,.6);
       transition: opacity 0.6s ease, transform 0.6s ease;
       opacity: 0;
       transform: translateY(20px);
@@ -84,7 +166,7 @@
       aspect-ratio: 16 / 9;
       border-radius: 1.5rem;
       border: 1px solid var(--border);
-      background: rgba(255,255,255,0.03);
+      background: rgba(15,23,42,0.95);
       padding: 0.5rem;
       backdrop-filter: blur(12px);
       perspective: 2000px;
@@ -203,8 +285,11 @@
       text-align: center;
       padding: 1rem;
       font-size: .9rem;
-      background: rgba(0,0,0,.4);
+      background: rgba(0,0,0,.5);
       margin-top: 2rem;
+      width: 100%;
+      max-width: 720px;
+      border-radius: 16px 16px 0 0;
     }
 
     footer a {
@@ -215,6 +300,17 @@
   </style>
 </head>
 <body>
+
+  <!-- BACKGROUND SLIDES (IMAGES + VIDEO) -->
+  <div class="bg-slider" aria-hidden="true">
+    <div class="bg-slide bg-slide-1"></div>
+    <div class="bg-slide bg-slide-2"></div>
+    <div class="bg-slide bg-slide-3"></div>
+    <video class="bg-slide bg-slide-4" autoplay muted loop playsinline>
+      <source src="/Videos/Ready%20to%20Move.mp4" type="video/mp4" />
+    </video>
+  </div>
+
   <div class="page">
     <header class="brand">
       <img src="/images/et-services-logo.png" alt="ET Services logo" />
@@ -233,8 +329,12 @@
             <video id="video-handyman" class="door-video" preload="auto" muted playsinline>
               <source src="/videos/handyman.mp4" type="video/mp4" />
             </video>
-            <div class="door-label"><h2>Handyman Services</h2><p>Repairs & quick fixes 🔧</p></div>
+            <div class="door-label">
+              <h2>Handyman Services</h2>
+              <p>Repairs & quick fixes 🔧</p>
+            </div>
           </a>
+
           <!-- Right Door -->
           <a href="/removals.html" class="door door-right" id="door-right" aria-label="Open Removals Services">
             <span class="door-handle-bar"><span class="door-handle-knob"></span></span>
@@ -242,7 +342,10 @@
             <video id="video-removals" class="door-video" preload="auto" muted playsinline>
               <source src="/videos/removals.mp4" type="video/mp4" />
             </video>
-            <div class="door-label"><h2>Removals Services</h2><p>Home & office moves 🚚</p></div>
+            <div class="door-label">
+              <h2>Removals Services</h2>
+              <p>Home & office moves 🚚</p>
+            </div>
           </a>
         </div>
       </section>
@@ -297,7 +400,7 @@
         // Navigate after video finishes (or fixed duration)
         setTimeout(() => {
           window.location.href = url;
-        }, 3000); // matches video duration
+        }, 3000); // adjust if videos are longer
       }
 
       function makeClickHandler(side, url, door){
