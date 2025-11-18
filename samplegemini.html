@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ET Services | Expert Handyman & Removals in Peacehaven</title>
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --fg: #f8fafc;
+      --muted: #cbd5f5;
+      --handle-brown: #5c4033;
+      --border: rgba(255, 255, 255, 0.1);
+      --focus: #38bdf8;
+      --olive-skin: #a67856;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #020617;
+      color: var(--fg);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ================================
+       BACKGROUND SLIDESHOW (DESKTOP)
+       ================================= */
+
+    .bg-slider {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+    }
+
+    .bg-slider video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .bg-slide {
+      position: absolute;
+      inset: 0;
+      background-position: center;
+      background-size: cover;
+      opacity: 0;
+      animation: bgFade 32s infinite;
+      filter: blur(3px) brightness(0.75);
+      transform: scale(1.03);
+    }
+
+    .bg-slide-1 {
+      background-image: url("/images/staff-team.jpg");
+      animation-delay: 0s;
+    }
+
+    .bg-slide-2 {
+      background-image: url("/images/men-at-work.jpg");
+      animation-delay: 8s;
+    }
+
+    .bg-slide-3 {
+      background-image: url("/images/removal-team.jpg");
+      animation-delay: 16s;
+    }
+
+    .bg-slide-4 {
+      animation-delay: 24s;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @keyframes bgFade {
+      0%, 20% { opacity: 1; }
+      25%, 100% { opacity: 0; }
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.5), rgba(2, 6, 23, 0.7));
+      z-index: -1;
+    }
+
+    /* ======================
+       MAIN PAGE LAYOUT
+       ====================== */
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.6rem 1rem;
+      border-radius: 999px;
+      backdrop-filter: blur(8px);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+    }
+
+    .hero-card {
+      text-align: center;
+      max-width: 900px;
+      background: rgba(8, 12, 24, 0.9);
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-card.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .hero-card h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-card p {
+      font-size: 1.1rem;
+      color: var(--muted);
+    }
+
+    /* ======================
+       DOOR MECHANIC STYLES
+       ====================== */
+
+    .door-shell {
+      margin-top: 2rem;
+      max-width: 1000px;
+      aspect-ratio: 16 / 9;
+      border-radius: 1.5rem;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.95);
+      padding: 0.5rem;
+      backdrop-filter: blur(12px);
+      perspective: 2000px;
+    }
+
+    .door-row {
+      display: flex;
+      gap: 0.5rem;
+      height: 100%;
+    }
+
+    .door {
+      flex: 1;
+      position: relative;
+      cursor: pointer;
+      border-radius: 1rem;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.7s ease;
+      min-height: 280px;
+      overflow: hidden;
+      display: block;
+    }
+
+    .door-left {
+      background-image: url("/images/handyman-hero.png");
+      transform-origin: left center;
+    }
+
+    .door-right {
+      background-image: url("/images/removals.jpg");
+      transform-origin: right center;
+    }
+
+    .door-shell.open-left .door-left {
+      transform: rotateY(-75deg);
+    }
+
+    .door-shell.open-right .door-right {
+      transform: rotateY(75deg);
+    }
+
+    .door-handle-bar {
+      position: absolute;
+      top: 50%;
+      width: 26px;
+      height: 110px;
+      transform: translateY(-50%);
+      background: linear-gradient(90deg, var(--handle-brown), #3b2a20, var(--handle-brown));
+      border-radius: 12px;
+      box-shadow: inset 0 0 6px #2a1a12, 0 0 20px rgba(92, 64, 51, 0.8);
+      z-index: 2;
+    }
+
+    .door-left .door-handle-bar {
+      right: 1rem;
+    }
+
+    .door-right .door-handle-bar {
+      left: 1rem;
+    }
+
+    .door-handle-knob {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle at 30% 30%, #7a523f, #3b2a20);
+      box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    .hand-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) translateX(50px);
+      font-size: 2rem;
+      opacity: 0;
+      transition: transform 0.6s ease, opacity 0.4s ease;
+      z-index: 3;
+      color: var(--olive-skin);
+    }
+
+    .door.clicked .hand-icon {
+      opacity: 1;
+      transform: translate(-50%, -50%) translateX(20px) rotate(-30deg);
+    }
+
+    .door-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 1rem;
+      z-index: 4;
+      display: none;
+    }
+
+    .door-label {
+      position: absolute;
+      bottom: 1rem;
+      left: 0;
+      right: 0;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 0.6rem;
+      border-radius: 0.6rem;
+    }
+
+    .door-label h2 {
+      margin: 0;
+      font-size: 1.3rem;
+      color: var(--fg);
+    }
+
+    .door-label p {
+      margin: 0.3rem 0 0;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    /* ======================
+       NEW CONTENT STYLES
+       ====================== */
+
+    .content-section {
+      text-align: left;
+      margin-top: 3rem;
+      padding: 1.5rem;
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 16px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+      max-width: 100%;
+    }
+
+    .content-section h2 {
+      font-size: 1.8rem;
+      border-bottom: 2px solid var(--focus);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .service-box h3 {
+      font-size: 1.5rem;
+      margin-top: 0;
+      color: var(--focus);
+    }
+
+    .service-box ul {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 1rem;
+    }
+
+    .service-box li {
+      padding: 0.3rem 0;
+      border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .service-box strong {
+      color: var(--fg);
+    }
+
+    .cta-button {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin-top: 1.5rem;
+      padding: 0.75rem 1rem;
+      background-color: var(--focus);
+      color: var(--bg);
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 700;
+      transition: background-color 0.3s;
+      box-shadow: 0 4px 10px rgba(56, 189, 248, 0.4);
+    }
+
+    .cta-button:hover {
+      background-color: #0ea5e9;
+    }
+
+    .trust-signals h2 {
+      text-align: center;
+      border: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      background: rgba(0, 0, 0, 0.5);
+      margin-top: 2rem;
+      width: 100%;
+      max-width: 900px;
+      border-radius: 16px 16px 0 0;
+    }
+
+    footer a {
+      color: #f8fafc;
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+    }
+
+    /* ======================
+       RESPONSIVE
+       ====================== */
+
+    @media (max-width: 768px) {
+      .door-row {
+        flex-direction: column;
+      }
+
+      .door-shell {
+        aspect-ratio: 3 / 4;
+        width: 94vw;
+      }
+
+      .service-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-slider" aria-hidden="true">
+    <div class="bg-slide bg-slide-1"></div>
+    <div class="bg-slide bg-slide-2"></div>
+    <div class="bg-slide bg-slide-3"></div>
+    <video class="bg-slide bg-slide-4" autoplay muted loop playsinline>
+      <source src="/videos/ready-to-move.mp4" type="video/mp4" />
+    </video>
+  </div>
+
+  <div class="page">
+    <header class="brand">
+      <a href="/index.html" style="display:flex; align-items:center; gap:.75rem; text-decoration:none; color:inherit;">
+        <img src="/images/et-services-logo.png" alt="ET Services logo" />
+        <span>ET Services</span>
+      </a>
+    </header>
+
+    <main class="hero-card" id="heroCard">
+      <h1>Your trusted team for expert Handyman & Removals solutions.</h1>
+      <p>We are ET Services. Choose a door to quickly access the service you need, or scroll down for detailed offerings.</p>
+
+      <section class="door-shell" id="door-shell">
+        <div class="door-row">
+          <a href="/handyman.html" class="door door-left" id="door-left" aria-label="Open Handyman Services">
+            <span class="door-handle-bar"><span class="door-handle-knob"></span></span>
+            <video id="video-handyman" class="door-video" preload="auto" muted playsinline>
+              <source src="/videos/handyman.mp4" type="video/mp4" />
+            </video>
+            <div class="door-label">
+              <h2>Handyman Services</h2>
+              <p>Repairs & quick fixes 🔧</p>
+            </div>
+          </a>
+
+          <a href="/removals.html" class="door door-right" id="door-right" aria-label="Open Removals Services">
+            <span class="door-handle-bar"><span class="door-handle-knob"></span></span>
+            <span class="hand-icon">🖐️</span>
+            <video id="video-removals" class="door-video" preload="auto" muted playsinline>
+              <source src="/videos/removals.mp4" type="video/mp4" />
+            </video>
+            <div class="door-label">
+              <h2>Removals Services</h2>
+              <p>Home & office moves 🚚</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <div class="content-section">
+        <h2>Our Comprehensive Services</h2>
+        <div class="service-grid">
+          <div class="service-box">
+            <h3>🔧 Handyman Services</h3>
+            <p>From small repairs to full home improvements, our skilled handymen handle it all with precision and care. Whether you need something fixed, installed, or assembled — we’ve got you covered.</p>
+            <ul>
+              <li><strong>General Repairs</strong> & quick fixes</li>
+              <li><strong>Furniture Assembly</strong> & carpentry</li>
+              <li><strong>Painting & Decorating</strong></li>
+              <li><strong>Driveways</strong> & resin bound services</li>
+              <li><strong>Gardening & Landscaping</strong></li>
+              <li><strong>Tree Surgeon</strong> & stump removal</li>
+              <li><strong>Home Improvements</strong> & odd jobs</li>
+            </ul>
+            <a href="/handyman.html" class="cta-button">➡ Book a Handyman</a>
+          </div>
+
+          <div class="service-box">
+            <h3>🚚 Removals Services</h3>
+            <p>Moving doesn’t have to be stressful. Our trained team provides safe, efficient removals for homes and businesses. We take care of your belongings like they’re our own.</p>
+            <ul>
+              <li><strong>Home & Office Moves</strong></li>
+              <li><strong>Local & Long-Distance</strong> relocations</li>
+              <li><strong>Packing & Unpacking</strong> services</li>
+              <li><strong>Single-Item</strong> & full-load moves</li>
+              <li><strong>Household & Office Clearances</strong></li>
+            </ul>
+            <a href="/removals.html" class="cta-button">➡ Schedule Your Move</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-section trust-signals">
+        <h2>Why Choose ET Services?</h2>
+        <p style="text-align:center; font-size:1.1rem; color:var(--focus); font-weight:700; margin-top:0;">
+          ★★★★★ Trusted Across All Platforms
+        </p>
+        <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1.5rem 2.5rem; margin-top:1.5rem; color:var(--muted); font-size:1rem;">
+          <p style="margin:0;">✔ Professional, friendly team</p>
+          <p style="margin:0;">✔ Fast, reliable response</p>
+          <p style="margin:0;">✔ Affordable, transparent pricing</p>
+          <p style="margin:0;">✔ Fully insured services</p>
+          <p style="margin:0;">✔ Fully licensed</p>
+          <p style="margin:0;">✔ Customer satisfaction guaranteed</p>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      📞 <a href="tel:+441273569343">01273 569343</a> |
+      ✉️ <a href="mailto:ely@et-services.co.uk">ely@et-services.co.uk</a><br />
+      📍 Lincoln Court, Lincoln Ave, Peacehaven BN10 7FB
+    </footer>
+  </div>
+
+  <script>
+    window.addEventListener("load", () => {
+      document.getElementById("heroCard").classList.add("visible");
+    });
+
+    (function () {
+      const shell = document.getElementById("door-shell");
+      const left = document.getElementById("door-left");
+      const right = document.getElementById("door-right");
+      if (!shell || !left || !right) return;
+
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let navigating = false;
+
+      function openAndGo(side, url, door) {
+        if (navigating) return;
+        navigating = true;
+
+        if (prefersReduced) {
+          window.location.href = url;
+          return;
+        }
+
+        door.classList.add("clicked");
+
+        const video = door.querySelector(".door-video");
+        if (video) {
+          video.style.display = "block";
+          video.play().catch(err => console.log("Video play blocked:", err));
+        }
+
+        setTimeout(() => {
+          shell.classList.remove("open-left", "open-right");
+          shell.classList.add(side === "left" ? "open-left" : "open-right");
+        }, 600);
+
+        setTimeout(() => {
+          window.location.href = url;
+        }, 3000);
+      }
+
+      function makeClickHandler(side, url, door) {
+        return function (e) {
+          if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          e.preventDefault();
+          openAndGo(side, url, door);
+        };
+      }
+
+      function makeKeyHandler(side, url, door) {
+        return function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openAndGo(side, url, door);
+          }
+        };
+      }
+
+      left.addEventListener("click", makeClickHandler("left", "/handyman.html", left));
+      right.addEventListener("click", makeClickHandler("right", "/removals.html", right));
+      left.addEventListener("keydown", makeKeyHandler("left", "/handyman.html", left));
+      right.addEventListener("keydown", makeKeyHandler("right", "/removals.html", right));
+
+      window.addEventListener("pageshow", () => {
+        shell.classList.remove("open-left", "open-right");
+        left.classList.remove("clicked");
+        right.classList.remove("clicked");
+        const videos = document.querySelectorAll(".door-video");
+        videos.forEach(v => {
+          v.pause();
+          v.currentTime = 0;
+          v.style.display = "none";
+        });
+        navigating = false;
+      });
+    })();
+  </script>
+</body>
+</html>

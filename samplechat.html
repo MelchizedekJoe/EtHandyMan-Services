@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ET Services | Handyman & Removals in Peacehaven</title>
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --fg: #f8fafc;
+      --muted: #cbd5f5;
+      --handle-brown: #5c4033;
+      --border: rgba(255,255,255,0.1);
+      --focus: #38bdf8;
+      --olive-skin: #a67856;
+      --accent-handyman: #f59e0b;
+      --accent-removals: #38bdf8;
+      --card-bg: rgba(15,23,42,0.96);
+      --light-card-bg: rgba(15,23,42,0.92);
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      background: #020617; /* fallback */
+      color: var(--fg);
+      margin: 0;
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ================================
+       BACKGROUND SLIDESHOW (DESKTOP)
+       ================================ */
+
+    .bg-slider {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+    }
+
+    .bg-slider video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .bg-slide {
+      position: absolute;
+      inset: 0;
+      background-position: center;
+      background-size: cover;
+      opacity: 0;
+      animation: bgFade 32s infinite;
+      filter: blur(3px) brightness(0.75);
+      transform: scale(1.03);
+    }
+
+    .bg-slide-1 {
+      background-image: url('/Images/Staff-team.jpg');
+      animation-delay: 0s;
+    }
+
+    .bg-slide-2 {
+      background-image: url('/Images/Men%20at%20Work.jpg');
+      animation-delay: 8s;
+    }
+
+    .bg-slide-3 {
+      background-image: url('/Images/Removal%20team.jpg');
+      animation-delay: 16s;
+    }
+
+    .bg-slide-4 {
+      animation-delay: 24s;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @keyframes bgFade {
+      0%, 20%   { opacity: 1; }
+      25%, 100% { opacity: 0; }
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(15,23,42,0.50), rgba(2,6,23,0.70));
+      z-index: -1;
+    }
+
+    /* ======================
+       MAIN PAGE LAYOUT
+       ====================== */
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      background: rgba(255,255,255,0.05);
+      padding: .6rem 1rem;
+      border-radius: 999px;
+      backdrop-filter: blur(8px);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+    }
+
+    .hero-card {
+      text-align: center;
+      max-width: 960px;
+      background: rgba(8,12,24,0.94);
+      border-radius: 24px;
+      padding: 1.75rem 1.5rem 2rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,.6);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      border: 1px solid rgba(148,163,184,0.35);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-card.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .hero-card h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-card p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      margin: 0.2rem 0;
+    }
+
+    .hero-tagline {
+      font-size: 1.1rem;
+      margin-top: .25rem;
+      margin-bottom: .75rem;
+      color: #e5e7eb;
+    }
+
+    .hero-subnote {
+      font-size: .98rem;
+      color: var(--muted);
+      margin-bottom: .75rem;
+    }
+
+    /* DOOR AREA */
+
+    .door-shell {
+      margin-top: 1.5rem;
+      max-width: 1000px;
+      aspect-ratio: 16 / 9;
+      border-radius: 1.5rem;
+      border: 1px solid var(--border);
+      background: rgba(15,23,42,0.95);
+      padding: 0.5rem;
+      backdrop-filter: blur(12px);
+      perspective: 2000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .door-row {
+      display: flex;
+      gap: 0.5rem;
+      height: 100%;
+    }
+
+    @media(max-width:768px){
+      .door-row{flex-direction:column;}
+      .door-shell{aspect-ratio:3/4;width:94vw;}
+    }
+
+    .door {
+      flex: 1;
+      position: relative;
+      cursor: pointer;
+      border-radius: 1rem;
+      background-size: cover;
+      background-position: center;
+      transition: transform .7s ease;
+      min-height: 280px;
+      overflow: hidden;
+    }
+
+    .door-left {
+      background-image: url('/images/handyman-hero.png');
+      transform-origin: left center;
+    }
+
+    .door-right {
+      background-image: url('/images/Removals.jpg');
+      transform-origin: right center;
+    }
+
+    .door-shell.open-left .door-left {
+      transform: rotateY(-75deg);
+    }
+
+    .door-shell.open-right .door-right {
+      transform: rotateY(75deg);
+    }
+
+    .door-handle-bar {
+      position: absolute;
+      top: 50%;
+      width: 26px;
+      height: 110px;
+      transform: translateY(-50%);
+      background: linear-gradient(90deg, var(--handle-brown), #3b2a20, var(--handle-brown));
+      border-radius: 12px;
+      box-shadow: inset 0 0 6px #2a1a12, 0 0 20px rgba(92,64,51,0.8);
+      z-index: 2;
+    }
+
+    .door-left .door-handle-bar { right: 1rem; }
+    .door-right .door-handle-bar { left: 1rem; }
+
+    .door-handle-knob {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle at 30% 30%, #7a523f, #3b2a20);
+      box-shadow: inset 2px 2px 4px rgba(255,255,255,0.3), inset -2px -2px 4px rgba(0,0,0,0.6);
+    }
+
+    .hand-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) translateX(50px);
+      font-size: 2rem;
+      opacity: 0;
+      transition: transform 0.6s ease, opacity 0.4s ease;
+      z-index: 3;
+      color: var(--olive-skin);
+    }
+
+    .door.clicked .hand-icon {
+      opacity: 1;
+      transform: translate(-50%, -50%) translateX(20px) rotate(-30deg);
+    }
+
+    .door-video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 1rem;
+      z-index: 4;
+      display: none;
+    }
+
+    .door-label {
+      position: absolute;
+      bottom: 1rem;
+      left: 0;
+      right: 0;
+      text-align: center;
+      background: rgba(0,0,0,.6);
+      padding: .6rem;
+      border-radius: .6rem;
+    }
+
+    .door-label h2 { margin: 0; font-size: 1.3rem; color: var(--fg); }
+    .door-label p { margin: .3rem 0 0; font-size: .95rem; color: var(--muted); }
+
+    /* ======================
+       NEW CTA ROW
+       ====================== */
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.75rem 1.4rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.98rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn span.emoji {
+      font-size: 1.1rem;
+    }
+
+    .btn-handyman {
+      background: linear-gradient(135deg, var(--accent-handyman), #e58c18);
+      color: #111827;
+      box-shadow: 0 10px 25px rgba(245,158,11,0.35);
+    }
+
+    .btn-removals {
+      background: linear-gradient(135deg, var(--accent-removals), #0ea5e9);
+      color: #0b1120;
+      box-shadow: 0 10px 25px rgba(56,189,248,0.35);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+      opacity: 0.96;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* ======================
+       TRUST BADGES
+       ====================== */
+
+    .trust-strip {
+      margin-top: 1.75rem;
+    }
+
+    .trust-title {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .trust-badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(148,163,184,0.7);
+      color: #e5e7eb;
+      backdrop-filter: blur(10px);
+    }
+
+    .badge-icon {
+      font-size: 1rem;
+    }
+
+    /* ======================
+       QUICK SERVICE CARDS
+       ====================== */
+
+    .services-section {
+      margin-top: 2rem;
+      text-align: left;
+    }
+
+    .services-heading {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #e5e7eb;
+      text-align: center;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .services-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hero-card {
+        padding: 1.4rem 1.1rem 1.75rem;
+      }
+    }
+
+    .service-card {
+      background: var(--light-card-bg);
+      border-radius: 1.1rem;
+      padding: 1rem 1rem 1.05rem;
+      border: 1px solid rgba(148,163,184,0.4);
+      box-shadow: 0 14px 32px rgba(15,23,42,0.85);
+    }
+
+    .service-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.55rem;
+    }
+
+    .service-card-title {
+      font-weight: 600;
+      font-size: 1.02rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .service-chip {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7);
+      color: var(--muted);
+    }
+
+    .service-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0 0 0.75rem;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .service-list li::before {
+      content: "•";
+      margin-right: 0.4rem;
+      color: rgba(148,163,184,0.9);
+    }
+
+    .service-link {
+      font-size: 0.88rem;
+      text-decoration: none;
+      color: var(--accent-removals);
+    }
+
+    .service-link:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: .9rem;
+      background: rgba(0,0,0,.5);
+      margin-top: 2rem;
+      width: 100%;
+      max-width: 720px;
+      border-radius: 16px 16px 0 0;
+    }
+
+    footer a {
+      color: #f8fafc;
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(255,255,255,.3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BACKGROUND SLIDES (IMAGES + VIDEO) -->
+  <div class="bg-slider" aria-hidden="true">
+    <div class="bg-slide bg-slide-1"></div>
+    <div class="bg-slide bg-slide-2"></div>
+    <div class="bg-slide bg-slide-3"></div>
+    <video class="bg-slide bg-slide-4" autoplay muted loop playsinline>
+      <source src="/Videos/Ready%20to%20Move.mp4" type="video/mp4" />
+    </video>
+  </div>
+
+  <div class="page">
+    <header class="brand">
+      <a href="/index.html" style="display:flex; align-items:center; gap:.75rem; text-decoration:none; color:inherit;">
+        <img src="/images/et-services-logo.png" alt="ET Services logo" />
+        <span>ET Services</span>
+      </a>
+    </header>
+
+    <main class="hero-card" id="heroCard">
+      <h1>Welcome to ET Services</h1>
+      <p class="hero-tagline">Fixing, moving, and improving your world.</p>
+      <p class="hero-subnote">Serving Peacehaven, Brighton & surrounding areas.</p>
+      <p class="hero-subnote">Choose a door to get started 👇</p>
+
+      <!-- DOORS -->
+      <section class="door-shell" id="door-shell" aria-label="Choose a service by opening a door">
+        <div class="door-row">
+          <!-- Left Door -->
+          <a href="/handyman.html" class="door door-left" id="door-left" aria-label="Open Handyman Services">
+            <span class="door-handle-bar"><span class="door-handle-knob"></span></span>
+            <video id="video-handyman" class="door-video" preload="auto" muted playsinline>
+              <source src="/videos/handyman.mp4" type="video/mp4" />
+            </video>
+            <div class="door-label">
+              <h2>Handyman Services</h2>
+              <p>Repairs, improvements & more 🔧</p>
+            </div>
+          </a>
+
+          <!-- Right Door -->
+          <a href="/removals.html" class="door door-right" id="door-right" aria-label="Open Removals Services">
+            <span class="door-handle-bar"><span class="door-handle-knob"></span></span>
+            <span class="hand-icon">🖐️</span>
+            <video id="video-removals" class="door-video" preload="auto" muted playsinline>
+              <source src="/videos/removals.mp4" type="video/mp4" />
+            </video>
+            <div class="door-label">
+              <h2>Removals Services</h2>
+              <p>Home & office moves 🚚</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- CTA BUTTONS UNDER DOORS -->
+      <div class="cta-row" aria-label="Quick actions">
+        <a href="/handyman.html" class="btn btn-handyman">
+          <span class="emoji">🔧</span>
+          <span>Book a Handyman</span>
+        </a>
+        <a href="/removals.html" class="btn btn-removals">
+          <span class="emoji">🚚</span>
+          <span>Get a Removals Quote</span>
+        </a>
+      </div>
+
+      <!-- TRUST STRIP WITH BADGES -->
+      <section class="trust-strip" aria-label="Why customers choose ET Services">
+        <p class="trust-title">Trusted by homeowners & businesses across Peacehaven & Brighton</p>
+        <div class="trust-badges">
+          <span class="badge">
+            <span class="badge-icon">⭐</span>
+            <span>5.0 Rated on Google</span>
+          </span>
+          <span class="badge">
+            <span class="badge-icon">💬</span>
+            <span>Friendly local team</span>
+          </span>
+          <span class="badge">
+            <span class="badge-icon">⚡</span>
+            <span>Fast, reliable response</span>
+          </span>
+          <span class="badge">
+            <span class="badge-icon">🛡️</span>
+            <span>Fully insured & licensed</span>
+          </span>
+        </div>
+      </section>
+
+      <!-- QUICK SERVICE CARDS -->
+      <section class="services-section" aria-label="Overview of our services">
+        <h2 class="services-heading">What can we help you with today?</h2>
+        <div class="services-grid">
+          <!-- Handyman card -->
+          <article class="service-card">
+            <div class="service-card-header">
+              <div class="service-card-title">
+                <span>🔧</span>
+                <span>Handyman Services</span>
+              </div>
+              <span class="service-chip">Repairs & improvements</span>
+            </div>
+            <ul class="service-list">
+              <li>General repairs & maintenance</li>
+              <li>Painting & decorating</li>
+              <li>Furniture assembly & fixtures</li>
+              <li>Driveways & resin bound</li>
+              <li>Gardening, landscaping & tree work</li>
+            </ul>
+            <a href="/handyman.html" class="service-link">View full handyman services →</a>
+          </article>
+
+          <!-- Removals card -->
+          <article class="service-card">
+            <div class="service-card-header">
+              <div class="service-card-title">
+                <span>🚚</span>
+                <span>Removals Services</span>
+              </div>
+              <span class="service-chip">Moves & clearances</span>
+            </div>
+            <ul class="service-list">
+              <li>Home & flat moves</li>
+              <li>Office & business relocations</li>
+              <li>Packing & unpacking support</li>
+              <li>Single items to full loads</li>
+              <li>Household, office & garage clearances</li>
+            </ul>
+            <a href="/removals.html" class="service-link">View full removals services →</a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      📞 <a href="tel:+441273569343">01273 569343</a> |
+      ✉️ <a href="mailto:ely@et-services.co.uk">ely@et-services.co.uk</a><br>
+      📍 Lincoln Court, Lincoln Ave, Peacehaven BN10 7FB
+    </footer>
+  </div>
+
+  <script>
+    window.addEventListener("load", () => {
+      document.getElementById("heroCard").classList.add("visible");
+    });
+
+    (function(){
+      const shell = document.getElementById('door-shell');
+      const left  = document.getElementById('door-left');
+      const right = document.getElementById('door-right');
+      if (!shell || !left || !right) return;
+
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let navigating = false;
+
+      function openAndGo(side, url, door){
+        if (navigating) return;
+        navigating = true;
+
+        if (prefersReduced){
+          window.location.href = url;
+          return;
+        }
+
+        door.classList.add("clicked");
+
+        const video = door.querySelector(".door-video");
+        if (video){
+          video.style.display = "block";
+          video.play().catch(err => console.log("Video play blocked:", err));
+        }
+
+        setTimeout(() => {
+          shell.classList.remove('open-left','open-right');
+          shell.classList.add(side === 'left' ? 'open-left' : 'open-right');
+        }, 600);
+
+        setTimeout(() => {
+          window.location.href = url;
+        }, 3000);
+      }
+
+      function makeClickHandler(side, url, door){
+        return function(e){
+          if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          e.preventDefault();
+          openAndGo(side, url, door);
+        };
+      }
+
+      function makeKeyHandler(side, url, door){
+        return function(e){
+          if (e.key === 'Enter' || e.key === ' '){
+            e.preventDefault();
+            openAndGo(side, url, door);
+          }
+        };
+      }
+
+      left.addEventListener('click',   makeClickHandler('left','/handyman.html',left));
+      right.addEventListener('click',  makeClickHandler('right','/removals.html',right));
+      left.addEventListener('keydown', makeKeyHandler('left','/handyman.html',left));
+      right.addEventListener('keydown',makeKeyHandler('right','/removals.html',right));
+
+      window.addEventListener("pageshow", () => {
+        shell.classList.remove('open-left','open-right');
+        left.classList.remove("clicked");
+        right.classList.remove("clicked");
+        const videos = document.querySelectorAll(".door-video");
+        videos.forEach(v => {
+          v.pause();
+          v.currentTime = 0;
+          v.style.display = "none";
+        });
+        navigating = false;
+      });
+    })();
+  </script>
+</body>
+</html>
