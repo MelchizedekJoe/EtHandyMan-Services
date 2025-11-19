@@ -26,18 +26,16 @@ body{
 .wrap{max-width:1200px;margin:auto;padding:10px 16px;display:flex;align-items:center;gap:12px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px;letter-spacing:.02em}
 .brand-logo{width:28px;height:28px;object-fit:contain;border-radius:6px;box-shadow:0 0 0 1px rgba(255,255,255,.15),0 4px 10px rgba(0,0,0,.35)}
-/* Make the logo link look like the old brand (white, no underline) */
 .brand,
 .brand:link,
 .brand:visited {
-  color: var(--fg);      /* same white as the header text */
+  color: var(--fg);
   text-decoration: none;
 }
-
 .brand:hover,
 .brand:focus-visible {
   text-decoration: none;
-  opacity: 0.9;         /* subtle hover feedback */
+  opacity: 0.9;
 }
 
 nav{display:flex;align-items:center;gap:8px}
@@ -108,7 +106,6 @@ nav a:hover{border-bottom-color:rgba(255,255,255,.35)}
   padding:8px 12px;background:rgba(17,24,39,.72);
   border:1px solid var(--border);border-radius:12px;backdrop-filter:blur(6px)
 }
-/* Floating nav + close so they never push the image */
 .lb-nav,.lb-close{
   background:rgba(17,24,39,.9);border:1px solid var(--border);color:var(--fg);
   width:44px;height:44px;border-radius:9999px;display:grid;place-items:center;
@@ -118,19 +115,14 @@ nav a:hover{border-bottom-color:rgba(255,255,255,.35)}
 .lb-prev{left:12px}
 .lb-next{right:12px}
 .lb-close{position:fixed;top:calc(12px + env(safe-area-inset-top));right:12px;font-size:22px}
-
-/* Make disabled arrows visible but inactive (mobile/desktop) */
-.lb-nav[disabled]{
-  opacity:.35;
-  pointer-events:none;
-}
+.lb-nav[disabled]{opacity:.35;pointer-events:none}
 
 /* ===== Reviews ===== */
 .testis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .quote{padding:14px}
 .stars{color:#fbbf24}
 
-/* ===== Booking ===== */
+/* ===== Booking & Contact ===== */
 .contactGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 label{display:block;margin-bottom:6px;font-size:13px;color:var(--muted)}
@@ -145,6 +137,73 @@ textarea{min-height:120px;grid-column:1/-1}
 .input-icon{position:relative;display:block}
 .input-icon input{padding-right:42px}
 .input-icon .icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:20px;height:20px;opacity:.8;pointer-events:none;color:#cbd5e1}
+
+/* Contact card */
+.contact-card{
+  padding:16px 18px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.contact-card h3{
+  margin:0 0 4px;
+  font-size:18px;
+}
+.contact-sub{
+  font-size:13px;
+  color:var(--muted);
+}
+.contact-row{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+}
+.contact-icon{
+  width:32px;
+  height:32px;
+  border-radius:9999px;
+  background:rgba(15,23,42,.95);
+  border:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+.contact-icon svg{
+  width:16px;
+  height:16px;
+  opacity:.9;
+}
+.contact-main{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.contact-label{
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--muted);
+}
+.contact-value{
+  font-size:15px;
+}
+.contact-value a{
+  color:inherit;
+  text-decoration:none;
+  border-bottom:1px dashed rgba(255,255,255,.4);
+}
+.contact-value a:hover,
+.contact-value a:focus-visible{
+  border-bottom-style:solid;
+}
+.contact-area{
+  margin-top:8px;
+  padding-top:10px;
+  border-top:1px solid var(--border);
+  font-size:13px;
+  color:var(--muted);
+}
 
 /* Drag & Drop Upload */
 .dropzone{border:1px dashed var(--border);background:rgba(255,255,255,.03);border-radius:12px;padding:18px;text-align:center;cursor:pointer;outline:none}
@@ -161,6 +220,28 @@ footer{margin:46px 0 70px}
 .card p{margin:.2rem 0}
 .card a{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.35)}
 
+/* Address card with map */
+.address-card{
+  padding:0;
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(0,1.4fr);
+}
+.address-text{
+  padding:14px 16px;
+}
+.address-map{
+  border-left:1px solid var(--border);
+  min-height:180px;
+  border-bottom-right-radius:16px;
+  border-top-right-radius:16px;
+  overflow:hidden;
+}
+.address-map iframe{
+  width:100%;
+  height:100%;
+  border:0;
+}
+
 /* ===== Sticky mobile bar ===== */
 .mobile-bar{position:fixed;inset:auto 0 0 0;z-index:999;background:rgba(7,12,24,.96);border-top:1px solid var(--border);padding:10px 12px;gap:10px;display:none}
 .mobile-bar a{flex:1;text-align:center;text-decoration:none;color:#0b1220;background:var(--accent);border-radius:12px;padding:.9rem 1rem;font-weight:700;box-shadow:0 6px 20px rgba(56,189,248,.25)}
@@ -169,6 +250,17 @@ footer{margin:46px 0 70px}
 /* ===== Toast ===== */
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:24px;background:rgba(17,24,39,.95);border:1px solid var(--border);color:var(--fg);padding:.8rem 1rem;border-radius:12px;box-shadow:var(--shadow);font-size:14px;display:none;z-index:2000}
 .toast.show{display:block}
+
+/* ===== Focus states ===== */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+  box-shadow:0 0 0 1px var(--accent);
+}
 
 /* ===== Responsive ===== */
 @media (max-width:1100px){.hero{grid-template-columns:1fr}}
@@ -185,8 +277,16 @@ footer{margin:46px 0 70px}
   .footerGrid{grid-template-columns:1fr}
   .heroImg{height:260px}
   .preview{grid-template-columns:repeat(3,1fr)}
+  .address-card{
+    grid-template-columns:1fr;
+  }
+  .address-map{
+    border-left:0;
+    border-top:1px solid var(--border);
+    border-radius:0 0 16px 16px;
+    min-height:220px;
+  }
 }
-/* Mobile fixes: align triptych and maximise lightbox height */
 @media (max-width:600px){
   .grid,.testis{grid-template-columns:1fr}
   .mobile-bar{display:flex}
@@ -205,10 +305,10 @@ footer{margin:46px 0 70px}
     <button class="menu-btn" aria-label="Toggle menu" aria-controls="mainnav" aria-expanded="false">
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
     </button>
-<a href="/index.html" class="brand">
-  <img class="brand-logo" src="./images/et-handyman-logo.jpg" alt="ET Handyman logo" width="28" height="28">
-  <span>ET Handyman Services</span>
-</a>
+    <a href="/index.html" class="brand">
+      <img class="brand-logo" src="./images/et-handyman-logo.jpg" alt="ET Handyman logo" width="28" height="28">
+      <span>ET Handyman Services</span>
+    </a>
 
     <div class="spacer"></div>
     <nav id="mainnav" aria-label="Main navigation">
@@ -226,7 +326,7 @@ footer{margin:46px 0 70px}
 <section class="hero" id="top">
   <div>
     <h1>Trusted Handyman Services in Brighton & Peacehaven</h1>
-    <p>Roofing, tiling, landscaping, resin driveways, decorating and more — reliable, insured, and friendly.</p>
+    <p>General repairs, painting, furniture assembly, resin driveways, gardening and more — reliable, insured, and friendly.</p>
     <div class="buttons">
       <a class="btn primary" href="#booking">Book a Job</a>
       <a class="btn" href="#work">View Past Work</a>
@@ -240,14 +340,55 @@ footer{margin:46px 0 70px}
 <!-- Services -->
 <section class="section" id="services" tabindex="-1">
   <h2>What we do</h2>
-  <p class="muted">Professional workmanship across exterior and interior projects.</p>
+  <p class="muted">Professional workmanship across general repairs, outdoor work and home improvements.</p>
   <div class="grid">
-    <article class="card svc"><img src="./images/Roofing%20repairs.jpg" alt="Roof repair" loading="lazy" width="240" height="240"><div><h3>Roofing & Repairs</h3><p>Tile/slate replacement, valleys & lead flashing, underlay & battens, gutters and leaks.</p></div></article>
-    <article class="card svc"><img src="./images/Tiling7.jpg" alt="Tiling" loading="lazy" width="240" height="240"><div><h3>Tiling & Paving</h3><p>Indoor/outdoor tiling, patios & steps, porcelain/ceramic, grouting and levelling.</p></div></article>
-    <article class="card svc"><img src="./images/Grandting3.jpg" alt="Driveway" loading="lazy" width="240" height="240"><div><h3>Driveways & Resin</h3><p>Resin-bound finishes, edging and drainage for durable, low-maintenance driveways.</p></div></article>
-    <article class="card svc"><img src="./images/Landscaping3.jpg" alt="Landscaping" loading="lazy" width="240" height="240"><div><h3>Landscaping & Groundworks</h3><p>Garden clearance, paths & edging, gravel/turf, levels and makeovers.</p></div></article>
-    <article class="card svc"><img src="./images/painting.jpg" alt="Painting" loading="lazy" width="240" height="240"><div><h3>Painting & Decorating</h3><p>Walls, ceilings and woodwork with careful prep and tidy finishes.</p></div></article>
-    <article class="card svc"><img src="./images/Carpeting.jpg" alt="Carpet" loading="lazy" width="240" height="240"><div><h3>Carpets & Flooring</h3><p>Carpet supply & fit, underlay, trimming and room restoration.</p></div></article>
+    <article class="card svc" data-service="General repairs & maintenance">
+      <img src="./images/Roofing%20repairs.jpg" alt="General repairs and maintenance" loading="lazy" width="240" height="240">
+      <div>
+        <h3>General repairs & maintenance</h3>
+        <p>Small repairs, leaks, minor faults and day-to-day maintenance around the home.</p>
+      </div>
+    </article>
+
+    <article class="card svc" data-service="Painting & decorating">
+      <img src="./images/painting.jpg" alt="Painting and decorating" loading="lazy" width="240" height="240">
+      <div>
+        <h3>Painting & decorating</h3>
+        <p>Walls, ceilings and woodwork with careful prep, neat cutting in and tidy finishes.</p>
+      </div>
+    </article>
+
+    <article class="card svc" data-service="Furniture assembly & fixtures">
+      <img src="./images/Carpeting.jpg" alt="Furniture assembly and fixtures" loading="lazy" width="240" height="240">
+      <div>
+        <h3>Furniture assembly & fixtures</h3>
+        <p>Flat pack furniture, curtain poles, blinds, shelves, mirrors and TV brackets.</p>
+      </div>
+    </article>
+
+    <article class="card svc" data-service="Driveways & resin bound">
+      <img src="./images/Grandting3.jpg" alt="Driveways and resin bound" loading="lazy" width="240" height="240">
+      <div>
+        <h3>Driveways & resin bound</h3>
+        <p>Resin-bound driveways, paths, edging and drainage for long-lasting kerb appeal.</p>
+      </div>
+    </article>
+
+    <article class="card svc" data-service="Gardening, landscaping & tree work">
+      <img src="./images/Landscaping3.jpg" alt="Gardening, landscaping and tree work" loading="lazy" width="240" height="240">
+      <div>
+        <h3>Gardening, landscaping & tree work</h3>
+        <p>Garden clearance, beds and borders, gravel, turfing and light tree/hedge work.</p>
+      </div>
+    </article>
+
+    <article class="card svc" data-service="Small plumbing & bathroom repairs">
+      <img src="./images/Tiling7.jpg" alt="Small plumbing and bathroom repairs" loading="lazy" width="240" height="240">
+      <div>
+        <h3>Small plumbing & bathroom repairs</h3>
+        <p>Tap changes, small leaks, sealant, grout repairs and other small bathroom jobs.</p>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -442,16 +583,17 @@ footer{margin:46px 0 70px}
         <div><label for="phone">Phone</label><input id="phone" name="phone" required placeholder="+44" autocomplete="tel"></div>
         <div><label for="email">Email</label><input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required></div>
         <div><label for="postcode">Postcode</label><input id="postcode" name="postcode" required placeholder="BN10 7FB" autocomplete="postal-code"></div>
-        <div><label for="service">Service</label>
+        <div>
+          <label for="service">Service</label>
           <select id="service" name="service" required>
             <option value="">Select…</option>
-            <option>Roofing & Repairs</option>
-            <option>Tiling & Paving</option>
-            <option>Driveways & Resin</option>
-            <option>Landscaping & Groundworks</option>
-            <option>Painting & Decorating</option>
-            <option>Carpets & Flooring</option>
-            <option>Small Plumbing / Bathroom</option>
+            <option>General repairs & maintenance</option>
+            <option>Painting & decorating</option>
+            <option>Furniture assembly & fixtures</option>
+            <option>Driveways & resin bound</option>
+            <option>Gardening, landscaping & tree work</option>
+            <option>Small plumbing & bathroom repairs</option>
+            <option>Other work</option>
           </select>
         </div>
 
@@ -488,13 +630,71 @@ footer{margin:46px 0 70px}
         </div>
       </form>
     </div>
-    <aside class="card" style="padding:16px">
-      <h3 style="margin-top:0">Contact</h3>
-      <p><strong>Phone:</strong> <a href="tel:+447305848484">+44 7305 848484</a></p>
-      <p><strong>Email:</strong> <a href="mailto:eli_etremovals@proton.me">eli_etremovals@proton.me</a></p>
-      <p><strong>WhatsApp:</strong> <a href="https://wa.me/447305848484" target="_blank" rel="noopener">Chat now</a></p>
-      <p><strong>Facebook:</strong> <a href="https://www.facebook.com/profile.php?id=61559444704457&sk=about" target="_blank" rel="noopener">Visit our Facebook</a></p>
-      <p class="muted">Service area: Peacehaven · Brighton & Hove · East Sussex</p>
+
+    <!-- Enhanced contact card -->
+    <aside class="card contact-card">
+      <h3>Contact</h3>
+      <p class="contact-sub">Prefer to talk to someone? Reach us directly by phone, WhatsApp or email.</p>
+
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6.6 3A2 2 0 0 0 4.6 5c0 8.3 6.7 15 15 15a2 2 0 0 0 2-2.1l-.2-3.2a1.8 1.8 0 0 0-1.8-1.7c-.4 0-.9.1-1.2.4l-2.1 1.7a1.2 1.2 0 0 1-1.3.1 12 12 0 0 1-5.6-5.6 1.2 1.2 0 0 1 .1-1.3L11.5 6c.3-.3.4-.7.4-1.1 0-.9-.7-1.6-1.6-1.7L7 3Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="contact-main">
+          <div class="contact-label">Phone</div>
+          <div class="contact-value"><a href="tel:01273 569343">01273 569343</a></div>
+        </div>
+      </div>
+
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/>
+            <path d="M4.5 6.5 12 12l7.5-5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="contact-main">
+          <div class="contact-label">Email</div>
+          <div class="contact-value"><a href="mailto:eli_etremovals@proton.me">eli_etremovals@proton.me</a></div>
+        </div>
+      </div>
+
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3.5A8.5 8.5 0 0 0 4 16.3L3.3 20l3.9-1A8.6 8.6 0 1 0 12 3.5Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8.7 11.3c.2.6.7 1.4 1.7 2 .8.5 1.5.7 2.1.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="contact-main">
+          <div class="contact-label">WhatsApp</div>
+          <div class="contact-value">
+            <a href="https://wa.me/447305848484" target="_blank" rel="noopener">Chat now</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M9 8.5c0-2 1.6-3.5 3.5-3.5H18v3h-2.5c-.8 0-1.5.7-1.5 1.5V11h4l-.6 3H14v7h-3v-7H9v-3h2V8.5Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="contact-main">
+          <div class="contact-label">Facebook</div>
+          <div class="contact-value">
+            <a href="https://www.facebook.com/profile.php?id=61559444704457&sk=about" target="_blank" rel="noopener">
+              Visit our Facebook
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <p class="contact-area">
+        Service area: Peacehaven · Brighton &amp; Hove · East Sussex
+      </p>
     </aside>
   </div>
 </section>
@@ -502,15 +702,41 @@ footer{margin:46px 0 70px}
 <!-- Footer -->
 <footer class="section">
   <div class="footerGrid">
-    <div class="card" style="padding:14px 16px"><h4>Address</h4><p>ET Handyman Services<br>2 Lincoln Court, Lincoln Avenue<br>Peacehaven BN10 7FB, UK</p></div>
-    <div class="card" style="padding:14px 16px"><h4>Hours</h4><p>Mon–Sat: 8:00–19:00<br>Sun: By appointment</p></div>
-    <div class="card" style="padding:14px 16px"><h4>Legal</h4><p class="muted" style="font-size:12px">© <span id="year"></span> ET Handyman Services</p></div>
+    <!-- Address + map -->
+    <div class="card address-card">
+      <div class="address-text">
+        <h4>Address</h4>
+        <p>ET Handyman Services<br>2 Lincoln Court, Lincoln Avenue<br>Peacehaven BN10 7FB, UK</p>
+        <p class="muted" style="font-size:12px;margin-top:6px">
+          Tap the map to open directions in Google Maps.
+        </p>
+      </div>
+      <div class="address-map">
+        <a href="https://www.google.com/maps/search/?api=1&query=2+Lincoln+Court,+Lincoln+Avenue,+Peacehaven+BN10+7FB,+UK" target="_blank" rel="noopener" aria-label="Open location in Google Maps">
+          <iframe
+            title="ET Handyman Services on Google Maps"
+            src="https://www.google.com/maps?q=2+Lincoln+Court,+Lincoln+Avenue,+Peacehaven+BN10+7FB,+UK&output=embed"
+            loading="lazy">
+          </iframe>
+        </a>
+      </div>
+    </div>
+
+    <div class="card" style="padding:14px 16px">
+      <h4>Hours</h4>
+      <p>Mon–Sat: 8:00–19:00<br>Sun: By appointment</p>
+    </div>
+
+    <div class="card" style="padding:14px 16px">
+      <h4>Legal</h4>
+      <p class="muted" style="font-size:12px">© <span id="year"></span> ET Handyman Services</p>
+    </div>
   </div>
 </footer>
 
 <!-- Sticky mobile action bar (phones only) -->
 <div class="mobile-bar" role="group" aria-label="Quick actions">
-  <a href="tel:01273 569343">Call</a>
+  <a href="tel:+447305848484">Call</a>
   <a class="secondary" href="https://wa.me/447305848484" target="_blank" rel="noopener">WhatsApp</a>
 </div>
 
@@ -648,7 +874,12 @@ async function collectAttachments(inputEl){
     if(!p.phone?.trim()) return 'Please enter your phone';
     if(!(p.address || p.postcode)?.trim()) return 'Please enter your postcode';
     if(!p.service) return 'Please select a service';
-    if(!p.message?.trim()) return 'Please describe the job';
+    if(!p.message?.trim()) {
+      if (p.service === 'Other work') {
+        return 'Please describe the job in detail so we can give an accurate quote.';
+      }
+      return 'Please describe the job';
+    }
     return null;
   }
 
@@ -717,7 +948,7 @@ const prevBtn = lb.querySelector('.lb-prev');
 const nextBtn = lb.querySelector('.lb-next');
 const closeBtn = lb.querySelector('.lb-close');
 
-let currentGroup = []; // array of {src, cap, phase, el}
+let currentGroup = [];
 let currentIndex = 0;
 
 function openGroupFrom(imgEl){
@@ -725,7 +956,6 @@ function openGroupFrom(imgEl){
   const container = document.querySelector(`.project[data-project="${projectId}"]`);
   if(!container) return;
 
-  // only visible figures (respect current phase filter)
   const items = Array.from(container.querySelectorAll('.triptych figure'))
     .filter(fig => fig.style.display !== 'none')
     .map(fig => {
@@ -743,8 +973,6 @@ function openGroupFrom(imgEl){
   if(currentIndex < 0) currentIndex = 0;
   showIndex(currentIndex);
   lb.classList.add('open');
-
-  // Prevent background scroll while open
   document.body.style.overflow = 'hidden';
 }
 
@@ -755,8 +983,6 @@ function showIndex(i){
   lbImg.src = it.src;
   lbCap.textContent = it.cap;
 
-  // Phase-aware arrows:
-  // before -> only next; during -> both; after -> only prev
   const ph = it.phase;
   const prevDisabled = (ph === 'before');
   const nextDisabled = (ph === 'after');
@@ -780,7 +1006,6 @@ document.getElementById('work').addEventListener('click', (e)=>{
   openGroupFrom(img);
 });
 
-// Backdrop click: close if click is NOT inside inner content or on nav buttons
 lb.addEventListener('click', (e)=>{
   const inside = e.target.closest('.lb-inner, .lb-nav');
   if(!inside) closeLightbox();
@@ -798,7 +1023,6 @@ nextBtn.addEventListener('click', (e)=>{
 });
 if (closeBtn) closeBtn.addEventListener('click', (e)=>{ e.stopPropagation(); closeLightbox(); });
 
-// Keep Esc + arrows
 addEventListener('keydown', (e)=>{
   if(!lb.classList.contains('open')) return;
   if(e.key === 'Escape') closeLightbox();
@@ -806,7 +1030,7 @@ addEventListener('keydown', (e)=>{
   if(e.key === 'ArrowRight' && !nextBtn.disabled) showIndex(currentIndex + 1);
 });
 
-// --- Swipe to navigate on touch devices ---
+// Swipe on touch devices
 (function(){
   let tsX = 0, tsY = 0;
   lb.addEventListener('touchstart', e => {
@@ -822,7 +1046,29 @@ addEventListener('keydown', (e)=>{
   }, {passive:true});
 })();
 
-// --- Optional: Log any missing images to help debugging ---
+// ===== Service cards -> scroll to booking with pre-selected service =====
+const serviceCards = document.querySelectorAll('.card.svc');
+const serviceSelect = document.getElementById('service');
+const bookingSection = document.getElementById('booking');
+const messageField = document.getElementById('message');
+
+serviceCards.forEach(card => {
+  card.style.cursor = 'pointer';
+  card.addEventListener('click', () => {
+    const value = card.dataset.service;
+    if (serviceSelect && value) {
+      serviceSelect.value = value;
+    }
+    if (bookingSection) {
+      bookingSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    if (messageField) {
+      setTimeout(() => messageField.focus(), 400);
+    }
+  });
+});
+
+// Log missing images
 document.querySelectorAll('img').forEach(img => {
   img.addEventListener('error', () => {
     console.warn('Missing image:', img.getAttribute('src'));
