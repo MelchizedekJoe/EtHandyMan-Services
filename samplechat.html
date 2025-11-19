@@ -190,10 +190,31 @@
       height: 100%;
     }
 
-    @media(max-width:768px){
-      .door-row{flex-direction:column;}
-      .door-shell{aspect-ratio:3/4;width:94vw;}
-    }
+    @media (max-width: 768px) {
+  .door-row {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  /* Let the container grow with its content on mobile */
+  .door-shell {
+    width: 100%;
+    max-width: 480px;
+    margin-inline: auto;
+    margin-top: 1.25rem;
+    padding: 0.5rem;
+    aspect-ratio: auto;
+    height: auto;
+    overflow: hidden;        /* keep doors inside the frame */
+    border-radius: 1.25rem;
+  }
+
+  /* Slightly shorter doors so they don’t feel huge on phones */
+  .door {
+    min-height: 200px;
+  }
+}
+
 
     .door {
       flex: 1;
