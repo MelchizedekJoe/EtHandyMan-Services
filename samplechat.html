@@ -168,7 +168,9 @@
       margin-bottom: .75rem;
     }
 
-    /* DOOR AREA */
+    /* ======================
+       DOOR AREA
+       ====================== */
 
     .door-shell {
       margin-top: 1.5rem;
@@ -182,6 +184,7 @@
       perspective: 2000px;
       margin-left: auto;
       margin-right: auto;
+      overflow: hidden;
     }
 
     .door-row {
@@ -189,32 +192,6 @@
       gap: 0.5rem;
       height: 100%;
     }
-
-    @media (max-width: 768px) {
-  .door-row {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  /* Let the container grow with its content on mobile */
-  .door-shell {
-    width: 100%;
-    max-width: 480px;
-    margin-inline: auto;
-    margin-top: 1.25rem;
-    padding: 0.5rem;
-    aspect-ratio: auto;
-    height: auto;
-    overflow: hidden;        /* keep doors inside the frame */
-    border-radius: 1.25rem;
-  }
-
-  /* Slightly shorter doors so they don’t feel huge on phones */
-  .door {
-    min-height: 200px;
-  }
-}
-
 
     .door {
       flex: 1;
@@ -314,8 +291,31 @@
     .door-label h2 { margin: 0; font-size: 1.3rem; color: var(--fg); }
     .door-label p { margin: .3rem 0 0; font-size: .95rem; color: var(--muted); }
 
+    /* Mobile tweaks for doors */
+    @media (max-width: 768px) {
+      .door-row {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .door-shell {
+        width: 100%;
+        max-width: 480px;
+        margin-inline: auto;
+        margin-top: 1.25rem;
+        padding: 0.5rem;
+        aspect-ratio: auto;
+        height: auto;
+        border-radius: 1.25rem;
+      }
+
+      .door {
+        min-height: 200px;
+      }
+    }
+
     /* ======================
-       NEW CTA ROW
+       CTA ROW
        ====================== */
 
     .cta-row {
@@ -538,7 +538,9 @@
       <h1>Welcome to ET Services</h1>
       <p class="hero-tagline">Fixing, moving, and improving your world.</p>
       <p class="hero-subnote">Serving Peacehaven, Brighton & surrounding areas.</p>
-      <p class="hero-subnote">Choose a door to get started 👇</p>
+      <p class="hero-subnote">
+        Choose a service to get started – the door is the experience 👇
+      </p>
 
       <!-- DOORS -->
       <section class="door-shell" id="door-shell" aria-label="Choose a service by opening a door">
@@ -715,10 +717,29 @@
         };
       }
 
+      // Door clicks / keyboard
       left.addEventListener('click',   makeClickHandler('left','/handyman.html',left));
       right.addEventListener('click',  makeClickHandler('right','/removals.html',right));
       left.addEventListener('keydown', makeKeyHandler('left','/handyman.html',left));
       right.addEventListener('keydown',makeKeyHandler('right','/removals.html',right));
+
+      // Buttons under doors trigger same animation & navigation
+      const handymanBtn = document.querySelector('.btn-handyman');
+      const removalsBtn = document.querySelector('.btn-removals');
+
+      if (handymanBtn) {
+        handymanBtn.addEventListener(
+          'click',
+          makeClickHandler('left', '/handyman.html', left)
+        );
+      }
+
+      if (removalsBtn) {
+        removalsBtn.addEventListener(
+          'click',
+          makeClickHandler('right', '/removals.html', right)
+        );
+      }
 
       window.addEventListener("pageshow", () => {
         shell.classList.remove('open-left','open-right');
