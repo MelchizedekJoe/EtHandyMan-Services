@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Book a Service | ET Services</title>
+  <meta name="description" content="Book handyman or removals services with ET Services in Peacehaven, Brighton & surrounding areas.">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+
+  <style>
+    :root{
+      --bg:#0f172a; --fg:#e5e7eb; --muted:#a7b0c0;
+      --border:rgba(255,255,255,.09); --glass:rgba(255,255,255,.06);
+      --shadow:0 16px 32px rgba(0,0,0,.45); --accent:#38bdf8; --accent2:#f97316;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,Arial;
+      background:radial-gradient(1200px 700px at 50% 0%, #111827 0%, var(--bg) 55%);
+      color:var(--fg); -webkit-text-size-adjust:100%;
+      min-height:100vh;
+    }
+
+    /* ===== Header ===== */
+    .header{position:fixed;inset:0 0 auto 0;z-index:1000;background:rgba(7,12,24,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+    .wrap{max-width:1100px;margin:auto;padding:10px 16px;display:flex;align-items:center;gap:12px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px;letter-spacing:.02em;text-decoration:none;color:var(--fg)}
+    .brand-logo{width:28px;height:28px;object-fit:contain;border-radius:6px;box-shadow:0 0 0 1px rgba(255,255,255,.15),0 4px 10px rgba(0,0,0,.35)}
+    .brand span small{display:block;font-weight:500;font-size:11px;color:var(--muted)}
+    .spacer{flex:1}
+    .header-pill{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:var(--glass);
+      color:var(--muted);
+    }
+    .header-back{
+      text-decoration:none;
+      color:var(--muted);
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(15,23,42,.9);
+    }
+
+    /* ===== Layout ===== */
+    main{
+      max-width:1100px;
+      margin:90px auto 40px;
+      padding:0 16px 32px;
+    }
+    .title-block{
+      margin-bottom:18px;
+    }
+    .title-block h1{
+      font-size:clamp(24px,4vw,32px);
+      margin-bottom:4px;
+    }
+    .title-block p{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    /* ===== Stepper ===== */
+    .stepper{
+      display:flex;
+      gap:10px;
+      margin-bottom:18px;
+      flex-wrap:wrap;
+    }
+    .step-pill{
+      flex:1 1 0;
+      min-width:0;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(15,23,42,.96);
+      font-size:13px;
+      color:var(--muted);
+    }
+    .step-pill span.num{
+      width:22px;height:22px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.8);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:12px;
+    }
+    .step-pill.active{
+      border-color:var(--accent);
+      color:#e5f3ff;
+      box-shadow:0 0 0 1px rgba(56,189,248,.5);
+    }
+    .step-pill.active span.num{
+      background:var(--accent);
+      border-color:transparent;
+      color:#020617;
+    }
+    .step-pill.done{
+      border-style:dashed;
+      opacity:0.9;
+    }
+
+    /* ===== Card layout ===== */
+    .card-shell{
+      display:grid;
+      grid-template-columns:minmax(0, 1.6fr) minmax(0, 1.1fr);
+      gap:18px;
+      align-items:flex-start;
+    }
+    .card-main,
+    .card-side{
+      background:var(--glass);
+      border-radius:18px;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      padding:16px 16px 18px;
+    }
+    .card-side{
+      position:sticky;
+      top:84px;
+      align-self:flex-start;
+      font-size:13px;
+    }
+
+    /* ===== Steps ===== */
+    .step{
+      display:none;
+      animation:fadeIn .25s ease;
+    }
+    .step.active{
+      display:block;
+    }
+    @keyframes fadeIn{
+      from{opacity:0;transform:translateY(4px)}
+      to{opacity:1;transform:none}
+    }
+
+    .step h2{
+      font-size:18px;
+      margin-bottom:6px;
+    }
+    .step p.help{
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:14px;
+    }
+
+    /* Service selection */
+    .service-choices{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-bottom:14px;
+    }
+    @media(max-width:720px){
+      .card-shell{grid-template-columns:1fr}
+      .card-side{position:static}
+      .service-choices{grid-template-columns:1fr}
+    }
+    .service-card{
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:rgba(15,23,42,.96);
+      padding:10px 11px 11px;
+      display:flex;
+      gap:8px;
+      cursor:pointer;
+      position:relative;
+      transition:border-color .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .service-card input[type="radio"]{
+      position:absolute;
+      opacity:0;
+      pointer-events:none;
+    }
+    .service-icon{
+      width:32px;height:32px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+      background:rgba(15,23,42,.98);
+      border:1px solid var(--border);
+      flex-shrink:0;
+    }
+    .service-body h3{
+      font-size:14px;
+      margin:0 0 2px;
+    }
+    .service-body p{
+      font-size:12px;
+      color:var(--muted);
+      margin:0;
+    }
+    .service-card[data-type="handyman"].selected{
+      border-color:var(--accent2);
+      box-shadow:0 0 0 1px rgba(249,115,22,.6);
+    }
+    .service-card[data-type="removals"].selected{
+      border-color:var(--accent);
+      box-shadow:0 0 0 1px rgba(56,189,248,.6);
+    }
+
+    .subservice-group{
+      margin-top:8px;
+    }
+    .subservice-label{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted);
+      margin-bottom:4px;
+    }
+    select, input, textarea{
+      width:100%;
+      padding:.75rem .85rem;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(15,23,42,.98);
+      color:inherit;
+      font-size:14px;
+    }
+    select{
+      padding-right:2.2rem;
+    }
+    textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+    label{
+      font-size:13px;
+      color:var(--muted);
+      display:block;
+      margin-bottom:4px;
+    }
+
+    .field-row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    @media(max-width:720px){
+      .field-row{grid-template-columns:1fr}
+    }
+    .field{margin-bottom:10px;}
+
+    .input-icon{
+      position:relative;
+      display:block;
+    }
+    .input-icon input{
+      padding-right:40px;
+    }
+    .input-icon .icon{
+      position:absolute;
+      right:12px;
+      top:50%;
+      transform:translateY(-50%);
+      width:18px;height:18px;
+      opacity:.85;
+      pointer-events:none;
+    }
+
+    /* Dropzone */
+    .dropzone{
+      border:1px dashed var(--border);
+      background:rgba(255,255,255,.03);
+      border-radius:12px;
+      padding:14px;
+      text-align:center;
+      cursor:pointer;
+      outline:none;
+      font-size:13px;
+    }
+    .dropzone p{
+      margin:0;
+    }
+    .dropzone small{
+      display:block;
+      margin-top:4px;
+      color:var(--muted);
+      font-size:11px;
+    }
+    .dropzone.dragover{
+      background:rgba(56,189,248,.07);
+      border-color:rgba(56,189,248,.5);
+    }
+    .preview{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
+      margin-top:10px;
+    }
+    @media(max-width:720px){
+      .preview{grid-template-columns:repeat(3,1fr)}
+    }
+    .preview-item{
+      position:relative;
+      border-radius:10px;
+      border:1px solid var(--border);
+      overflow:hidden;
+      background:#020617;
+    }
+    .preview-item img{
+      width:100%;
+      height:90px;
+      object-fit:cover;
+      display:block;
+    }
+    .preview-item button{
+      position:absolute;
+      top:6px;
+      right:6px;
+      border:1px solid var(--border);
+      background:rgba(0,0,0,.6);
+      color:var(--fg);
+      font-size:11px;
+      padding:.2rem .4rem;
+      border-radius:999px;
+      cursor:pointer;
+    }
+
+    /* Buttons */
+    .step-actions{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:14px;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      padding:.8rem 1.05rem;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(15,23,42,1));
+      color:inherit;
+      text-decoration:none;
+      font-size:14px;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+    }
+    .btn.primary{
+      background:linear-gradient(135deg,var(--accent),#0ea5e9);
+      border-color:rgba(56,189,248,.7);
+      color:#020617;
+      font-weight:600;
+      box-shadow:0 12px 30px rgba(15,23,42,.8);
+    }
+    .btn[disabled]{
+      opacity:.65;
+      cursor:not-allowed;
+      box-shadow:none;
+    }
+    .btn-ghost{
+      background:transparent;
+      border-style:dashed;
+      color:var(--muted);
+    }
+    .hint{
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    /* Side summary */
+    .summary-title{
+      font-size:14px;
+      margin-bottom:6px;
+    }
+    .summary-tag{
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      padding:4px 8px;
+      border-radius:999px;
+      font-size:11px;
+      border:1px solid var(--border);
+      margin-bottom:8px;
+    }
+    .summary-list{
+      list-style:none;
+      padding:0;
+      margin:6px 0 10px;
+      font-size:12px;
+      color:var(--muted);
+    }
+    .summary-list li{
+      margin-bottom:4px;
+    }
+    .side-block{
+      margin-bottom:10px;
+      padding-bottom:8px;
+      border-bottom:1px solid rgba(148,163,184,.3);
+    }
+    .side-block:last-child{
+      border-bottom:none;
+      padding-bottom:0;
+    }
+    .side-label{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted);
+      margin-bottom:3px;
+    }
+    .side-value{
+      font-size:13px;
+    }
+
+    /* Toast */
+    .toast{
+      position:fixed;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:22px;
+      background:rgba(15,23,42,.96);
+      border:1px solid var(--border);
+      color:var(--fg);
+      padding:.75rem 1rem;
+      border-radius:12px;
+      font-size:13px;
+      box-shadow:var(--shadow);
+      display:none;
+      z-index:2000;
+    }
+    .toast.show{display:block;}
+
+    /* Focus */
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible{
+      outline:2px solid var(--accent);
+      outline-offset:2px;
+      box-shadow:0 0 0 1px var(--accent);
+    }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="wrap">
+    <a href="/index.html" class="brand">
+      <img src="/images/et-services-logo.png" alt="ET Services logo" class="brand-logo">
+      <span>ET Services<br><small>Handyman & Removals</small></span>
+    </a>
+    <div class="spacer"></div>
+    <span class="header-pill">Step-by-step booking · No payment required yet</span>
+  </div>
+</header>
+
+<main>
+  <div class="title-block">
+    <a href="javascript:history.back();" class="header-back">
+      ← Back
+    </a>
+    <h1>Book your job</h1>
+    <p>Tell us what you need, where you are, and how to contact you. We’ll confirm time and price with you directly.</p>
+  </div>
+
+  <!-- Stepper -->
+  <div class="stepper" aria-hidden="true">
+    <div class="step-pill active" data-step-pill="1"><span class="num">1</span><span>Service</span></div>
+    <div class="step-pill" data-step-pill="2"><span class="num">2</span><span>Date & location</span></div>
+    <div class="step-pill" data-step-pill="3"><span class="num">3</span><span>Details & contact</span></div>
+  </div>
+
+  <div class="card-shell">
+    <!-- Main form -->
+    <section class="card-main">
+      <form id="multiStepForm" novalidate>
+        <!-- Hidden fields used for final payload -->
+        <input type="hidden" name="service" id="serviceFinal">
+        <input type="hidden" name="primaryType" id="primaryType">
+
+        <!-- STEP 1: SERVICE -->
+        <div class="step active" data-step="1">
+          <h2>What do you need help with?</h2>
+          <p class="help">Choose a service and type of job. You can add more detail later.</p>
+
+          <div class="service-choices">
+            <!-- Handyman -->
+            <label class="service-card" data-type="handyman">
+              <input type="radio" name="serviceType" value="Handyman">
+              <div class="service-icon">🔧</div>
+              <div class="service-body">
+                <h3>Handyman</h3>
+                <p>Repairs, painting, driveways, gardens & more.</p>
+              </div>
+            </label>
+
+            <!-- Removals -->
+            <label class="service-card" data-type="removals">
+              <input type="radio" name="serviceType" value="Removals">
+              <div class="service-icon">🚚</div>
+              <div class="service-body">
+                <h3>Removals</h3>
+                <p>Home moves, office relocations, clearances & single items.</p>
+              </div>
+            </label>
+          </div>
+
+          <div class="subservice-group" id="handymanOptions">
+            <div class="subservice-label">Handyman job type</div>
+            <select id="handymanDetail">
+              <option value="">Select…</option>
+              <option>General repairs & maintenance</option>
+              <option>Painting & decorating</option>
+              <option>Furniture assembly & fixtures</option>
+              <option>Driveways & resin bound</option>
+              <option>Gardening, landscaping & tree work</option>
+              <option>Small plumbing & bathroom repairs</option>
+              <option>Other handyman work</option>
+            </select>
+          </div>
+
+          <div class="subservice-group" id="removalsOptions" style="display:none;">
+            <div class="subservice-label">Removals job type</div>
+            <select id="removalsDetail">
+              <option value="">Select…</option>
+              <option>Flat / house move</option>
+              <option>Office / business relocation</option>
+              <option>Single item or small load</option>
+              <option>Household / garage clearance</option>
+              <option>Office / commercial clearance</option>
+              <option>Other removals work</option>
+            </select>
+          </div>
+
+          <div class="step-actions">
+            <span class="hint">You can change this later before sending.</span>
+            <button type="button" class="btn primary" id="next1">
+              Next: Date & location →
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2: DATE & LOCATION -->
+        <div class="step" data-step="2">
+          <h2>When and where?</h2>
+          <p class="help">Share your postcode and preferred date. We’ll confirm availability with you.</p>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="postcode">Postcode</label>
+              <input id="postcode" name="postcode" placeholder="BN10 7FB" autocomplete="postal-code" required>
+            </div>
+            <div class="field">
+              <label for="town">Town / area</label>
+              <input id="town" name="town" placeholder="Peacehaven / Brighton / Hove…" autocomplete="address-level2">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="address">Address (optional)</label>
+            <input id="address" name="address" placeholder="House number & street">
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="date">Preferred date</label>
+              <div class="input-icon">
+                <input id="date" name="date" type="text" placeholder="Select a date">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M8 2v4M16 2v4M3 10h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+            <div class="field">
+              <label for="timeWindow">Time of day (optional)</label>
+              <select id="timeWindow" name="timeWindow">
+                <option value="">Any time</option>
+                <option>Morning (8:00–12:00)</option>
+                <option>Afternoon (12:00–17:00)</option>
+                <option>Evening (after 17:00)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="parking">Parking / access (optional)</label>
+            <input id="parking" name="parking" placeholder="e.g. On-street parking, permit needed, narrow access…">
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn btn-ghost" id="back2">← Back</button>
+            <button type="button" class="btn primary" id="next2">
+              Next: Details & contact →
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: DETAILS & CONTACT -->
+        <div class="step" data-step="3">
+          <h2>Job details & contact</h2>
+          <p class="help">Tell us what needs doing and how to reach you. No payment is taken on this page.</p>
+
+          <div class="field">
+            <label for="message">Job details</label>
+            <textarea id="message" name="message" placeholder="Describe the work, rooms or items involved, any deadlines, etc." required></textarea>
+          </div>
+
+          <div class="field">
+            <label for="photos">Photos (optional)</label>
+            <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload photos">
+              <p>Click to upload or drag and drop up to 5 photos</p>
+              <small>JPG, PNG, HEIC/HEIF, WebP · Max 4 MB each</small>
+            </div>
+            <input id="photos" name="photos" type="file" accept="image/*" capture="environment" multiple hidden />
+            <div id="preview" class="preview" aria-live="polite"></div>
+          </div>
+
+          <div class="field-row" style="margin-top:8px;">
+            <div class="field">
+              <label for="fullName">Full name</label>
+              <input id="fullName" name="fullName" placeholder="Jane Doe" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" placeholder="+44" autocomplete="tel" required>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="contactPref">Best way to contact you</label>
+              <select id="contactPref" name="contactPref">
+                <option>Email or phone</option>
+                <option>Call me</option>
+                <option>WhatsApp me</option>
+                <option>Email only</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Honeypot -->
+          <input type="text" name="company" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0">
+
+          <div class="step-actions">
+            <button type="button" class="btn btn-ghost" id="back3">← Back</button>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:0;">
+              <button type="submit" class="btn primary" id="submitBtn">
+                Send request
+              </button>
+              <span id="formMsg" class="hint" aria-live="polite"></span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- Side summary -->
+    <aside class="card-side" aria-label="Booking summary">
+      <div class="side-block">
+        <div class="side-label">You’re booking with</div>
+        <div class="side-value"><strong>ET Services</strong><br>Peacehaven · Brighton & Hove</div>
+      </div>
+
+      <div class="side-block">
+        <div class="side-label">Chosen service</div>
+        <div id="summaryService" class="side-value">Not selected yet</div>
+      </div>
+
+      <div class="side-block">
+        <div class="side-label">When & where</div>
+        <ul class="summary-list" id="summaryWhenWhere">
+          <li>Postcode: –</li>
+          <li>Date: –</li>
+          <li>Time: Any</li>
+        </ul>
+      </div>
+
+      <div class="side-block">
+        <div class="side-label">Contact</div>
+        <ul class="summary-list" id="summaryContact">
+          <li>Name: –</li>
+          <li>Phone: –</li>
+          <li>Email: –</li>
+        </ul>
+      </div>
+
+      <div class="side-block">
+        <div class="side-label">What happens next?</div>
+        <p class="side-value">
+          We’ll review your request, check availability, and get back to you to confirm a time and price.
+        </p>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  // ===== Toast
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'), 4000);
+  }
+
+  // ===== Stepper logic
+  const steps = Array.from(document.querySelectorAll('.step'));
+  const stepPills = Array.from(document.querySelectorAll('.step-pill'));
+  let currentStep = 1;
+
+  function goToStep(n){
+    currentStep = Math.min(Math.max(n,1), steps.length);
+    steps.forEach(s => s.classList.toggle('active', Number(s.dataset.step) === currentStep));
+    stepPills.forEach(p => {
+      const stepNum = Number(p.dataset.stepPill);
+      p.classList.toggle('active', stepNum === currentStep);
+      p.classList.toggle('done', stepNum < currentStep);
+    });
+  }
+
+  // ===== Service selection
+  const serviceCards = document.querySelectorAll('.service-card');
+  const handymanOptions = document.getElementById('handymanOptions');
+  const removalsOptions = document.getElementById('removalsOptions');
+  const serviceFinal = document.getElementById('serviceFinal');
+  const primaryType = document.getElementById('primaryType');
+  const summaryService = document.getElementById('summaryService');
+
+  function updateServiceSummary(){
+    const type = primaryType.value || '';
+    const detailHandyman = document.getElementById('handymanDetail').value;
+    const detailRemovals = document.getElementById('removalsDetail').value;
+    let label = 'Not selected yet';
+
+    if (type === 'Handyman') {
+      label = detailHandyman ? ('Handyman — ' + detailHandyman) : 'Handyman (job type not chosen yet)';
+    } else if (type === 'Removals') {
+      label = detailRemovals ? ('Removals — ' + detailRemovals) : 'Removals (job type not chosen yet)';
+    }
+
+    summaryService.textContent = label;
+  }
+
+  serviceCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const type = card.dataset.type === 'handyman' ? 'Handyman' : 'Removals';
+      document.querySelectorAll('input[name="serviceType"]').forEach(r => {
+        r.checked = (r.value === type);
+      });
+      primaryType.value = type;
+      serviceCards.forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+
+      if (type === 'Handyman') {
+        handymanOptions.style.display = '';
+        removalsOptions.style.display = 'none';
+      } else {
+        handymanOptions.style.display = 'none';
+        removalsOptions.style.display = '';
+      }
+      updateServiceSummary();
+    });
+  });
+
+  document.getElementById('handymanDetail').addEventListener('change', updateServiceSummary);
+  document.getElementById('removalsDetail').addEventListener('change', updateServiceSummary);
+
+  // Prefill based on ?type=handyman / removals
+  (function(){
+    const params = new URLSearchParams(location.search);
+    const t = (params.get('type') || '').toLowerCase();
+    if (t === 'handyman' || t === 'removals') {
+      const targetCard = document.querySelector('.service-card[data-type="' + t + '"]');
+      if (targetCard) targetCard.click();
+    }
+  })();
+
+  // ===== Flatpickr
+  if (window.flatpickr) {
+    flatpickr("#date", {
+      dateFormat: "Y-m-d",
+      altInput: true,
+      altFormat: "D, j M Y",
+      minDate: "today",
+      disableMobile: true
+    });
+  }
+
+  // ===== Dropzone
+  const dropzone = document.getElementById('dropzone');
+  const photosInput = document.getElementById('photos');
+  const previewEl = document.getElementById('preview');
+  let selectedFiles = [];
+  const MAX_FILES = 5;
+  const MAX_MB_PER_FILE = 4;
+
+  function addFiles(files){
+    for (const f of files){
+      if (selectedFiles.length >= MAX_FILES){ showToast('You can upload up to ' + MAX_FILES + ' images.'); break; }
+      const mb = f.size/(1024*1024);
+      if (mb > MAX_MB_PER_FILE){ showToast('"' + f.name + '" is ' + mb.toFixed(1) + ' MB. Max ' + MAX_MB_PER_FILE + ' MB.'); continue; }
+      if (f.type && !f.type.startsWith('image/')){ showToast('"' + f.name + '" is not an image.'); continue; }
+      const key = f.name + ':' + f.size + ':' + f.lastModified;
+      if (selectedFiles.some(sf => (sf.name + ':' + sf.size + ':' + sf.lastModified) === key)) continue;
+      selectedFiles.push(f);
+    }
+    updatePreview();
+    syncInputWithSelection();
+  }
+
+  function updatePreview(){
+    previewEl.innerHTML = '';
+    selectedFiles.forEach((file, idx) => {
+      const url = URL.createObjectURL(file);
+      const item = document.createElement('div');
+      item.className = 'preview-item';
+      item.innerHTML = '<img src="' + url + '" alt="Selected photo ' + (idx+1) + '"><button type="button" aria-label="Remove photo ' + (idx+1) + '">×</button>';
+      item.querySelector('button').addEventListener('click', () => {
+        selectedFiles.splice(idx, 1);
+        updatePreview();
+        syncInputWithSelection();
+      });
+      previewEl.appendChild(item);
+    });
+  }
+
+  function syncInputWithSelection(){
+    const dt = new DataTransfer();
+    selectedFiles.forEach(f => dt.items.add(f));
+    photosInput.files = dt.files;
+  }
+
+  function readFileAsBase64(file){
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64 = String(reader.result).split(',')[1];
+        resolve({ filename:file.name, content_type:file.type || 'application/octet-stream', base64 });
+      };
+      reader.onerror = () => reject(new Error('Failed to read file'));
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function collectAttachments(inputEl){
+    const files = Array.from(inputEl.files || []);
+    if (!files.length) return [];
+    return Promise.all(files.map(readFileAsBase64));
+  }
+
+  if (dropzone && photosInput && previewEl) {
+    dropzone.addEventListener('click', () => photosInput.click());
+    dropzone.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); photosInput.click(); }
+    });
+    ['dragenter','dragover'].forEach(evt => {
+      dropzone.addEventListener(evt, (e) => {
+        e.preventDefault(); e.stopPropagation();
+        dropzone.classList.add('dragover');
+      });
+    });
+    ['dragleave','drop'].forEach(evt => {
+      dropzone.addEventListener(evt, (e) => {
+        e.preventDefault(); e.stopPropagation();
+        dropzone.classList.remove('dragover');
+      });
+    });
+    dropzone.addEventListener('drop', (e) => addFiles(Array.from(e.dataTransfer.files || [])));
+    photosInput.addEventListener('change', () => addFiles(Array.from(photosInput.files || [])));
+  }
+
+  // ===== Summary auto-update (when user types)
+  const postcode = document.getElementById('postcode');
+  const dateInput = document.getElementById('date');
+  const timeWindow = document.getElementById('timeWindow');
+  const fullName = document.getElementById('fullName');
+  const phone = document.getElementById('phone');
+  const email = document.getElementById('email');
+  const summaryWhenWhere = document.getElementById('summaryWhenWhere');
+  const summaryContact = document.getElementById('summaryContact');
+
+  function refreshWhenWhere(){
+    const pc = postcode.value.trim() || '–';
+    const d = dateInput.value.trim() || '–';
+    const t = timeWindow.value || 'Any time';
+    summaryWhenWhere.innerHTML = '<li>Postcode: ' + pc + '</li><li>Date: ' + d + '</li><li>Time: ' + t + '</li>';
+  }
+  function refreshContact(){
+    const n = fullName.value.trim() || '–';
+    const p = phone.value.trim() || '–';
+    const e = email.value.trim() || '–';
+    summaryContact.innerHTML = '<li>Name: ' + n + '</li><li>Phone: ' + p + '</li><li>Email: ' + e + '</li>';
+  }
+
+  ['input','change'].forEach(evt => {
+    postcode.addEventListener(evt, refreshWhenWhere);
+    dateInput.addEventListener(evt, refreshWhenWhere);
+    timeWindow.addEventListener(evt, refreshWhenWhere);
+    fullName.addEventListener(evt, refreshContact);
+    phone.addEventListener(evt, refreshContact);
+    email.addEventListener(evt, refreshContact);
+  });
+
+  // ===== Step buttons
+  document.getElementById('next1').addEventListener('click', () => {
+    // basic validation for step 1
+    if (!primaryType.value){
+      showToast('Please choose Handyman or Removals.');
+      return;
+    }
+    const detailH = document.getElementById('handymanDetail').value;
+    const detailR = document.getElementById('removalsDetail').value;
+    if (primaryType.value === 'Handyman' && !detailH){
+      showToast('Please select a handyman job type.');
+      return;
+    }
+    if (primaryType.value === 'Removals' && !detailR){
+      showToast('Please select a removals job type.');
+      return;
+    }
+    const label = primaryType.value === 'Handyman'
+      ? ('Handyman — ' + detailH)
+      : ('Removals — ' + detailR);
+    serviceFinal.value = label;
+    updateServiceSummary();
+    goToStep(2);
+  });
+
+  document.getElementById('back2').addEventListener('click', () => goToStep(1));
+  document.getElementById('next2').addEventListener('click', () => {
+    if (!postcode.value.trim()){
+      showToast('Please enter your postcode.');
+      postcode.focus();
+      return;
+    }
+    // date is optional but recommended
+    refreshWhenWhere();
+    goToStep(3);
+  });
+
+  document.getElementById('back3').addEventListener('click', () => goToStep(2));
+
+  // ===== Form submit
+  const form = document.getElementById('multiStepForm');
+  const formMsg = document.getElementById('formMsg');
+  const submitBtn = document.getElementById('submitBtn');
+
+  function validatePayload(p){
+    if(!p.primaryType) return 'Please choose a service type.';
+    if(!p.service) return 'Please select a job type.';
+    if(!p.postcode?.trim()) return 'Please enter your postcode.';
+    if(!p.message?.trim()) return 'Please describe the job.';
+    if(!p.fullName?.trim()) return 'Please enter your name.';
+    if(!p.phone?.trim()) return 'Please enter your phone.';
+    if(!/^\S+@\S+\.\S+$/.test(p.email||'')) return 'Please enter a valid email.';
+    return null;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formMsg.textContent = '';
+    submitBtn.disabled = true;
+
+    const fd = new FormData(form);
+    const payload = Object.fromEntries(Array.from(fd.entries()).filter(([k]) => k !== 'photos'));
+
+    const err = validatePayload(payload);
+    if (err){
+      formMsg.textContent = err;
+      showToast(err);
+      submitBtn.disabled = false;
+      return;
+    }
+
+    try{
+      const attachments = await collectAttachments(photosInput);
+      if (attachments.length) payload.attachments = attachments;
+
+      const res = await fetch('/.netlify/functions/quote-request', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(payload)
+      });
+      const text = await res.text();
+      let data = {}; try{ data = JSON.parse(text); }catch(e){}
+      if(!res.ok) throw new Error(data?.error || text || 'Submission failed');
+
+      formMsg.textContent = 'Thanks! Your request has been received. We’ll be in touch.';
+      showToast('Request sent ✔');
+      form.reset();
+      selectedFiles = [];
+      updatePreview();
+      const fp = dateInput._flatpickr; if (fp) fp.clear();
+      primaryType.value = '';
+      serviceFinal.value = '';
+      serviceCards.forEach(c => c.classList.remove('selected'));
+      handymanOptions.style.display = '';
+      removalsOptions.style.display = 'none';
+      summaryService.textContent = 'Not selected yet';
+      refreshWhenWhere();
+      refreshContact();
+      goToStep(1);
+    }catch(err){
+      console.error(err);
+      formMsg.textContent = 'Sorry, something went wrong. Please try again or call 01273 569343.';
+      showToast('Could not send. Please try again.');
+    }finally{
+      submitBtn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
