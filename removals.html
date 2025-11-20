@@ -68,8 +68,32 @@
     .svc p{ margin:0; color:var(--muted); font-size:14px }
 
     /* USP */
-    .usp{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:14px }
-    .usp .pill{ padding:.6rem .8rem; border:1px solid var(--border); border-radius:9999px; background:var(--glass); text-align:center; font-size:13px }
+.usp{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:12px;
+  margin-top:14px;
+}
+
+.usp .pill{
+  padding:.6rem .95rem;
+  border:1px solid var(--border);
+  border-radius:9999px;
+  background:var(--glass);
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.usp-icon{
+  width:22px;
+  height:22px;
+  object-fit:contain;
+  border-radius:999px;
+  flex-shrink:0;
+}
+
 
     /* Gallery + Lightbox */
     .gallery{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px }
@@ -195,31 +219,91 @@
         <a class="btn primary" href="#booking">Get a Quote</a>
         <a class="btn" href="#work">See Past Moves</a>
       </div>
-      <div class="usp">
-        <div class="pill">2–3 person crews</div>
-        <div class="pill">Disassemble & re-assemble</div>
-        <div class="pill">Blankets & straps</div>
-        <div class="pill">Evenings/weekends</div>
-      </div>
+<div class="usp">
+  <div class="pill">
+    <img src="./images/brighton-hove-council-logo.png"
+         alt="Brighton &amp; Hove City Council"
+         class="usp-icon">
+    <span>Trusted by Brighton &amp; Hove City Council</span>
+  </div>
+
+  <div class="pill">
+    <img src="./images/google-fb-5star.png"
+         alt="5 star Facebook and Google reviews"
+         class="usp-icon">
+    <span>5★ Facebook &amp; Google reviews</span>
+  </div>
+
+  <div class="pill">
+    <img src="./images/discount-icon.svg"
+         alt="Discounts for customers with additional needs"
+         class="usp-icon">
+    <span>Discounts for customers with additional needs</span>
+  </div>
+</div>
+
     </div>
     <aside class="heroCard" aria-label="Hero image">
       <img class="heroImg" src="./images/removals-hero.jpg" alt="Team loading boxes into a van"/>
     </aside>
   </section>
 
-  <!-- Services -->
-  <section class="section" id="services" tabindex="-1">
-    <h2>What we do</h2>
-    <p class="muted">Clear options for small and full moves. Mix & match to fit your job.</p>
-    <div class="grid">
-      <article class="card svc"><img src="./images/rem-s1.png" alt="Flat/house moves"><div><h3>Flat & House Moves</h3><p>Studio to 4-bedroom moves handled carefully and efficiently.</p></div></article>
-      <article class="card svc"><img src="./images/rem-s2.jpeg" alt="Office moves"><div><h3>Office Moves</h3><p>Desks, chairs, IT — labelled and relocated with minimal downtime.</p></div></article>
-      <article class="card svc"><img src="./images/rem-s3.jpg" alt="Man with a van"><div><h3>Man with a Van</h3><p>Ideal for single-item collections, small loads, IKEA runs.</p></div></article>
-      <article class="card svc"><img src="./images/rem-s4.jpg" alt="Packing service"><div><h3>Packing Service</h3><p>Full or partial packing, fragile-only, and unpacking on arrival.</p></div></article>
-      <article class="card svc"><img src="./images/rem-s5.jpeg" alt="Furniture assembly"><div><h3>Disassemble & Re-assemble</h3><p>Beds, wardrobes, tables — we take down and put back up.</p></div></article>
-      <article class="card svc"><img src="./images/rem-s6.webp" alt="Local deliveries"><div><h3>Local Deliveries</h3><p>Boxes, appliances and flat-pack delivered to your door.</p></div></article>
-    </div>
-  </section>
+ <!-- Services -->
+<section class="section" id="services" tabindex="-1">
+  <h2>What we do</h2>
+  <p class="muted">Clear options for small and full moves. Mix & match to fit your job.</p>
+
+  <div class="grid">
+    <article class="card svc">
+      <img src="./images/rem-s1.png" alt="Home & Flat Moves">
+      <div>
+        <h3>Home & Flat Moves</h3>
+        <p>From studio flats to large family homes — handled with care.</p>
+      </div>
+    </article>
+
+    <article class="card svc">
+      <img src="./images/rem-s2.jpeg" alt="Office & Business Relocations">
+      <div>
+        <h3>Office & Business Relocations</h3>
+        <p>Desks, chairs, IT and documents — relocated with minimal downtime.</p>
+      </div>
+    </article>
+
+    <article class="card svc">
+      <img src="./images/rem-s4.jpg" alt="Packing & Unpacking Support">
+      <div>
+        <h3>Packing & Unpacking Support</h3>
+        <p>Fragile protection, full or partial packing — stress-free setup.</p>
+      </div>
+    </article>
+
+    <article class="card svc">
+      <img src="./images/rem-s3.jpg" alt="Single Items to Full Loads">
+      <div>
+        <h3>Single Items to Full Loads</h3>
+        <p>From a sofa delivery to full-house clearouts — we’ll move it.</p>
+      </div>
+    </article>
+
+    <article class="card svc">
+      <img src="./images/rem-s5.jpeg" alt="Household, Office & Garage Clearances">
+      <div>
+        <h3>Household, Office & Garage Clearances</h3>
+        <p>Responsible disposal and recycling — clutter sorted.</p>
+      </div>
+    </article>
+
+    <article class="card svc">
+      <img src="./images/rem-s6.webp" alt="Local & Nationwide Moves">
+      <div>
+        <h3>Local & Nationwide Moves</h3>
+        <p>Brighton, Peacehaven and across the UK — wherever you’re going.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
 
   <!-- Our Work -->
   <section class="section" id="work" tabindex="-1">

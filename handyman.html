@@ -62,6 +62,31 @@ nav a:hover{border-bottom-color:rgba(255,255,255,.35)}
 .heroCard{background:var(--glass);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
 .heroImg{width:100%;height:320px;object-fit:cover;background:#1f2937;display:block}
 
+/* USP badges under hero */
+.usp{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-top:12px;
+}
+.usp .pill{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:.55rem .7rem;
+  border-radius:9999px;
+  border:1px solid var(--border);
+  background:var(--glass);
+  font-size:13px;
+}
+.usp-icon{
+  width:22px;
+  height:22px;
+  object-fit:contain;
+  flex-shrink:0;
+  filter:drop-shadow(0 0 4px rgba(0,0,0,.4));
+}
+
 /* ===== Services ===== */
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .card{background:var(--glass);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow)}
@@ -325,11 +350,45 @@ textarea:focus-visible {
 <!-- Hero -->
 <section class="hero" id="top">
   <div>
-    <h1>Trusted Handyman Services in Brighton & Peacehaven</h1>
+    <h1>Trusted Handyman Services in Brighton &amp; Peacehaven</h1>
     <p>General repairs, painting, furniture assembly, resin driveways, gardening and more — reliable, insured, and friendly.</p>
     <div class="buttons">
       <a class="btn primary" href="#booking">Book a service</a>
       <a class="btn" href="#work">View Past Work</a>
+    </div>
+
+    <div class="usp">
+      <div class="pill">
+        <img
+          src="./images/brighton-hove-council-logo.png"
+          alt="Trusted by Brighton &amp; Hove City Council"
+          class="usp-icon">
+        <span>Trusted by Brighton &amp; Hove City Council</span>
+      </div>
+
+      <div class="pill">
+        <img
+          src="./images/qatar-embassy-icon.png"
+          alt="Renovation work for Qatar Embassy in London"
+          class="usp-icon">
+        <span>Renovated Qatar Embassy, London</span>
+      </div>
+
+      <div class="pill">
+        <img
+          src="./images/google-fb-5star.png"
+          alt="5 star Facebook and Google reviews"
+          class="usp-icon">
+        <span>5★ Facebook &amp; Google Reviews</span>
+      </div>
+
+      <div class="pill">
+        <img
+          src="./images/discount-icon.svg"
+          alt="Discounts for customers with additional needs"
+          class="usp-icon">
+        <span>Discounts for Customers with Additional Needs</span>
+      </div>
     </div>
   </div>
   <aside class="heroCard">
