@@ -31,17 +31,23 @@
     }
 
     /* ================================
-       BACKGROUND SLIDESHOW (DESKTOP)
-       ================================ */
+      BACKGROUND SETUP (STATIC DEFAULT)
+      ================================ */
 
     .bg-slider {
       position: fixed;
       inset: 0;
       z-index: -2;
       overflow: hidden;
+      /* Default static background for mobile/low-motion */
+      background-image: url('/Images/Staff-team.jpg'); 
+      background-position: center;
+      background-size: cover;
+      filter: blur(3px) brightness(0.75);
     }
 
     .bg-slider video {
+      display: none; /* Hide video by default */
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -53,36 +59,60 @@
       background-position: center;
       background-size: cover;
       opacity: 0;
-      animation: bgFade 32s infinite;
+      /* Hide slides by default on mobile/low-motion */
+      display: none; 
       filter: blur(3px) brightness(0.75);
       transform: scale(1.03);
-    }
-
-    .bg-slide-1 {
-      background-image: url('/Images/Staff-team.jpg');
-      animation-delay: 0s;
-    }
-
-    .bg-slide-2 {
-      background-image: url('/Images/Men%20at%20Work.jpg');
-      animation-delay: 8s;
-    }
-
-    .bg-slide-3 {
-      background-image: url('/Images/Removal%20team.jpg');
-      animation-delay: 16s;
-    }
-
-    .bg-slide-4 {
-      animation-delay: 24s;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
     }
 
     @keyframes bgFade {
       0%, 20%   { opacity: 1; }
       25%, 100% { opacity: 0; }
+    }
+    
+    /* ================================
+      BACKGROUND SLIDESHOW (DESKTOP ONLY)
+      ================================ */
+    @media (min-width: 769px) {
+      .bg-slider {
+        background-image: none; /* Remove static image when slides take over */
+        filter: none;
+      }
+      
+      .bg-slide, .bg-slider video {
+        display: block; /* Show slides and video on desktop */
+      }
+      
+      .bg-slide {
+        animation: bgFade 32s infinite;
+      }
+      
+      .bg-slide-1 {
+        background-image: url('/Images/Staff-team.jpg');
+        animation-delay: 0s;
+      }
+
+      .bg-slide-2 {
+        background-image: url('/Images/Men%20at%20Work.jpg');
+        animation-delay: 8s;
+      }
+
+      .bg-slide-3 {
+        background-image: url('/Images/Removal%20team.jpg');
+        animation-delay: 16s;
+      }
+
+      .bg-slide-4 {
+        animation-delay: 24s;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
+      /* Re-apply filters to slides individually for the animation */
+      .bg-slide {
+        filter: blur(3px) brightness(0.75);
+      }
     }
 
     body::before {
@@ -94,8 +124,8 @@
     }
 
     /* ======================
-       MAIN PAGE LAYOUT
-       ====================== */
+      MAIN PAGE LAYOUT
+      ====================== */
 
     .page {
       min-height: 100vh;
@@ -169,8 +199,8 @@
     }
 
     /* ======================
-       DOOR AREA
-       ====================== */
+      DOOR AREA
+      ====================== */
 
     .door-shell {
       margin-top: 1.5rem;
@@ -203,6 +233,8 @@
       transition: transform .7s ease;
       min-height: 280px;
       overflow: hidden;
+      /* Ensure door links are focusable */
+      outline: none; 
     }
 
     .door-left {
@@ -315,8 +347,8 @@
     }
 
     /* ======================
-       CTA ROW
-       ====================== */
+      CTA ROW
+      ====================== */
 
     .cta-row {
       display: flex;
@@ -370,8 +402,8 @@
     }
 
     /* ======================
-       TRUST BADGES
-       ====================== */
+      TRUST BADGES
+      ====================== */
 
     .trust-strip {
       margin-top: 1.75rem;
@@ -410,8 +442,8 @@
     }
 
     /* ======================
-       QUICK SERVICE CARDS
-       ====================== */
+      QUICK SERVICE CARDS
+      ====================== */
 
     .services-section {
       margin-top: 2rem;
@@ -516,7 +548,6 @@
 </head>
 <body>
 
-  <!-- BACKGROUND SLIDES (IMAGES + VIDEO) -->
   <div class="bg-slider" aria-hidden="true">
     <div class="bg-slide bg-slide-1"></div>
     <div class="bg-slide bg-slide-2"></div>
@@ -542,13 +573,11 @@
         Choose a service to get started 👇
       </p>
 
-      <!-- DOORS -->
       <section class="door-shell" id="door-shell" aria-label="Choose a service by opening a door">
         <div class="door-row">
-          <!-- Left Door -->
           <a href="/handyman.html" class="door door-left" id="door-left" aria-label="Open Handyman Services">
             <span class="door-handle-bar"><span class="door-handle-knob"></span></span>
-            <video id="video-handyman" class="door-video" preload="auto" muted playsinline>
+            <video id="video-handyman" class="door-video" preload="auto" muted playsinline aria-hidden="true">
               <source src="/videos/handyman.mp4" type="video/mp4" />
             </video>
             <div class="door-label">
@@ -557,11 +586,10 @@
             </div>
           </a>
 
-          <!-- Right Door -->
           <a href="/removals.html" class="door door-right" id="door-right" aria-label="Open Removals Services">
             <span class="door-handle-bar"><span class="door-handle-knob"></span></span>
             <span class="hand-icon">🖐️</span>
-            <video id="video-removals" class="door-video" preload="auto" muted playsinline>
+            <video id="video-removals" class="door-video" preload="auto" muted playsinline aria-hidden="true">
               <source src="/videos/removals.mp4" type="video/mp4" />
             </video>
             <div class="door-label">
@@ -572,7 +600,6 @@
         </div>
       </section>
 
-      <!-- CTA BUTTONS UNDER DOORS -->
       <div class="cta-row" aria-label="Quick actions">
         <a href="/handyman.html" class="btn btn-handyman">
           <span class="emoji">🔧</span>
@@ -584,7 +611,6 @@
         </a>
       </div>
 
-      <!-- TRUST STRIP WITH BADGES -->
       <section class="trust-strip" aria-label="Why customers choose ET Services">
         <p class="trust-title">Trusted by homeowners & businesses across Peacehaven & Brighton</p>
         <div class="trust-badges">
@@ -607,11 +633,9 @@
         </div>
       </section>
 
-      <!-- QUICK SERVICE CARDS -->
       <section class="services-section" aria-label="Overview of our services">
         <h2 class="services-heading">What can we help you with today?</h2>
         <div class="services-grid">
-          <!-- Handyman card -->
           <article class="service-card">
             <div class="service-card-header">
               <div class="service-card-title">
@@ -630,7 +654,6 @@
             <a href="/handyman.html" class="service-link">View full handyman services →</a>
           </article>
 
-          <!-- Removals card -->
           <article class="service-card">
             <div class="service-card-header">
               <div class="service-card-title">
@@ -651,7 +674,7 @@
         </div>
       </section>
 
-            <div class="content-section trust-signals">
+      <div class="content-section trust-signals">
         <h2>Why Choose ET Services?</h2>
         <p style="text-align:center; font-size:1.1rem; color:var(--focus); font-weight:700; margin-top:0;">
           ★★★★★ Trusted Across All Platforms
@@ -688,6 +711,9 @@
 
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       let navigating = false;
+      
+      // *** UX IMPROVEMENT: Reduced the delay from 3000ms to 800ms ***
+      const NAVIGATION_DELAY = 800; 
 
       function openAndGo(side, url, door){
         if (navigating) return;
@@ -711,9 +737,10 @@
           shell.classList.add(side === 'left' ? 'open-left' : 'open-right');
         }, 600);
 
+        // Navigation happens after a short delay for the animation to start
         setTimeout(() => {
           window.location.href = url;
-        }, 3000);
+        }, NAVIGATION_DELAY); 
       }
 
       function makeClickHandler(side, url, door){
@@ -734,8 +761,8 @@
       }
 
       // Door clicks / keyboard
-      left.addEventListener('click',   makeClickHandler('left','/handyman.html',left));
-      right.addEventListener('click',  makeClickHandler('right','/removals.html',right));
+      left.addEventListener('click', 	makeClickHandler('left','/handyman.html',left));
+      right.addEventListener('click', 	makeClickHandler('right','/removals.html',right));
       left.addEventListener('keydown', makeKeyHandler('left','/handyman.html',left));
       right.addEventListener('keydown',makeKeyHandler('right','/removals.html',right));
 
