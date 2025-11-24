@@ -322,6 +322,51 @@ textarea:focus-visible {
   .lb-img{max-height:calc(100vh - 180px - env(safe-area-inset-bottom))}
 }
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}.triptych .tile img{transition:none}}
+/* Mobile UI Upgrade for Hero + USP badges */
+@media (max-width: 600px) {
+
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+
+  .buttons {
+    gap: 8px;
+  }
+
+  /* Smaller, cleaner badges */
+  .usp {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .usp .pill {
+    padding: .55rem .65rem;
+    border-radius: 14px;
+    background: rgba(255,255,255,.05);
+    backdrop-filter: blur(8px);
+    font-size: 12px;
+    min-height: 44px;
+    border: none;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.06);
+  }
+
+  .usp-icon {
+    width: 18px;
+    height: 18px;
+    filter: none;
+    opacity: .95;
+  }
+
+  .heroImg {
+    height: 220px;
+    border-radius: 14px;
+    margin-top: 16px;
+  }
+}
+
+
 </style>
 </head>
 <body>
